@@ -175,6 +175,7 @@ Route::get('/category/{id}/{slug}', [IndexController::class, 'CategoryProduct'])
 Route::get('/subcategory/{id}/{slug}', [IndexController::class, 'SubCategoryProduct'])->name('subcategory.products');
 Route::get('/brand/{id}/{slug}', [IndexController::class, 'BrandProduct'])->name('brand.products');
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

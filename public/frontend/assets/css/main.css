@@ -1778,6 +1778,22 @@ label {
   padding: 12px 25px;
 }
 
+.search-dropdown {
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+}
+
+.search-result-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-result-item:hover {
+  background-color: #f0f0f0;
+}
+
 .search-form form {
   position: relative;
 }
