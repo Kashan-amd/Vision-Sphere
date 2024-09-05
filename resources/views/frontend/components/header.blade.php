@@ -115,10 +115,8 @@
                 <div class="header-wrap d-flex justify-content-around">
                     
                     <div class="search-form" style="width:auto">
-                        <form action="#" method="GET">
-                            <input type="text" name="search" placeholder="Search Items..." />
-                            <button type="submit"><i class="fi-rs-search"></i></button>
-                        </form>
+                        <input type="text" id="product-search" name="search" placeholder="Search Items..." autocomplete="off" />
+                        <div id="search-results" style="position: absolute; background: white; z-index: 999; width: 100%;"></div>
                     </div>
                     
                     <div class="header-center">
@@ -281,7 +279,7 @@
                                             $shops = App\Models\User::where('role', 'vendor')->get();
                                         @endphp
 
-                                        <a href="#">Vendors <i class="fi-rs-angle-down"></i></a>
+                                        <a href="{{ route('all.vendors') }}">Vendors <i class="fi-rs-angle-down"></i></a>
                                         <ul class="sub-menu">
                                             @if ($shops->isEmpty())
                                                 <li><a href="#">No shops found</a></li>

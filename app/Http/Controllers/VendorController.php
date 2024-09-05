@@ -138,38 +138,6 @@ class VendorController extends Controller
         return back()->with("status", "Password Updated Successfully");
     }
 
-
-    // Frontend All Vendor Information
-    public function AllVendor(Request $request)
-    {
-        $query = $request->input('search');
-
-        $vendors = User::where('role', 'vendor');
-
-        if ($query) {
-            $vendors->where(function ($q) use ($query) {
-                $q->where('name', 'like', '%' . $query . '%')
-                    ->orWhere('id', 'like', '%' . $query . '%');
-            });
-        }
-
-        $vendors = $vendors->get();
-
-        if ($vendors->isEmpty()) {
-            return redirect()->route('all.vendors')->with('message', 'Your search was not found!');
-        }
-
-        return view('frontend.vendor.all_vendors', ['vendors' => $vendors]);
-    }
-
-    public function VendorDetails($id)
-    {
-        $vendor = User::findOrFail($id);
-        $products = Product::where('vendor_id', $id)->latest()->get();
-        $productCount = $products->count();
-        return view('frontend.vendor.vendor_details',compact('vendor','products', 'productCount'));
-    } // End Method
-
     /**
      * Store a newly created resource in storage.
      */

@@ -38,10 +38,6 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'viewWishlist'])->name('wishlist.view');
 });
 
-// All Vendor
-Route::get('/all/vendors', [VendorController::class, 'AllVendor'])->name('all.vendors');
-Route::get('/vendor/details/{id}', [VendorController::class, 'VendorDetails'])->name('vendor.details');
-
 // User routes
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/dashboard', [UserController::class, 'UserDashboard'])->name('user.dashboard');
@@ -169,12 +165,17 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
 
 });
 
-// Product View Details Route
+// search products
+Route::get('/product/search', [IndexController::class, 'search'])->name('product.search');
+
+// Product Details Route
 Route::get('/product-details/{id}/{slug}', [IndexController::class, 'ProductDetails'])->name('product.details');
 Route::get('/category/{id}/{slug}', [IndexController::class, 'CategoryProduct'])->name('category.products');
 Route::get('/subcategory/{id}/{slug}', [IndexController::class, 'SubCategoryProduct'])->name('subcategory.products');
 Route::get('/brand/{id}/{slug}', [IndexController::class, 'BrandProduct'])->name('brand.products');
-
+// Vender Details
+Route::get('/all/vendors', [IndexController::class, 'AllVendor'])->name('all.vendors');
+Route::get('/vendor/details/{id}', [IndexController::class, 'VendorDetails'])->name('vendor.details');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -10,13 +10,16 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function wishListCount()
+    public function getUserWishlistData()
     {
-        $user = Auth::user();
-        $userId = $user->id;
-        $wishList_count = WishList::where('user_id', $userId)->count();
-
-        $wishlistItems = $user->wishlist()->with('product')->get();
+        $wishList_count = 0;
+        $wishlistItems = collect(); // Empty collection if the user is not authenticated
+        
+        if (Auth::check()) { 
+            $user = Auth::user();
+            $wishList_count = WishList::where('user_id', $user->id)->count(); 
+            $wishlistItems = $user->wishlist()->with('product')->get();
+        }
 
         return compact('wishList_count', 'wishlistItems');
     }
@@ -25,7 +28,7 @@ class UserController extends Controller
     {
         $id = Auth::user()->id;
         $userdata = User::find($id);
-        $data = $this->wishListCount();
+        $data = $this->getUserWishlistData();
         return view('user.user_dashboard', $data, compact('id', 'userdata'));
     }
 

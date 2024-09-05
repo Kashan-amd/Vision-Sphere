@@ -37,6 +37,7 @@
     @include('frontend.components.preloader')
 
     <!-- Vendor JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
@@ -62,6 +63,45 @@
 
     <!-- Toaster -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#product-search').on('keyup', function() {
+                let query = $(this).val();
+
+                if (query.length > 1) { 
+                    $.ajax({
+                        url: "{{ route('product.search') }}",
+                        type: "GET",
+                        data: { search: query },
+                        success: function(data) {
+                            $('#search-results').html(""); // Clear previous results
+                            
+                            if (data.length > 0) {
+                                $.each(data, function(index, product) {
+                                    $('#search-results').append(`
+                                        <a href="/product-details/${product.id}/${product.product_slug}" class="list-group-item list-group-item-action d-flex align-items-center">
+                                            <img src="/${product.product_thambnail}" alt="${product.product_name}" />
+                                            ${product.product_name}
+                                        </a>
+                                    `);
+                                });
+                            } else {
+                                $('#search-results').append(`<div class="list-group-item">No products found</div>`);
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                } else {
+                    $('#search-results').html(""); 
+                }
+            });
+        });
+    </script>
+
+
     <script>
      @if(Session::has('message'))
      var type = "{{ Session::get('alert-type','info') }}"

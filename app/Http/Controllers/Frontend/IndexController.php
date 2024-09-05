@@ -5,32 +5,49 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Brand;
+use App\Models\User;
 use App\Models\WishList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
-    // Main index method
     public function index()
     {
         $data = $this->getUserWishlistData();
-        return view('frontend.index', $data); // Returning view with the wish list data
+        return view('frontend.index', $data);
     }
 
-    // Helper method to count wishlist items
     public function getUserWishlistData()
     {
         $wishList_count = 0;
         $wishlistItems = collect(); // Empty collection if the user is not authenticated
         
-        if (Auth::check()) { // Check if the user is logged in
+        if (Auth::check()) { 
             $user = Auth::user();
-            $wishList_count = WishList::where('user_id', $user->id)->count(); // Count the user's wish list items
-            $wishlistItems = $user->wishlist()->with('product')->get(); // Get wish list items with related products
+            $wishList_count = WishList::where('user_id', $user->id)->count(); 
+            $wishlistItems = $user->wishlist()->with('product')->get();
         }
 
         return compact('wishList_count', 'wishlistItems');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('search');
+
+        if (!$query) {
+            return response()->json([]);
+        }
+
+        // Search products by name, brand, etc.
+        $products = Product::where('product_name', 'LIKE', "%{$query}%")
+                            ->orWhere('product_slug', 'LIKE', "%{$query}%")
+                            ->limit(10)
+                            ->get(['id', 'product_name', 'product_slug', 'product_thambnail']);
+
+        // Return the results as JSON
+        return response()->json($products);
     }
 
     // Product details method
@@ -94,4 +111,39 @@ class IndexController extends Controller
         // Merge brand data with wishlist data and return the view
         return view('frontend.product.brand_product', array_merge($data, compact('products', 'productCount')));
     }
+
+        // Frontend All Vendor Information
+        public function AllVendor(Request $request)
+        {
+            $query = $request->input('search');
+    
+            $vendors = User::where('role', 'vendor');
+    
+            if ($query) {
+                $vendors->where(function ($q) use ($query) {
+                    $q->where('name', 'like', '%' . $query . '%')
+                        ->orWhere('id', 'like', '%' . $query . '%');
+                });
+            }
+    
+            $vendors = $vendors->get();
+            
+            $data = $this->getUserWishlistData();
+    
+            if ($vendors->isEmpty()) {
+                return redirect()->route('all.vendors', $data)->with('message', 'Your search was not found!');
+            }
+            
+            return view('frontend.vendor.all_vendors', $data, ['vendors' => $vendors]);
+        }
+    
+        public function VendorDetails($id)
+        {
+            $vendor = User::findOrFail($id);
+            $products = Product::where('vendor_id', $id)->latest()->get();
+            $productCount = $products->count();
+            $data = $this->getUserWishlistData();
+
+            return view('frontend.vendor.vendor_details', $data, compact('vendor','products', 'productCount'));
+        } // End Method
 }
