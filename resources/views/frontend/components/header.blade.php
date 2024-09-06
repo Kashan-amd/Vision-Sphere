@@ -326,7 +326,7 @@
                                                         $subcategories = App\Models\SubCategory::where('category_id', $category->id)->get();
                                                     @endphp
                                                     @if($subcategories->isNotEmpty())
-                                                        <li class="sub-mega-menu sub-mega-menu-width-22">
+                                                        <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:0 5rem 0 0">
                                                             <a class="menu-title" href="{{ route('category.products', ['id' => $category->id, 'slug' => $category->slug]) }}">{{ $category->name }}</a>
                                                             <ul>
                                                                 @foreach ($subcategories as $subcategory)
@@ -336,57 +336,18 @@
                                                         </li>
                                                     @endif
                                                 @endforeach
-                                                <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:0 3rem 0 0">
-                                                    <a class="menu-title" href="#">By Type</a>
-                                                    <ul>
-                                                        <li><a href="#">types</a></li>
-                                                        <li><a href="#">types</a></li>
-                                                        <li><a href="#">types</a></li>
-                                                        <li><a href="#">types</a></li>
-                                                        <li><a href="#">types</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:0 3rem 0 0">
-                                                    <a class="menu-title" href="#">By Color</a>
-                                                    <ul>
-                                                        <li><a href="#">colors</a></li>
-                                                        <li><a href="#">colors</a></li>
-                                                        <li><a href="#">colors</a></li>
-                                                        <li><a href="#">colors</a></li>
-                                                        <li><a href="#">colors</a></li>
-                                                        <li><a href="#">colors</a></li>
-                                                        <li><a href="#">colors</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:0 3rem 0 0">
-                                                    <a class="menu-title" href="#">By Shape</a>
-                                                    <ul>
-                                                        <li><a href="#">shapes</a></li>
-                                                        <li><a href="#">shapes</a></li>
-                                                        <li><a href="#">shapes</a></li>
-                                                        <li><a href="#">shapes</a></li>
-                                                        <li><a href="#">shapes</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:0 3rem 0 0">
-                                                    <a class="menu-title" href="#">By Size</a>
-                                                    <ul>
-                                                        <li><a href="#">sizes</a></li>
-                                                        <li><a href="#">sizes</a></li>
-                                                        <li><a href="#">sizes</a></li>
-                                                    </ul>
-                                                </li>
-                                                <!-- <li class="sub-mega-menu sub-mega-menu-width-34" style="margin:0 3rem 0 0">
-                                                    <div class="menu-banner-wrap">
+                                                
+                                                <li class="sub-mega-menu sub-mega-menu-width-31" style="margin:0 2rem 1rem 0">
+                                                    <div class="menu-banner-wrap shadow hover-up">
                                                         <a href="#"><img src="{{ asset('frontend/assets/imgs/banner/banner-menu.png') }}" alt="VisionSphere" /></a>
                                                         <div class="menu-banner-content">
                                                             <h4>Hot deals</h4>
                                                             <h3>
                                                                 Don't miss<br />
-                                                                Trending
+                                                                New Products
                                                             </h3>
                                                             <div class="menu-banner-price">
-                                                                <span class="new-price text-success">Save to 50%</span>
+                                                                <span class="new-price text-success">Save upto 20%</span>
                                                             </div>
                                                             <div class="menu-banner-btn">
                                                                 <a href="#">Shop now</a>
@@ -394,12 +355,138 @@
                                                         </div>
                                                         <div class="menu-banner-discount">
                                                             <h3>
-                                                                <span>25%</span>
+                                                                <span>20%</span>
                                                                 off
                                                             </h3>
                                                         </div>
                                                     </div>
-                                                </li> -->
+                                                </li>
+                                                
+                                                <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:0 5rem 0 0">
+                                                    <a class="menu-title" href="#">By Material</a>
+                                                    <ul>
+                                                        @php
+                                                            $productMaterials = App\Models\Product::select('product_material')
+                                                                                    ->distinct()
+                                                                                    ->whereNotNull('product_material')
+                                                                                    ->get();
+                                                        @endphp
+                                                        @foreach ($productMaterials as $material)
+                                                            @php
+                                                                $materialArray = explode(',', $material->product_material);
+                                                            @endphp
+
+                                                            @foreach ($materialArray as $singleMaterial)
+                                                                @php
+                                                                    $trimmedMaterial = trim($singleMaterial);
+                                                                @endphp
+
+                                                                @if (!empty($trimmedMaterial))
+                                                                    <li class="sub-mega-menu sub-mega-menu-width-21">
+                                                                        <ul>
+                                                                            <!-- Create a link for the unique material -->
+                                                                            <li>
+                                                                                <a href="{{ route('products.by.material', ['material' => $trimmedMaterial]) }}">
+                                                                                    {{ $trimmedMaterial }}
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                @endif
+                                                            @endforeach
+                                                        @endforeach
+                                                    </ul>
+                                                </li>
+                                                <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:0 5rem 0 0">
+                                                    <a class="menu-title" href="#">By Shape</a>
+                                                    <ul>
+                                                        @php
+                                                            // Retrieve distinct product shapes and store them uniquely in an array
+                                                            $productShapes = App\Models\Product::select('product_shape')
+                                                                                    ->distinct()
+                                                                                    ->whereNotNull('product_shape')
+                                                                                    ->get();
+
+                                                            $uniqueShapes = [];
+                                                        @endphp
+
+                                                        @foreach ($productShapes as $product)
+                                                            @php
+                                                                // Split shapes by commas if a product has multiple shapes
+                                                                $shapesArray = explode(',', $product->product_shape);
+                                                            @endphp
+
+                                                            @foreach ($shapesArray as $shape)
+                                                                @php
+                                                                    $trimmedShape = trim($shape);
+                                                                @endphp
+
+                                                                <!-- Check if the shape is unique, and add it to the array if it's not already there -->
+                                                                @if (!in_array($trimmedShape, $uniqueShapes) && !empty($trimmedShape))
+                                                                    @php
+                                                                        $uniqueShapes[] = $trimmedShape;
+                                                                    @endphp
+
+                                                                    <li class="sub-mega-menu sub-mega-menu-width-21">
+                                                                        <ul>
+                                                                            <!-- Create a link for the unique shape -->
+                                                                            <li>
+                                                                                <a href="{{ route('products.by.shape', ['shape' => $trimmedShape]) }}">
+                                                                                    {{ $trimmedShape }}
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                @endif
+                                                            @endforeach
+                                                        @endforeach
+                                                    </ul>
+                                                </li>
+                                                <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:2rem 5rem 0 0">
+                                                    <a class="menu-title" href="#">By Size</a>
+                                                    <ul>
+                                                        @php
+                                                            // Retrieve distinct product sizes and store them uniquely in an array
+                                                            $productSizes = App\Models\Product::select('product_size')
+                                                                                    ->distinct()
+                                                                                    ->whereNotNull('product_size')
+                                                                                    ->get();
+
+                                                            $uniqueSizes = []; // Array to hold unique sizes
+                                                        @endphp
+
+                                                        @foreach ($productSizes as $product)
+                                                            @php
+                                                                // Split sizes by commas if a product has multiple sizes
+                                                                $sizesArray = explode(',', $product->product_size);
+                                                            @endphp
+
+                                                            @foreach ($sizesArray as $size)
+                                                                @php
+                                                                    $trimmedSize = trim($size); // Remove extra spaces
+                                                                @endphp
+
+                                                                <!-- Check if the size is unique, and add it to the array if it's not already there -->
+                                                                @if (!in_array($trimmedSize, $uniqueSizes) && !empty($trimmedSize))
+                                                                    @php
+                                                                        $uniqueSizes[] = $trimmedSize;
+                                                                    @endphp
+
+                                                                    <li class="sub-mega-menu sub-mega-menu-width-21">
+                                                                        <ul>
+                                                                            <!-- Create a link for the unique size -->
+                                                                            <li>
+                                                                                <a href="{{ route('products.by.size', ['size' => $trimmedSize]) }}">
+                                                                                    {{ $trimmedSize }}
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                @endif
+                                                            @endforeach
+                                                        @endforeach
+                                                    </ul>
+                                                </li>
                                             </ul>
                                         </li>
                                     @endif

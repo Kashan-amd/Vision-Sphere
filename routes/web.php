@@ -168,6 +168,11 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
 // search products
 Route::get('/product/search', [IndexController::class, 'search'])->name('product.search');
 
+// Shop by routes
+Route::get('/products/shape/{shape}', [IndexController::class, 'getProductsByShape'])->name('products.by.shape');
+Route::get('/products/material/{material}', [IndexController::class, 'getProductsByMaterial'])->name('products.by.material');
+Route::get('/products/size/{size}', [IndexController::class, 'getProductsBySize'])->name('products.by.size');
+
 // Product Details Route
 Route::get('/product-details/{id}/{slug}', [IndexController::class, 'ProductDetails'])->name('product.details');
 Route::get('/category/{id}/{slug}', [IndexController::class, 'CategoryProduct'])->name('category.products');

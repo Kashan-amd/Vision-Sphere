@@ -146,4 +146,46 @@ class IndexController extends Controller
 
             return view('frontend.vendor.vendor_details', $data, compact('vendor','products', 'productCount'));
         } // End Method
+
+        public function getProductsByShape($shape)
+        {
+            $products = Product::where('product_shape', 'LIKE', "%$shape%")->get();
+            $productCount = $products->count();
+
+            // Get all unique shapes and their respective counts
+            $shapesWithCounts = Product::select('product_shape', Product::raw('COUNT(*) as products_count'))
+                ->groupBy('product_shape')
+                ->get();
+
+            $data = $this->getUserWishlistData();
+            return view('frontend.product.products_by_shape', $data, compact('products', 'shape', 'productCount', 'shapesWithCounts'));
+        }
+
+        public function getProductsByMaterial($material)
+        {
+            $products = Product::where('product_material', 'LIKE', "%$material%")->get();
+            $productCount = $products->count();
+
+            // Get all unique shapes and their respective counts
+            $materialsWithCounts = Product::select('product_material', Product::raw('COUNT(*) as products_count'))
+                ->groupBy('product_material')
+                ->get();
+
+            $data = $this->getUserWishlistData();
+            return view('frontend.product.products_by_material', $data, compact('products', 'material', 'productCount', 'materialsWithCounts'));
+        }
+
+        public function getProductsBySize($size)
+        {
+            $products = Product::where('product_size', 'LIKE', "%$size%")->get();
+            $productCount = $products->count();
+
+            // Get all unique shapes and their respective counts
+            $sizesWithCounts = Product::select('product_size', Product::raw('COUNT(*) as products_count'))
+                ->groupBy('product_size')
+                ->get();
+
+            $data = $this->getUserWishlistData();
+            return view('frontend.product.products_by_size', $data, compact('products', 'size', 'productCount', 'sizesWithCounts'));
+        }
 }
