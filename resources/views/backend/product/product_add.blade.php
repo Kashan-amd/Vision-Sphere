@@ -43,12 +43,27 @@
 
                                 <div class="form-group mb-3">
                                     <label for="inputProductTitle" class="form-label">Product Size</label>
-                                    <input type="text" name="product_size" class="form-control visually-hidden" data-role="tagsinput" value="Small,Midium,Large ">
+                                    <input type="text" name="product_size" class="form-control visually-hidden" data-role="tagsinput" value="Narrow 49.5-44.89-128,Midium 54-37-132,Wide 55.83-44.02-146 ">
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="inputProductTitle" class="form-label">Product Color</label>
-                                    <input type="text" name="product_color" class="form-control visually-hidden" data-role="tagsinput" value="Red,Blue,Black">
+                                    <input type="text" name="product_color" class="form-control visually-hidden" data-role="tagsinput" value="Grey,Blue,Black">
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="inputProductTitle" class="form-label">Product Shape</label>
+                                    <input type="text" name="product_shape" class="form-control visually-hidden" data-role="tagsinput" value="Rectangle,Round,Cat Eye">
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="inputProductTitle" class="form-label">Product Material</label>
+                                    <input type="text" name="product_material" class="form-control visually-hidden" data-role="tagsinput" value="Plastic,Metal,Acetate">
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="inputProductTitle" class="form-label">Product Weight</label>
+                                    <input type="text" name="product_weight" class="form-control visually-hidden" data-role="tagsinput" value="19.6 g,15 g,20.5 g">
                                 </div>
 
 

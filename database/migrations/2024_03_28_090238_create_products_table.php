@@ -22,7 +22,10 @@ return new class extends Migration
             $table->string('product_qty');
             $table->string('product_tags')->nullable();
             $table->string('product_size')->nullable();
-            $table->string('product_color')->nullable();
+            $table->string('product_color')->nullable();            
+            $table->string('product_shape')->nullable();
+            $table->string('product_weight')->nullable();
+            $table->string('product_material')->nullable();
             $table->string('selling_price');
             $table->string('discount_price')->nullable();
             $table->text('short_descp');

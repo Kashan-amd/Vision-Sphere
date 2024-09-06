@@ -147,10 +147,10 @@
                                         @foreach($wishlistItems as $item)
                                         <li>
                                             <div class="shopping-cart-img">
-                                                <a href=""><img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" /></a>
+                                                <a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}"><img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" /></a>
                                             </div>
                                             <div class="shopping-cart-title">
-                                                <h4><a href="#">{{ $item->product->product_name }}</a></h4>
+                                                <h4><a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}">{{ $item->product->product_name }}</a></h4>
                                                 <h4><span>PKR </span>{{ $item->product->selling_price }}</h4>
                                             </div>
                                             <div class="shopping-cart-delete">

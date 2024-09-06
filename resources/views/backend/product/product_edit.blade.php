@@ -58,6 +58,31 @@
                 </div>
 
                 <div class="form-group mb-3">
+                  <label for="inputProductTitle" class="form-label">Product Shape</label>
+                  <input type="text" name="product_shape" data-role="tagsinput" value="{{ old('product_shape', $product->product_shape) }}" class="form-control visually-hidden">
+                  @error('product_color')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="inputProductTitle" class="form-label">Product Material</label>
+                  <input type="text" name="product_material" data-role="tagsinput" value="{{ old('product_material', $product->product_material) }}" class="form-control visually-hidden">
+                  @error('product_color')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="inputProductTitle" class="form-label">Product Weight</label>
+                  <input type="text" name="product_weight" data-role="tagsinput" value="{{ old('product_weight', $product->product_weight) }}" class="form-control visually-hidden">
+                  @error('product_color')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
+                </div>
+
+
+                <div class="form-group mb-3">
                   <label for="inputProductDescription" class="form-label">Short Description</label>
                   <textarea name="short_descp" class="form-control" id="inputProductDescription" rows="3" required>{{ old('short_descp', $product->short_descp) }}</textarea>
                   @error('short_descp')

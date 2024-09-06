@@ -117,8 +117,7 @@
 
                                 <div class="font-xs">
                                     <ul class="mr-50 float-start">
-                                        <li class="mb-5">Brand: <span class="text-brand"><a href="{{route('brand.products', ['id' => $product->brand->id, 'slug' => $product->brand->slug])}}">{{ $product['brand']['name'] }} </a></span></li>
-                                        <li class="mb-5">Category:<span class="text-brand"><a href="{{ route('category.products', ['id' => $product->category->id, 'slug' => $product->category->slug])}}">{{ $product['category']['name'] }}</a></span></li>
+                                        <li class="mb-5">Category: <span class="text-brand"><a href="{{ route('category.products', ['id' => $product->category->id, 'slug' => $product->category->slug])}}">{{ $product['category']['name'] }}</a></span></li>
                                         @if ($product->created_at)
                                             <li class="mb-5">Created: <span class="text-brand">{{ $product->created_at->format('M j.Y') }}</span></li>
                                         @endif
@@ -172,88 +171,64 @@
                                 <div class="tab-pane fade" id="Additional-info">
                                     <table class="font-md">
                                         <tbody>
-                                            <tr class="stand-up">
-                                                <th>Stand Up</th>
+                                            <tr class="handle-height-ground-to-handle">
+                                                <th>Brand</th>
                                                 <td>
-                                                    <p>35″L x 24″W x 37-45″H(front to back wheel)</p>
+                                                    <p>{{ $product['brand']['name'] }}</p>
+                                                </td>
+                                            </tr>
+                                            <tr class="stand-up">
+                                                <th>SKU</th>
+                                                <td>
+                                                    <p>{{ $product['product_code'] }}</p>
                                                 </td>
                                             </tr>
                                             <tr class="folded-wo-wheels">
-                                                <th>Folded (w/o wheels)</th>
+                                                <th>Shape</th>
                                                 <td>
-                                                    <p>32.5″L x 18.5″W x 16.5″H</p>
+                                                    <p>{{ $product['product_shape'] }}</p>
                                                 </td>
                                             </tr>
                                             <tr class="folded-w-wheels">
-                                                <th>Folded (w/ wheels)</th>
+                                                <th>Size</th>
                                                 <td>
-                                                    <p>32.5″L x 24″W x 18.5″H</p>
+                                                    <p>{{ $product['product_size'] }}</p>
                                                 </td>
                                             </tr>
                                             <tr class="door-pass-through">
-                                                <th>Door Pass Through</th>
+                                                <th>Material</th>
                                                 <td>
-                                                    <p>24</p>
+                                                    <p>{{ $product['product_material'] }}</p>
                                                 </td>
                                             </tr>
                                             <tr class="frame">
-                                                <th>Frame</th>
+                                                <th>Weight</th>
                                                 <td>
-                                                    <p>Aluminum</p>
+                                                    <p>{{ $product['product_weight'] }}</p>
                                                 </td>
                                             </tr>
                                             <tr class="weight-wo-wheels">
-                                                <th>Weight (w/o wheels)</th>
+                                                <th>RX Range</th>
                                                 <td>
-                                                    <p>20 LBS</p>
+                                                    <p>-20.00~+12.00 </p>
                                                 </td>
                                             </tr>
                                             <tr class="weight-capacity">
-                                                <th>Weight Capacity</th>
+                                                <th>PD Range</th>
                                                 <td>
-                                                    <p>60 LBS</p>
+                                                    <p>54~78</p>
                                                 </td>
                                             </tr>
                                             <tr class="width">
-                                                <th>Width</th>
+                                                <th>Progressive</th>
                                                 <td>
-                                                    <p>24″</p>
+                                                    <p>Yes</p>
                                                 </td>
                                             </tr>
                                             <tr class="handle-height-ground-to-handle">
-                                                <th>Handle height (ground to handle)</th>
+                                                <th>Spring Hing</th>
                                                 <td>
-                                                    <p>37-45″</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="wheels">
-                                                <th>Wheels</th>
-                                                <td>
-                                                    <p>12″ air / wide track slick tread</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="seat-back-height">
-                                                <th>Seat back height</th>
-                                                <td>
-                                                    <p>21.5″</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="head-room-inside-canopy">
-                                                <th>Head room (inside canopy)</th>
-                                                <td>
-                                                    <p>25″</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="pa_color">
-                                                <th>Color</th>
-                                                <td>
-                                                    <p>Black, Blue, Red, White</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="pa_size">
-                                                <th>Size</th>
-                                                <td>
-                                                    <p>M, S</p>
+                                                    <p>Yes</p>
                                                 </td>
                                             </tr>
                                         </tbody>
