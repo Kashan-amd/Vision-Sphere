@@ -638,25 +638,117 @@
                                 <li class="menu-item-has-children">
                                     <a href="#">Categories</a>
                                     <ul class="dropdown">
-                                    @if ($categories->isEmpty())
-                                        <li>No categories found</li>
-                                    @else
-                                        @foreach ($categories as $category)
-                                            <li><a href="{{ route('category.products', ['id' => $data->id, 'slug' => $data->slug]) }}">{{ $category->name }}</a></li>
-                                        @endforeach
-                                    @endif
+                                        <li>
+                                            @foreach ($categories as $category)
+                                                <a href="{{ route('category.products', ['id' => $category->id, 'slug' => $category->slug]) }}">{{ $category->name }}</a><br>
+                                            @endforeach
+                                        </li>
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#">Colors</a>
+                                    <a href="#">Frame Material</a>
                                     <ul class="dropdown">
-                                        <li><a href="#">Add Colors</a></li>
+                                        <li>
+                                            @php
+                                                $productMaterials = App\Models\Product::select('product_material')
+                                                                        ->distinct()
+                                                                        ->whereNotNull('product_material')
+                                                                        ->get();
+                                            @endphp
+                                            @foreach ($productMaterials as $material)
+                                                @php
+                                                    $materialArray = explode(',', $material->product_material);
+                                                @endphp
+
+                                                @foreach ($materialArray as $singleMaterial)
+                                                    @php
+                                                        $trimmedMaterial = trim($singleMaterial);
+                                                    @endphp
+
+                                                    @if (!empty($trimmedMaterial))
+                                                        <a href="{{ route('products.by.material', ['material' => $trimmedMaterial]) }}">
+                                                            {{ $trimmedMaterial }}
+                                                        </a><br>
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        </li> 
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#">Frame Type</a>
+                                    <a href="#">Frame Shape</a>
                                     <ul class="dropdown">
-                                        <li><a href="#">Add Types</a></li>
+                                        <li>
+                                            @php
+                                                $productShapes = App\Models\Product::select('product_shape')
+                                                                        ->distinct()
+                                                                        ->whereNotNull('product_shape')
+                                                                        ->get();
+
+                                                $uniqueShapes = [];
+                                            @endphp
+                                            @foreach ($productShapes as $product)
+                                                @php
+                                                    // Split shapes by commas if a product has multiple shapes
+                                                    $shapesArray = explode(',', $product->product_shape);
+                                                @endphp
+
+                                                @foreach ($shapesArray as $shape)
+                                                    @php
+                                                        $trimmedShape = trim($shape);
+                                                    @endphp
+
+                                                    <!-- Check if the shape is unique, and add it to the array if it's not already there -->
+                                                    @if (!in_array($trimmedShape, $uniqueShapes) && !empty($trimmedShape))
+                                                        @php
+                                                            $uniqueShapes[] = $trimmedShape;
+                                                        @endphp
+                                                        <a href="{{ route('products.by.shape', ['shape' => $trimmedShape]) }}">
+                                                            {{ $trimmedShape }}
+                                                        </a><br>
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a href="#">Frame Size</a>
+                                    <ul class="dropdown">
+                                        <li>
+                                            @php
+                                                // Retrieve distinct product sizes and store them uniquely in an array
+                                                $productSizes = App\Models\Product::select('product_size')
+                                                                        ->distinct()
+                                                                        ->whereNotNull('product_size')
+                                                                        ->get();
+
+                                                $uniqueSizes = []; // Array to hold unique sizes
+                                            @endphp
+
+                                            @foreach ($productSizes as $product)
+                                                @php
+                                                    // Split sizes by commas if a product has multiple sizes
+                                                    $sizesArray = explode(',', $product->product_size);
+                                                @endphp
+
+                                                @foreach ($sizesArray as $size)
+                                                    @php
+                                                        $trimmedSize = trim($size); // Remove extra spaces
+                                                    @endphp
+
+                                                    <!-- Check if the size is unique, and add it to the array if it's not already there -->
+                                                    @if (!in_array($trimmedSize, $uniqueSizes) && !empty($trimmedSize))
+                                                        @php
+                                                            $uniqueSizes[] = $trimmedSize;
+                                                        @endphp
+                                                            <a href="{{ route('products.by.size', ['size' => $trimmedSize]) }}">
+                                                                {{ $trimmedSize }}
+                                                            </a><br>
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
