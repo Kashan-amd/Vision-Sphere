@@ -52,7 +52,7 @@
 				<div class="card radius-10 bg-gradient-ibiza">
 				 <div class="card-body">
 					<div class="d-flex align-items-center">
-						<h5 class="mb-0 text-white">2100</h5>
+						<h5 class="mb-0 text-white">{{ $reviews->count() }}</h5>
 						<div class="ms-auto">
                             <i class='bx bx-paper-plane fs-3 text-white'></i>
 						</div>

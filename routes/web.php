@@ -165,6 +165,10 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
 
 });
 
+
+// review routes
+Route::post('/product/{id}/review', [ProductController::class, 'storeReview'])->name('product.review')->middleware('auth');
+
 // search products
 Route::get('/product/search', [IndexController::class, 'search'])->name('product.search');
 

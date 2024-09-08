@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\File;
@@ -17,7 +18,8 @@ class AdminController extends Controller
         $productCount = Product::count();
         $vendorCount = User::where('role', 'vendor')->count();
         $customerCount = User::where('role', 'user')->count();
-        return view('admin.admin_dashboard', compact('productCount', 'vendorCount', 'customerCount'));
+        $reviews = Review::get();
+        return view('admin.admin_dashboard', compact('productCount', 'vendorCount', 'customerCount', 'reviews'));
     }
 
     public function AdminLogin()

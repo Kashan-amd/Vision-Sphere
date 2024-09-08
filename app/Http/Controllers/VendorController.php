@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Review;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +50,12 @@ class VendorController extends Controller
         $vendorId = auth()->user()->id;
         $productCount = Product::where('vendor_id', $vendorId)->count();
         $customerCount = User::where('role', 'user')->count();
-        return view('vendor.vendor_dashboard', compact('productCount', 'customerCount'));
+
+        $reviewCount = Review::whereHas('product', function($query) use ($vendorId) {
+            $query->where('vendor_id', $vendorId);
+        })->count(); 
+
+        return view('vendor.vendor_dashboard', compact('productCount', 'customerCount', 'reviewCount'));
     }
 
     public function VendorLogin()

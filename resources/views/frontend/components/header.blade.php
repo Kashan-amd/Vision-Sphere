@@ -143,29 +143,34 @@
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
 
                                     @if(Auth()->user())
-                                        <ul>
-                                        @foreach($wishlistItems as $item)
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}"><img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" /></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}">{{ $item->product->product_name }}</a></h4>
-                                                <h4><span>PKR </span>{{ $item->product->selling_price }}</h4>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                            <form action="{{ route('wishlist.remove', $item->product->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm"><i class="fi-rs-cross-small"></i></button>
-                                            </form>
-                                            </div>
-                                        </li>
-                                        @endforeach
+                                        @if($wishList_count < 1)
+                                            <p>such emptiness!! 🥲</p>
+                                            <p>Add your Wishes!</p>
+                                        @else
+                                            <ul>
+                                            @foreach($wishlistItems as $item)
+                                            <li>
+                                                <div class="shopping-cart-img">
+                                                    <a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}"><img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" /></a>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}">{{ $item->product->product_name }}</a></h4>
+                                                    <h4><span>PKR </span>{{ $item->product->selling_price }}</h4>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                <form action="{{ route('wishlist.remove', $item->product->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm"><i class="fi-rs-cross-small"></i></button>
+                                                </form>
+                                                </div>
+                                            </li>
+                                            @endforeach
+                                        @endif
                                     </ul>
                                     @else
                                     <ul>
-                                        <li>Such Emptiness!! 🥹🥹 
+                                        <li>Such Emptiness!! 🥲 
                                             <br>
                                             Login to view your wishlist..
                                         </li>
@@ -537,33 +542,38 @@
 
                                 </a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
-
-                                    @if(Auth()->user())
-                                        <ul>
-                                        @foreach($wishlistItems as $item)
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href=""><img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" /></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="#">{{ $item->product->product_name }}</a></h4>
-                                                <h4><span>PKR </span>{{ $item->product->selling_price }}</h4>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                            <form action="{{ route('wishlist.remove', $item->product->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm"><i class="fi-rs-cross-small"></i></button>
-                                            </form>
-                                            </div>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                    @else
-                                    <ul>
-                                        <li>Sign in to see your wishlist!!</li>
-                                    </ul>
-                                    @endif
+                                    
+                                        @if(Auth()->user())
+                                            @if($wishList_count < 1)
+                                                <p>such emptiness!! 🥲</p>
+                                                <p>Add your Wishes!</p>
+                                            @else
+                                                <ul>
+                                                @foreach($wishlistItems as $item)
+                                                    <li>
+                                                        <div class="shopping-cart-img">
+                                                            <a href=""><img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" /></a>
+                                                        </div>
+                                                        <div class="shopping-cart-title">
+                                                            <h4><a href="#">{{ $item->product->product_name }}</a></h4>
+                                                            <h4><span>PKR </span>{{ $item->product->selling_price }}</h4>
+                                                        </div>
+                                                        <div class="shopping-cart-delete">
+                                                        <form action="{{ route('wishlist.remove', $item->product->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm"><i class="fi-rs-cross-small"></i></button>
+                                                        </form>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                                </ul>
+                                            @endif
+                                        @else
+                                            <ul>
+                                                <li>Sign in to see your wishlist!!</li>
+                                            </ul>
+                                        @endif
 
                                 </div>
                             </div>
