@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\User;
+use App\Models\Review;
 use App\Models\WishList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,9 +69,12 @@ class IndexController extends Controller
 
         // Get user wishlist data
         $data = $this->getUserWishlistData();
+
+        // review data
+        $reviews = Review::where('product_id', $id)->get();
         
         // Merge product data with wishlist data and return the view
-        return view('frontend.product.product_details', array_merge($data, compact('product', 'product_size', 'product_color', 'relatedProducts')));
+        return view('frontend.product.product_details', array_merge($data, compact('product', 'product_size', 'product_color', 'relatedProducts', 'reviews')));
     }
 
     // Show products based on category

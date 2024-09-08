@@ -9,6 +9,7 @@ use App\Models\Brand;
 use App\Models\MultiImg;
 use App\Models\SubCategory;
 use App\Models\User;
+use App\Models\Review;
 use Carbon\Carbon;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
@@ -263,4 +264,21 @@ class ProductController extends Controller
         return $this->toggleProductStatus($request, 1);
     }
 
+    public function storeReview(Request $request, $productId)
+    {
+        //dd($request);
+        $request->validate([
+            'comment' => 'required',
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+
+        Review::create([
+            'user_id' => auth()->id(),
+            'product_id' => $productId,
+            'comment' => $request->comment,
+            'rating' => $request->rating * 20,
+        ]);
+
+        return redirect()->back()->with('message', 'Review submitted!!');
+    }
 }

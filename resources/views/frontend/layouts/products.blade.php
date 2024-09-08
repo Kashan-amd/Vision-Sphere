@@ -74,9 +74,9 @@
                                     <h2><a href="{{ url('/product-details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></h2>
                                     <div class="product-rate-cover">
                                         <div class="product-rate d-inline-block">
-                                            <div class="product-rating" style="width: 90%"></div>
+                                            <div class="product-rating" style="width: {{ round($product->reviews->average('rating'), 1) }}%"></div>
                                         </div>
-                                        <span class="font-small ml-5 text-muted"> (4.0)</span>
+                                        <span class="font-small ml-5 text-muted"> ({{round($product->reviews->average('rating') / 20, 1)}})</span>
                                     </div>
                                     <div>
                                         <span class="font-small text-muted">By <a href="{{ route('vendor.details',$product->vendor->id) }}">{{ $product->vendor->name ?? 'Owner' }}</a></span>
@@ -151,9 +151,9 @@
                                                     <div class="product-detail-rating">
                                                         <div class="product-rate-cover text-end">
                                                             <div class="product-rate d-inline-block">
-                                                                <div class="product-rating" style="width: 90%"></div>
+                                                                <div class="product-rating" style="width: {{round($product->reviews->average('rating'), 1)}}%"></div>
                                                             </div>
-                                                            <span class="font-small ml-5 text-muted"> (32 reviews)</span>
+                                                            <span class="font-small ml-5 text-muted"> ({{ $product->reviews->count() }} reviews)</span>
                                                         </div>
                                                     </div>
 
@@ -276,9 +276,9 @@
                                         <h2><a href="{{ url('/product-details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></h2>
                                         <div class="product-rate-cover">
                                             <div class="product-rate d-inline-block">
-                                                <div class="product-rating" style="width: 90%"></div>
+                                                <div class="product-rating" style="width: {{round($product->reviews->average('rating'), 1)}}%"></div>
                                             </div>
-                                            <span class="font-small ml-5 text-muted"> (4.0)</span>
+                                            <span class="font-small ml-5 text-muted"> ({{round($product->reviews->average('rating') / 20, 1)}})</span>
                                         </div>
                                         <div>
                                             <span class="font-small text-muted">By <a href="{{ route('vendor.details',$product->vendor->id) }}">{{ $product->vendor->name ?? 'Owner' }}</a></span>
@@ -352,9 +352,9 @@
                                                         <div class="product-detail-rating">
                                                             <div class="product-rate-cover text-end">
                                                                 <div class="product-rate d-inline-block">
-                                                                    <div class="product-rating" style="width: 90%"></div>
+                                                                    <div class="product-rating" style="width: {{round($product->reviews->average('rating'), 1)}}%"></div>
                                                                 </div>
-                                                                <span class="font-small ml-5 text-muted"> (32 reviews)</span>
+                                                                <span class="font-small ml-5 text-muted"> ({{$product->reviews->count()}} reviews)</span>
                                                             </div>
                                                         </div>
                                                         @php
@@ -490,7 +490,7 @@
                                             </div>
                                             <h2><a href="{{ url('/product-details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></h2>
                                             <div class="product-rate d-inline-block">
-                                                <div class="product-rating" style="width: 80%"></div>
+                                                <div class="product-rating" style="width: {{round($product->reviews->average('rating'), 1)}}%"></div>
                                             </div>
                                             <div class="product-price mt-10">
                                                 @if($product->discount_price == NULL)
@@ -557,9 +557,9 @@
                                 </h6>
                                 <div class="product-rate-cover">
                                     <div class="product-rate d-inline-block">
-                                        <div class="product-rating" style="width: 70%"></div>
+                                        <div class="product-rating" style="width: {{round($product->reviews->average('rating'), 1)}}%"></div>
                                     </div>
-                                    <span class="font-small ml-5 text-muted"> (4.0)</span>
+                                    <span class="font-small ml-5 text-muted"> ({{round($product->reviews->average('rating') / 20, 1)}})</span>
                                 </div>
                                 @php
                                     $priceDifference = $product->selling_price - $product->discount_price;
@@ -597,9 +597,9 @@
                                 </h6>
                                 <div class="product-rate-cover">
                                     <div class="product-rate d-inline-block">
-                                        <div class="product-rating" style="width: 70%"></div>
+                                        <div class="product-rating" style="width: {{round($product->reviews->average('rating'), 1)}}%"></div>
                                     </div>
-                                    <span class="font-small ml-5 text-muted"> (4.0)</span>
+                                    <span class="font-small ml-5 text-muted"> ({{round($product->reviews->average('rating') / 20, 1)}})</span>
                                 </div>
                                 @php
                                     $priceDifference = $product->selling_price - $product->discount_price;
@@ -637,9 +637,9 @@
                                 </h6>
                                 <div class="product-rate-cover">
                                     <div class="product-rate d-inline-block">
-                                        <div class="product-rating" style="width: 70%"></div>
+                                        <div class="product-rating" style="width: {{round($product->reviews->average('rating'), 1)}}%"></div>
                                     </div>
-                                    <span class="font-small ml-5 text-muted"> (4.0)</span>
+                                    <span class="font-small ml-5 text-muted"> ({{round($product->reviews->average('rating') / 20, 1)}})</span>
                                 </div>
                                 @php
                                     $priceDifference = $product->selling_price - $product->discount_price;
@@ -677,9 +677,9 @@
                                 </h6>
                                 <div class="product-rate-cover">
                                     <div class="product-rate d-inline-block">
-                                        <div class="product-rating" style="width: 70%"></div>
+                                        <div class="product-rating" style="width: {{round($product->reviews->average('rating'), 1)}}%"></div>
                                     </div>
-                                    <span class="font-small ml-5 text-muted"> (4.0)</span>
+                                    <span class="font-small ml-5 text-muted"> ({{round($product->reviews->average('rating') / 20, 1)}})</span>
                                 </div>
                                 @php
                                     $priceDifference = $product->selling_price - $product->discount_price;
@@ -766,9 +766,9 @@
                                     <h2><a href="{{ url('/product-details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></h2>
                                     <div class="product-rate-cover">
                                         <div class="product-rate d-inline-block">
-                                            <div class="product-rating" style="width: 90%"></div>
+                                            <div class="product-rating" style="width: {{round($product->reviews->average('rating'), 1)}}%"></div>
                                         </div>
-                                        <span class="font-small ml-5 text-muted"> (4.0)</span>
+                                        <span class="font-small ml-5 text-muted"> ({{round($product->reviews->average('rating') / 20, 1)}})</span>
                                     </div>
                                     <div>
                                         <span class="font-small text-muted">By <a href="{{ route('vendor.details',$product->vendor->id) }}">{{ $product->vendor->name ?? 'Owner' }}</a></span>
@@ -842,9 +842,9 @@
                                                     <div class="product-detail-rating">
                                                         <div class="product-rate-cover text-end">
                                                             <div class="product-rate d-inline-block">
-                                                                <div class="product-rating" style="width: 90%"></div>
+                                                                <div class="product-rating" style="width: {{round($product->reviews->average('rating'), 1)}}%"></div>
                                                             </div>
-                                                            <span class="font-small ml-5 text-muted"> (32 reviews)</span>
+                                                            <span class="font-small ml-5 text-muted"> ({{$product->reviews->count()}} reviews)</span>
                                                         </div>
                                                     </div>
                                                     @php
