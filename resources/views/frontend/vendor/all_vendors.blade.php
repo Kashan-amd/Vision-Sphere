@@ -96,3 +96,8 @@
     </div>
 </div>
 @endsection
+
+@php
+    $hideFooter = true;
+    $hidePreloader = false;
+@endphp

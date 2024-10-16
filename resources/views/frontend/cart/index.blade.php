@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="mb-100 shadow" style="border:0px solid grey; padding:0 0 2rem 0; margin:0 1rem; border-radius: 20px">
+<div class="shadow" style="border:0px solid grey; padding:0 0 2rem 0; margin:0 1rem 1rem 1rem; border-radius: 20px">
     <div class="page-header mt-30 mb-50" style="height:5rem">
         <div class="archive-header">
             <div class="row align-items-center">
@@ -47,28 +47,29 @@
                                     @endif
                                 </div>
                                 <div class="product-content-price">
-                                    <span class="text-brand">Quantity: {{ $item->quantity }}</span>
+                                    <span class="text-silent">Quantity: {{ $item->quantity }}</span>
                                 </div>
-                                <div class="row remove-cart justify-content-around mt-10">
-                                    <div class="col-8 detail-qty border radius">
+                                <div class="row justify-content-around mt-10">
+                                    <div class="col-lg-6 col-md-6 col-6 detail-qty border radius">
                                         <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                        <input type="number" name="quantity" class="qty-val" value="{{ $item->quantity }}" min="1" max="{{ $item->product->product_qty ?? 1 }}">
+                                        <input type="num" name="quantity" class="qty-val" value="{{ $item->quantity }}" min="1" max="{{ $item->product->product_qty ?? 1 }}">
                                         <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                     </div>
-                                    <div class="col-4">
-                                        <button style="width:3rem" class="remove-item col-6 btn btn-sm btn-outline-danger mt-5" data-id="{{ $item->product_id }}"><i class="fi-rs-trash"></i></button>
-                                    </div>
                                 </div>
+                            </div>
+                            
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <button style="width:100%" class="remove-item btn btn-sm" data-id="{{ $item->product_id }}">Remove</button>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
 
-            @foreach ($cartItems as $item)
              <!-- quick view modal -->
+            @foreach ($cartItems as $item)
              <div class="modal fade custom-modal" id="quickViewModal{{ $item->product->id }}" tabindex="-1" aria-labelledby="quickViewModal{{ $item->product->id }}" aria-hidden="true">
-                <div class="modal-dialog mr-15">
+                <div class="modal-dialog" style="width:90%; height:85%">
                     <div class="modal-content">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         <div class="modal-body">
@@ -124,7 +125,6 @@
                                         @endphp
                                         @if(!empty($item->product->product_size))
                                             <div class="attr-detail attr-size mb-30">
-                                                <strong class="mr-10" style="width:50px;">Size : </strong>
                                                 <select class="form-control unicase-form-control" id="sizeSelect">
                                                     <option selected disabled>--Choose Size--</option>
                                                     @foreach($product_size as $size)
@@ -136,7 +136,6 @@
 
                                         @if(!empty($item->product->product_color))
                                             <div class="attr-detail attr-color mb-30">
-                                                <strong class="mr-10" style="width:50px;">Color: </strong>
                                                 <select class="form-control unicase-form-control" id="colorSelect">
                                                     <option selected disabled>--Choose Color--</option>
                                                     @foreach($product_color as $color)
@@ -171,6 +170,7 @@
                 </div>
             </div>
             @endforeach
+
             <hr>
             <div class="row ml-5">
                 <div class="col-lg-10 col-md-9 col-8 p-0">

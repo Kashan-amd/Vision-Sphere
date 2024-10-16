@@ -93,16 +93,16 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="add-cart">
-                                <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <input type="hidden" name="name" value="{{ $product->product_name }}">
-                                    <input type="hidden" name="price" value="{{ $product->selling_price }}">
-                                    <input type="hidden" name="quantity" value="1" min="1" required>
-                                    <button class="add"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
-                                </form>
-                            </div>
+                        </div>
+                        <div class="add-cart">
+                            <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                <input type="hidden" name="quantity" value="1" min="1" required>
+                                <button style="width:100%" class="button button-add-to-cart mt-10"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                            </form>
                         </div>
                     </div>
                 </div>

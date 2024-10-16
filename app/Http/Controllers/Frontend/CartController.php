@@ -63,7 +63,7 @@ class CartController extends Controller
                 'product_id' => $request->product_id,
                 'quantity' => $request->quantity,
             ]);
-            return redirect()->back()->with('message', 'Item Added to Cart!');
+            return redirect()->back()->with('message', 'Product Added to Cart!');
         }
     }    
     

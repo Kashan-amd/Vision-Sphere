@@ -38,6 +38,7 @@
                         </div>
                     </div>
                     <div class="col-md-9">
+                        <hr>
                         <div class="tab-content account dashboard-content">
                             <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                 <div class="card">
@@ -248,3 +249,8 @@
     });
 </script>
 @endsection
+
+@php
+    $hideFooter = true;
+    $hidePreloader = true;
+@endphp
