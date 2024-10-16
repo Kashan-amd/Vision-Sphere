@@ -1,8 +1,5 @@
     <!-- Header  -->
     <header class="header-area header-style-1 header-height-2">
-        <div class="mobile-promotion">
-            <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>1 Month</strong> left</span>
-        </div>
         <div class="header-top header-top-ptb-1 d-none d-lg-block">
             <div class="container">
                 <div class="row align-items-center">
@@ -10,7 +7,7 @@
                     <div class="col-xl-3 col-lg-4">
                         <div class="header-info">
                             <ul>
-                                <li><a href="{{ route('user.dashboard') }}">My Cart</a></li>
+                                <li><a href="{{ route('cart.index') }}">My Cart</a></li>
                                 <li><a href="checkout.html">Checkout</a></li>
                                 <li><a href="track_order.html">Order Tracking</a></li>
                             </ul>
@@ -114,14 +111,14 @@
             <div class="container ">
                 <div class="header-wrap d-flex justify-content-around">
                     
-                    <div class="search-form" style="width:auto">
+                    <div class="search-form" style="position: relative; width: auto;">
                         <input type="text" id="product-search" name="search" placeholder="Search Items..." autocomplete="off" />
-                        <div id="search-results" style="position: absolute; background: white; z-index: 999; width: 100%;"></div>
+                        <div id="search-results" class="search-results-container"></div>
                     </div>
                     
                     <div class="header-center">
                         <div class="logo logo-width-2">
-                            <a href="{{ '/' }}"><img height="auto" src="{{ asset('frontend/assets/imgs/theme/logo-alt-1.png') }}" alt="logo" /></a>
+                            <a href="{{ '/' }}"><img height="40rem" src="{{ asset('frontend/assets/imgs/theme/logo-alt.png') }}" alt="logo" /></a>
                         </div>
                     </div>
 
@@ -144,7 +141,7 @@
 
                                     @if(Auth()->user())
                                         @if($wishList_count < 1)
-                                            <p>such emptiness!! 🥲</p>
+                                            <p>Such Emptiness!! 🥲</p>
                                             <p>Add your Wishes!</p>
                                         @else
                                             <ul>
@@ -180,36 +177,53 @@
                                 </div>
                             </div>
                             <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="shop-cart.html">
+                                <a class="mini-cart-icon" href="#">
                                     <img alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
-                                    <span class="pro-count blue">2</span>
+                                    
+                                    @if(Auth()->user())
+                                        <span class="pro-count blue">{{ $cartItem_count }} </span>
+                                    @else
+                                        <span class="pro-count blue"> 0 </span>
+                                    @endif
                                 </a>
                                 <a href="shop-cart.html"><span class="lable"></span></a>
                                 <!-- add dynamic cart -->
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                     <ul>
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href="#"><img alt="VisionSphere" src="{{ asset('frontend/assets/imgs/shop/glasses.jpg') }}" /></a>
+                                    @if(Auth()->user())
+                                        @if($cartItem_count < 1)
+                                            <p>Empty Also!! 🥲</p>
+                                            <p>Fill it up...</p>
+                                        @else
+                                            @foreach($cartItems as $item)
+                                                <li>
+                                                    <div class="shopping-cart-img">
+                                                        <a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}"><img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" /></a>
+                                                    </div>
+                                                    <div class="shopping-cart-title">
+                                                        <h4><a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}">{{ $item->product->product_name }}</a></h4>
+                                                        <h4><span>PKR </span>{{ $item->product->selling_price }}</h4>
+                                                    </div>
+                                                    <div class="shopping-cart-delete">
+                                                        <button class="remove-item btn btn-sm btn-outline-danger" data-id="{{ $item->product_id }}"><i class="fi-rs-cross-small"></i></button>
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        <div class="shopping-cart-footer">
+                                            <div class="shopping-cart-total">
+                                                <h4>Total <span>PKR 2000.00</span></h4>
                                             </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="#">Luca 91</a></h4>
-                                                <h4><span>1 × </span>PKR 2000.00</h4>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="shopping-cart-footer">
-                                        <div class="shopping-cart-total">
-                                            <h4>Total <span>PKR 2000.00</span></h4>
                                         </div>
-                                        <div class="shopping-cart-button">
-                                            <a href="shop-cart.html" class="outline">View cart</a>
-                                            <a href="shop-checkout.html">Checkout</a>
-                                        </div>
-                                    </div>
+                                        @endif
+                                    @else
+                                        <ul>
+                                            <li>Also Empty!! 🥲 
+                                                <br>
+                                                Login to view your Cart..
+                                            </li>
+                                        </ul>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -233,14 +247,14 @@
 
                     <div class="main-categori-wrap d-none d-lg-block">
                         <a class="categories-button-active" href="#">
-                            <span class="fi-rs-apps"></span> All Categories
+                            <span class="fi-rs-apps" style="padding: 0.7rem 0"></span>
                             <i class="fi-rs-angle-down"></i>
                         </a>
                         <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
                             @if ($categories->isEmpty())
                                 <p>No categories found.</p>
                             @else
-                                <div class="d-flex categori-dropdown-inner">
+                                <div class="d-flex categori-dropdown-inner" style="min-width:300px">
                                     <ul>
                                         @foreach ($categoriesChunked->first() as $data)
                                             <li>
@@ -518,7 +532,7 @@
                     </div>
 
                     <!-- for mobile screens -->
-                    <div class="header-action-icon-2 d-block d-lg-none">
+                    <div id="header-action-icon-2" class="header-action-icon-2 d-block d-lg-none">
                         <div class="burger-icon burger-icon-white">
                             <span class="burger-icon-top"></span>
                             <span class="burger-icon-mid"></span>
@@ -526,12 +540,12 @@
                         </div>
                     </div>
                     <div class="d-block d-lg-none">
-                        <a style="margin: 0 0 0 0rem" href="{{ '/' }}"><img height="30rem" src="{{ asset('frontend/assets/imgs/theme/logo-alt-1.png') }}" alt="logo" /></a>
+                        <a style="margin: 0 0 0 0rem" href="{{ '/' }}"><img height="25rem" src="{{ asset('frontend/assets/imgs/theme/logo-alt.png') }}" alt="logo" /></a>
                     </div>
                     <div class="header-action-right d-block d-lg-none">
                         <div class="header-action-2">
                             <div class="header-action-icon-2">
-                                <a href="#">
+                                <a href="##">
                                     <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
                                     
                                     @if(Auth()->user())
@@ -577,7 +591,7 @@
 
                                 </div>
                             </div>
-                            <div class="header-action-icon-2">
+                            <!-- <div class="header-action-icon-2">
                                 <a class="mini-cart-icon" href="#">
                                     <img alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
                                     <span class="pro-count white">2</span>
@@ -607,7 +621,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -620,41 +634,65 @@
     <div class="mobile-header-wrapper-inner">
         <div class="mobile-header-top justify-content-end">
             <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
-                <button class="close-style search-close">
+                <button style="background-color:#00cdff" class="close-style search-close">
                     <i class="icon-top"></i>
                     <i class="icon-bottom"></i>
                 </button>
             </div>
         </div>
         <div class="mobile-header-content-area">
-            <div class="mobile-search search-style-3 mobile-header-border">
-                <form action="#">
-                    <input type="text" placeholder="Search for items…" />
-                    <button type="submit"><i class="fi-rs-search"></i></button>
-                </form>
+            <!-- Always visible btn... -->
+            <div class="mb-20">
+                <button type="button" class="btn btn-outline-dark" id="main-product-search">Searching for something...</button>
             </div>
+
+            <!-- Search Overlay -->
+            <div class="mobile-search-overlay">
+                <div class="mobile-search-overlay-header">
+                    <input type="text" id="mobile-product-search" class="mobile-search-input" name="search" placeholder="Search Here..." autocomplete="off" />
+                    <button class="close-search-btn">close</button>
+                </div>
+
+                <!-- Search results container -->
+                <div id="mobile-search-results" class="mobile-search-results">
+                    <!-- Search result items will be inserted here -->
+                </div>
+            </div>
+
             <div class="mobile-menu-wrap mobile-header-border">
                 <!-- mobile menu start -->
                 <nav>
                     <ul class="mobile-menu font-heading">
                         <li class="menu-item-has-children">
                             <a href="{{ '/' }}">Home</a>
-
                         </li>
-
+                        <li class="menu-item-has-children">
+                            <a href="#">Brands</a>
+                            <ul class="dropdown">
+                                @if ($brands->isEmpty())
+                                    <li><a href="#">No brands found</a></li>
+                                @else
+                                    @foreach ($brands as $brand)
+                                    <li>
+                                        <a href="{{ route('brand.products', ['id' => $brand->id, 'slug' => $brand->slug]) }}">{{ $brand->name }}</a>
+                                    </li>
+                                    @endforeach
+                                @endif
+                            </ul>
+                        </li>
+                        <li class="menu-item-has-children">
+                           <a href="#">Categories</a>
+                            <ul class="dropdown">
+                                <li>
+                                    @foreach ($categories as $category)
+                                        <a href="{{ route('category.products', ['id' => $category->id, 'slug' => $category->slug]) }}">{{ $category->name }}</a><br>
+                                    @endforeach
+                                </li>
+                            </ul>
+                        </li>
                         <li class="menu-item-has-children">
                             <a href="#">Shop By</a>
                             <ul class="dropdown">
-                                <li class="menu-item-has-children">
-                                    <a href="#">Categories</a>
-                                    <ul class="dropdown">
-                                        <li>
-                                            @foreach ($categories as $category)
-                                                <a href="{{ route('category.products', ['id' => $category->id, 'slug' => $category->slug]) }}">{{ $category->name }}</a><br>
-                                            @endforeach
-                                        </li>
-                                    </ul>
-                                </li>
                                 <li class="menu-item-has-children">
                                     <a href="#">Frame Material</a>
                                     <ul class="dropdown">
@@ -763,17 +801,17 @@
                                 </li>
                             </ul>
                         </li>
+                        <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
                         <li class="menu-item-has-children">
                             <a href="#">Misc</a>
                             <ul class="dropdown">
                                 <li><a href="page-about.html">About Us</a></li>
                                 <li><a href="page-contact.html">Contact</a></li>
-                                <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
                                 <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
                                 <li><a href="page-terms.html">Terms of Service</a></li>
                             </ul>
                         </li>
-                        <li class="menu-item-has-children">
+                        <!-- <li class="menu-item-has-children">
                             <a href="#">Language</a>
                             <ul class="dropdown">
                                 <li><a href="#">English</a></li>
@@ -781,7 +819,7 @@
                                 <li><a href="#">German</a></li>
                                 <li><a href="#">Spanish</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </nav>
                 <!-- mobile menu end -->
@@ -800,7 +838,7 @@
                                     <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-label mr-10"></i>My Voucher</a>
+                                    <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-label mr-10"></i>My Points</a>
                                 </li>
                                 <li>
                                     <a href="shop-wishlist.html"><i class="fi fi-rs-heart mr-10"></i>My Wishlist</a>
@@ -854,15 +892,6 @@
                 @endif
                 </div>
             </div>
-            <div class="mobile-social-icon mb-50">
-                <h6 class="mb-15">Follow Us</h6>
-                <a href="#"><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-facebook-white.svg') }}" alt="" /></a>
-                <a href="#"><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-twitter-white.svg') }}" alt="" /></a>
-                <a href="#"><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-instagram-white.svg') }}" alt="" /></a>
-                <a href="#"><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-pinterest-white.svg') }}" alt="" /></a>
-                <a href="#"><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-youtube-white.svg') }}" alt="" /></a>
-            </div>
-            <div class="site-copyright">Copyright 2024 © VisionSphere. All rights reserved.</div>
         </div>
     </div>
 </div>

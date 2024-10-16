@@ -4,31 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\WishList;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function getUserWishlistData()
+    public function getUserData()
     {
         $wishList_count = 0;
         $wishlistItems = collect(); // Empty collection if the user is not authenticated
         
+        $cartItem_count = 0;
+        $cartItems = collect(); // Empty collection if the user is not authenticated
+        
         if (Auth::check()) { 
             $user = Auth::user();
+            $cartItem_count = Cart::where('user_id', $user->id)->count(); 
+            $cartItems = $user->cart()->with('product')->get();
+
             $wishList_count = WishList::where('user_id', $user->id)->count(); 
             $wishlistItems = $user->wishlist()->with('product')->get();
         }
 
-        return compact('wishList_count', 'wishlistItems');
+        return compact('wishList_count', 'wishlistItems', 'cartItem_count', 'cartItems');
     }
 
     public function UserDashboard()
     {
         $id = Auth::user()->id;
         $userdata = User::find($id);
-        $data = $this->getUserWishlistData();
+        $data = $this->getUserData();
         return view('user.user_dashboard', $data, compact('id', 'userdata'));
     }
 

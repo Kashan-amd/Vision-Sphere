@@ -5,8 +5,9 @@
     <meta charset="utf-8" />
     <title>VisionSphere</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    
     <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta property="og:title" content="" />
     <meta property="og:type" content="" />
     <meta property="og:url" content="" />
@@ -32,9 +33,13 @@
 
     </main>
 
-    @include('frontend.components.footer')
+    @if(!isset($hideFooter) || !$hideFooter)
+        @include('frontend.components.footer')
+    @endif
 
-    @include('frontend.components.preloader')
+    @if(!isset($hidePreloader) || !$hidePreloader)
+        @include('frontend.components.preloader')
+    @endif
 
     <!-- Vendor JS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -65,11 +70,33 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script type="text/javascript">
+        document.querySelectorAll('.remove-item').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+
+                fetch('{{ route("cart.remove") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({ product_id: productId }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload(); // Refresh the cart page to show updated items
+                    }
+                });
+            });
+        });
+        
         $(document).ready(function() {
             $('#product-search').on('keyup', function() {
                 let query = $(this).val();
 
-                if (query.length > 1) { 
+                // Only fetch results if the query is at least 1 character long
+                if (query.length > 0) { 
                     $.ajax({
                         url: "{{ route('product.search') }}",
                         type: "GET",
@@ -80,9 +107,11 @@
                             if (data.length > 0) {
                                 $.each(data, function(index, product) {
                                     $('#search-results').append(`
-                                        <a href="/product-details/${product.id}/${product.product_slug}" class="list-group-item list-group-item-action d-flex align-items-center">
-                                            <img src="/${product.product_thambnail}" alt="${product.product_name}" />
-                                            ${product.product_name}
+                                        <a href="/product-details/${product.id}/${product.product_slug}" class="list-group-item list-group-item-action search-result-item">
+                                            <img src="/${product.product_thambnail}" alt="${product.product_name}" class="search-result-image"/>
+                                            <div class="search-result-info">
+                                                <span class="search-result-name">${product.product_name}</span>
+                                            </div>
                                         </a>
                                     `);
                                 });
@@ -99,6 +128,73 @@
                 }
             });
         });
+
+        // Close the search overlay when the close button is clicked
+        document.querySelector('.close-search-btn').addEventListener('click', function closeSearchOverlay() {
+            document.querySelector('.mobile-search-overlay').classList.remove('active');
+            document.getElementById('mobile-product-search').value = '';
+            document.getElementById('mobile-search-results').innerHTML = '';
+        });
+
+        // Open the search overlay when the main search input is clicked
+        document.getElementById('main-product-search').addEventListener('click', function () {
+            document.querySelector('.mobile-search-overlay').classList.add('active');
+            document.getElementById('mobile-product-search').focus();
+        });
+
+        // Close the search overlay when the close button is clicked
+        document.querySelector('.close-search-btn').addEventListener('click', function () {
+            closeSearchOverlay();
+        });
+
+        // Close the search overlay when clicking outside of it
+        document.addEventListener('click', function (event) {
+            const overlay = document.querySelector('.mobile-search-overlay');
+            const hamburgerMenu = document.getElementById('header-action-icon-2');
+
+            // Check if the click target is not the overlay or the hamburger menu
+            if (!overlay.contains(event.target) && event.target !== hamburgerMenu) {
+                closeSearchOverlay();
+            }
+        });
+
+        // Fetch and display search results dynamically when typing in mobile search
+        document.getElementById('mobile-product-search').addEventListener('input', function () {
+            let query = this.value;
+            let resultsDiv = document.getElementById('mobile-search-results');
+            
+            if (query.length === 0) {
+                resultsDiv.innerHTML = '';
+                return;
+            }
+
+            fetch(`/product/search?search=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    let resultsHTML = '';
+
+                    data.forEach(product => {
+                        resultsHTML += `
+                            <div class="mobile-search-result-item">
+                                <a href="/product-details/${product.id}/${product.product_slug}">
+                                    <div class="mobile-search-result-image">
+                                        <img src="${product.product_thambnail}" alt="${product.product_name}" />
+                                    </div>
+                                    <div class="mobile-search-result-info">
+                                        <span class="mobile-search-result-name">${product.product_name}</span>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                    });
+
+                    resultsDiv.innerHTML = resultsHTML;
+                })
+                .catch(error => {
+                    console.error('Error fetching search results:', error);
+                });
+            });
+
     </script>
 
 
@@ -121,6 +217,7 @@
      }
      @endif
     </script>
+    
 </body>
 
 </html>

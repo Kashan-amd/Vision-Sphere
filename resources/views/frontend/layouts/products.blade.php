@@ -32,7 +32,7 @@
             <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
                 <div class="row product-grid-4">
                     @foreach($products as $product)
-                        <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
+                        <div class="col-lg-1-5 col-md-4 col-6 col-sm-6">
                             <div class="product-cart-wrap mb-30 wow animate__animated animate__fadeIn" data-wow-delay=".1s">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
@@ -43,12 +43,7 @@
                                             @endif
                                         </a>
                                     </div>
-                                    <div class="product-action-1">
-                                        <!-- <form action="{{ route('wishlist.add', $product->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            <button type="submit" aria-label="Add To Wishlist" class="action-btn btn-sm"><i class="fi-rs-heart"></i></button>
-                                        </form> -->
-
+                                    <div class="product-action-1 d-lg-block d-md-block d-none">
                                         <a aria-label="Add To Wishlist" class="action-btn" href="{{ route('wishlist.add', $product->id) }}"><i class="fi-rs-heart"></i></a>
                                         <!-- <a aria-label="Compare" class="action-btn" href="#"><i class="fi-rs-shuffle"></i></a> -->
                                         <!-- Add a unique identifier to each quick view button -->
@@ -89,13 +84,20 @@
                                         @else
                                             <div class="product-price">
                                                 <span>PKR {{ $amount }}</span>
-                                                <span class="old-price">PKR {{ $product->selling_price }}</span>
+                                                <span class="old-price d-none d-lg-block d-md-block">PKR {{ $product->selling_price }}</span>
                                             </div>
                                         @endif
                                         
                                     </div>
                                     <div class="add-cart">
-                                        <a class="add" href="#"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                        <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                            <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                            <input type="hidden" name="quantity" value="1" min="1" required>
+                                            <button class="add"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -203,8 +205,14 @@
                                                             <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                                         </div>
                                                         <div class="product-extra-link2">
-                                                            <input type="hidden" id="product_id">
-                                                            <button type="submit" class="button button-add-to-cart" onclick="addToCard()"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                                            <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                                                @csrf
+                                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                                <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                                                <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                                                <input type="hidden" name="quantity" value="1" min="1" required>
+                                                                <button class="button button-add-to-cart"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                     <div class="font-xs">
@@ -250,7 +258,7 @@
                                                 @endif
                                             </a>
                                         </div>
-                                        <div class="product-action-1">
+                                        <div class="product-action-1 d-lg-block d-md-block d-none">
                                             <a aria-label="Add To Wishlist" class="action-btn" href="{{ route('wishlist.add', $product->id) }}"><i class="fi-rs-heart"></i></a>
                                             <!-- <a aria-label="Compare" class="action-btn" href="#"><i class="fi-rs-shuffle"></i></a> -->
                                             <!-- Add a unique identifier to each quick view button -->
@@ -295,7 +303,14 @@
                                                 </div>
                                             @endif
                                             <div class="add-cart">
-                                                <a class="add" href="#"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                            <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                                <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                                <input type="hidden" name="quantity" value="1" min="1" required>
+                                                <button class="add"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                            </form>
                                             </div>
                                         </div>
                                     </div>
@@ -403,7 +418,14 @@
                                                                 <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                                             </div>
                                                             <div class="product-extra-link2">
-                                                                <button type="submit" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                                                <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                                                    @csrf
+                                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                                    <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                                                    <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                                                    <input type="hidden" name="quantity" value="1" min="1" required>
+                                                                    <button class="button button-add-to-cart"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                         <div class="font-xs">
@@ -467,7 +489,7 @@
                                                     @endif
                                                 </a>
                                             </div>
-                                            <div class="product-action-1">
+                                            <div class="product-action-1 d-lg-block d-md-block d-none">
                                                 <a aria-label="Full view" class="action-btn small hover-up" href="{{ url('/product-details/'.$product->id.'/'.$product->product_slug) }}"> <i class="fi-rs-eye"></i></a>
                                                 <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="{{ route('wishlist.add', $product->id) }}"><i class="fi-rs-heart"></i></a>
                                                 <!-- <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a> -->
@@ -480,14 +502,11 @@
                                                 @if ($product->discount_price == NULL)
                                                     <span class="new">New</span>
                                                 @else
-                                                    <span class="hot">Save {{ round($discount) }} %</span>
+                                                    <span class="hot">{{ round($discount) }} %</span>
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="product-content-wrap">
-                                            <div class="product-category">
-                                                <a href="{{ route('category.products', ['id' => $product->category->id, 'slug' => $product->category->slug]) }}">{{ $product->category->name }}</a>
-                                            </div>
+                                        <div class="product-content-wrap mt-5">
                                             <h2><a href="{{ url('/product-details/'.$product->id.'/'.$product->product_slug) }}">{{ $product->product_name }}</a></h2>
                                             <div class="product-rate d-inline-block">
                                                 <div class="product-rating" style="width: {{round($product->reviews->average('rating'), 1)}}%"></div>
@@ -500,7 +519,7 @@
                                                 @else
                                                     <div class="product-price">
                                                         <span>PKR {{ $amount }}</span>
-                                                        <span class="old-price">PKR {{ $product->selling_price }}</span>
+                                                        <span class="old-price d-none d-lg-block d-md-block">PKR {{ $product->selling_price }}</span>
                                                     </div>
                                                 @endif
                                             </div>
@@ -513,9 +532,16 @@
                                                 <div class="progress mb-5">
                                                     <div class="progress-bar" role="progressbar" style="width: {{ $soldPercentage }}%" aria-valuemin="0" aria-valuemax="{{ $product_stock }}"></div>
                                                 </div>
-                                                <span class="font-xs text-heading"> Sold: {{ $product->product_qty }}/{{ $product_stock }}</span>
+                                                <span class="font-xs text-heading">{{ $product->product_qty }} SOLD!</span>
                                             </div>
-                                            <a href="#" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To Cart</a>
+                                            <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                                <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                                <input type="hidden" name="quantity" value="1" min="1" required>
+                                                <button class="button button-add-to-cart"><i class="fi-rs-shopping-cart mr-5"></i>Add to Cart</button>
+                                            </form>
                                         </div>
                                     </div>
                                 @endforeach
@@ -542,7 +568,7 @@
             @endphp
             @if($hotDeals->isNotEmpty())
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-sm-5 mb-md-0 wow animate__animated animate__fadeInUp" data-wow-delay="0">
-                    <h4 class="section-title style-1 mb-30 animated animated"> Hot Deals </h4>
+                    <h4 class="section-title style-1 mb-30 animated animated" style="font-size:2.5rem"> Hot Deals </h4>
                     <div class="product-list-small animated animated">
                         @foreach($hotDeals as $product)
                         <article class="row align-items-center hover-up">
@@ -582,7 +608,7 @@
             @endif
             @if($featured->isNotEmpty())
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-sm-5 mb-md-0 wow animate__animated animate__fadeInUp" data-wow-delay="0">
-                    <h4 class="section-title style-1 mb-30 animated animated"> Featured </h4>
+                    <h4 class="section-title style-1 mb-30 animated animated" style="font-size:2.5rem"> Featured </h4>
                     <div class="product-list-small animated animated">
                         @foreach($featured as $product)
                         <article class="row align-items-center hover-up">
@@ -622,7 +648,7 @@
             @endif
             @if($specialOffer->isNotEmpty())
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-sm-5 mb-md-0 wow animate__animated animate__fadeInUp" data-wow-delay="0">
-                    <h4 class="section-title style-1 mb-30 animated animated"> Special Offer </h4>
+                    <h4 class="section-title style-1 mb-30 animated animated" style="font-size:2.5rem"> Special Offer </h4>
                     <div class="product-list-small animated animated">
                         @foreach($specialOffer as $product)
                         <article class="row align-items-center hover-up">
@@ -662,7 +688,7 @@
             @endif
             @if($specialDeals->isNotEmpty())
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-sm-5 mb-md-0 wow animate__animated animate__fadeInUp" data-wow-delay="0">
-                    <h4 class="section-title style-1 mb-30 animated animated"> Special Deals </h4>
+                    <h4 class="section-title style-1 mb-30 animated animated" style="font-size:2.5rem"> Special Deals </h4>
                     <div class="product-list-small animated animated">
                         @foreach($specialDeals as $product)
                         <article class="row align-items-center hover-up">
@@ -740,9 +766,9 @@
                                             @endif
                                         </a>
                                     </div>
-                                    <div class="product-action-1">
+                                    <div class="product-action-1 d-lg-block d-md-block d-none">
                                         <a aria-label="Add To Wishlist" class="action-btn" href="{{ route('wishlist.add', $product->id) }}"><i class="fi-rs-heart"></i></a>
-                                        <a aria-label="Compare" class="action-btn" href="#"><i class="fi-rs-shuffle"></i></a>
+                                        <!-- <a aria-label="Compare" class="action-btn" href="#"><i class="fi-rs-shuffle"></i></a> -->
                                         <!-- Add a unique identifier to each quick view button -->
                                         <a aria-label="Quick view" class="action-btn quick-view-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal{{ $product->id }}"><i class="fi-rs-eye"></i></a>
                                     </div>
@@ -785,7 +811,14 @@
                                             </div>
                                         @endif
                                         <div class="add-cart">
-                                            <a class="add" href="#"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                            <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                                <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                                <input type="hidden" name="quantity" value="1" min="1" required>
+                                                <button class="add"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -893,7 +926,14 @@
                                                             <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                                         </div>
                                                         <div class="product-extra-link2">
-                                                            <button type="submit" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                                            <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                                                @csrf
+                                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                                <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                                                <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                                                <input type="hidden" name="quantity" value="1" min="1" required>
+                                                                <button class="button button-add-to-cart"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                     <div class="font-xs">

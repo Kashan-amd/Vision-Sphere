@@ -52,6 +52,13 @@
                 <li> <a href="{{ route('vendor.add.product') }}"><i class="bx bx-right-arrow-alt"></i>Add Product</a>
 			</ul>
 		</li>
+		<li>
+			<a href="{{ route('home') }}">
+				<div class="parent-icon"><i class="bx bx-star"></i>
+				</div>
+				<div class="menu-title">Home</div>
+			</a>
+		</li>
 
         @else
 		<li class="menu-label">Your are Inactive</li>

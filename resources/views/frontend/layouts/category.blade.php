@@ -2,10 +2,10 @@
     <div class="container wow animate__animated animate__fadeIn">
         <div class="section-title">
             <div class="title">
-                <h3>Featured Categories</h3>
-
+                <h3 class="d-none d-lg-block d-md-block">Featured Categories</h3>
+                <h4 class="d-block d-lg-none d-md-none" >Featured Categories</h4>
             </div>
-            <div class="slider-arrow slider-arrow-2 flex-right carausel-10-columns-arrow" id="carausel-10-columns-arrows"></div>
+            <!-- <div class="slider-arrow slider-arrow-2 flex-right carausel-10-columns-arrow" id="carausel-10-columns-arrows"></div> -->
         </div>
         <div class="carausel-10-columns-cover position-relative">
             <div class="carausel-10-columns" id="carausel-10-columns">

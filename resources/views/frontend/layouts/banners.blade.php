@@ -7,7 +7,7 @@
             @endphp
 
             @if ($banners->isEmpty())
-                <p>No banners found</p>
+
             @else
                 @foreach ($banners as $banner)
                     <div class="col-lg-4 col-md-6">

@@ -1,6 +1,11 @@
+
+<!-- <div class="mobile-promotion" style="background-color:#67b1ce;margin:0 0 -20px 0;">
+    <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>1 Month</strong> left</span>
+</div> -->
+
 <section class="home-slider position-relative mb-30">
     <div class="container">
-        <div class="home-slide-cover mt-30">
+        <div class="home-slide-cover mt-10">
             <div class="hero-slider-1 style-4 dot-style-1 dot-style-1-position-1">
                 @php
                     $sliders = App\Models\Slider::all();
@@ -33,11 +38,7 @@
                                     {{ $firstThreeWords }}<br />
                                     {{ $restOfTitle }}
                                 </h1>
-                                <p class="mb-65">{{ $slider->short_title }}</p>
-                                <form class="form-subscriber d-flex">
-                                    <input type="email" placeholder="Your email address" />
-                                    <button class="btn" type="submit">Subscribe</button>
-                                </form>
+                                <h6 class="mb-65">{{ $slider->short_title }}</h6>
                             </div>
                         </div>
                     @endforeach
@@ -46,6 +47,29 @@
             </div>
             <div class="slider-arrow hero-slider-1-arrow"></div>
         </div>
+        <div class="mobile-promotion  mt-2" style="border-radius: 5px;">
+        <div class="row text-center">
+            <div class="col-4">
+                <span class="promotion-title"><strong>Loyalty Points</strong></span>
+                <p class="promotion-detail">Collect em' All!</p>
+            </div>
+            <div class="col-4">
+                <span class="promotion-title"><strong>Wide Assortment</strong></span>
+                <p class="promotion-detail">Mega Discounts!</p>
+            </div>
+            <div class="col-4">
+                <span class="promotion-title"><strong>Return</strong></span>
+                <p class="promotion-detail">Within 30 days!</p>
+            </div>
+        </div>
     </div>
+    <div class="mobile-promotion  mt-2 shadow" style="border-radius: 5px;">
+        <div class="row">
+            <img height="100rem" width="100%" style="object-fit: cover;" src="{{ asset('frontend/assets/imgs/banner/banner.jpg') }}" alt="">
+        </div>
+    </div>
+    </div>
+
 </section>
 <!--End hero slider-->
+

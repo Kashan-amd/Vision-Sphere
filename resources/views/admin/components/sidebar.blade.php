@@ -101,6 +101,13 @@
 						<li> <a href="{{ route('add.banner') }}"><i class="bx bx-right-arrow-alt"></i>Add Banner</a></li>
 					</ul>
 				</li>
+				<li>
+					<a href="{{ route('home') }}">
+						<div class="parent-icon"><i class="bx bx-star"></i>
+						</div>
+						<div class="menu-title">Home</div>
+					</a>
+				</li>
 			</ul>
 			<!--end navigation-->
 		</div>

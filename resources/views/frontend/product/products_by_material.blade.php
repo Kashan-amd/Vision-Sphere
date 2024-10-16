@@ -38,7 +38,7 @@
                                     @endif
                                 </a>
                             </div>
-                            <div class="product-action-1">
+                            <div class=" d-none">
                                 <a aria-label="Add To Wishlist" class="action-btn" href="{{ route('wishlist.add', $product->id) }}"><i class="fi-rs-heart"></i></a>
                                 <!-- <a aria-label="Compare" class="action-btn" href="#"><i class="fi-rs-shuffle"></i></a> -->
                                 <!-- Add a unique identifier to each quick view button -->
@@ -84,7 +84,14 @@
                                 @endif
                             </div>
                             <div class="add-cart">
-                                <a class="add" href="#"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                    <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                    <input type="hidden" name="quantity" value="1" min="1" required>
+                                    <button class="add"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -192,7 +199,14 @@
                                                     <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                                 </div>
                                                 <div class="product-extra-link2">
-                                                    <button type="submit" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                                    <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                        <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                                        <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                                        <input type="hidden" name="quantity" value="1" min="1" required>
+                                                        <button class="button button-add-to-cart"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                             <div class="font-xs">

@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\User;
 use App\Models\Review;
 use App\Models\WishList;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,23 +16,30 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $data = $this->getUserWishlistData();
+        $data = $this->getUserData();
         return view('frontend.index', $data);
     }
 
-    public function getUserWishlistData()
+    public function getUserData()
     {
         $wishList_count = 0;
         $wishlistItems = collect(); // Empty collection if the user is not authenticated
         
+        $cartItem_count = 0;
+        $cartItems = collect(); // Empty collection if the user is not authenticated
+        
         if (Auth::check()) { 
             $user = Auth::user();
+            $cartItem_count = Cart::where('user_id', $user->id)->count(); 
+            $cartItems = $user->cart()->with('product')->get();
+
             $wishList_count = WishList::where('user_id', $user->id)->count(); 
             $wishlistItems = $user->wishlist()->with('product')->get();
         }
 
-        return compact('wishList_count', 'wishlistItems');
+        return compact('wishList_count', 'wishlistItems', 'cartItem_count', 'cartItems');
     }
+
 
     public function search(Request $request)
     {
@@ -68,7 +76,7 @@ class IndexController extends Controller
             ->get();
 
         // Get user wishlist data
-        $data = $this->getUserWishlistData();
+        $data = $this->getUserData();
 
         // review data
         $reviews = Review::where('product_id', $id)->get();
@@ -84,7 +92,7 @@ class IndexController extends Controller
         $productCount = $products->count();
         
         // Get user wishlist data
-        $data = $this->getUserWishlistData();
+        $data = $this->getUserData();
         
         // Merge category data with wishlist data and return the view
         return view('frontend.product.category_product', array_merge($data, compact('products', 'productCount')));
@@ -97,7 +105,7 @@ class IndexController extends Controller
         $productCount = $products->count();
         
         // Get user wishlist data
-        $data = $this->getUserWishlistData();
+        $data = $this->getUserData();
         
         // Merge subcategory data with wishlist data and return the view
         return view('frontend.product.subcategory_product', array_merge($data, compact('products', 'productCount')));
@@ -110,86 +118,86 @@ class IndexController extends Controller
         $productCount = $products->count();
         
         // Get user wishlist data
-        $data = $this->getUserWishlistData();
+        $data = $this->getUserData();
         
         // Merge brand data with wishlist data and return the view
         return view('frontend.product.brand_product', array_merge($data, compact('products', 'productCount')));
     }
 
-        // Frontend All Vendor Information
-        public function AllVendor(Request $request)
-        {
-            $query = $request->input('search');
-    
-            $vendors = User::where('role', 'vendor');
-    
-            if ($query) {
-                $vendors->where(function ($q) use ($query) {
-                    $q->where('name', 'like', '%' . $query . '%')
-                        ->orWhere('id', 'like', '%' . $query . '%');
-                });
-            }
-    
-            $vendors = $vendors->get();
-            
-            $data = $this->getUserWishlistData();
-    
-            if ($vendors->isEmpty()) {
-                return redirect()->route('all.vendors', $data)->with('message', 'Your search was not found!');
-            }
-            
-            return view('frontend.vendor.all_vendors', $data, ['vendors' => $vendors]);
-        }
-    
-        public function VendorDetails($id)
-        {
-            $vendor = User::findOrFail($id);
-            $products = Product::where('vendor_id', $id)->latest()->get();
-            $productCount = $products->count();
-            $data = $this->getUserWishlistData();
+    // Frontend All Vendor Information
+    public function AllVendor(Request $request)
+    {
+        $query = $request->input('search');
 
-            return view('frontend.vendor.vendor_details', $data, compact('vendor','products', 'productCount'));
-        } // End Method
+        $vendors = User::where('role', 'vendor');
 
-        public function getProductsByShape($shape)
-        {
-            $products = Product::where('product_shape', 'LIKE', "%$shape%")->get();
-            $productCount = $products->count();
-
-            // Get all unique shapes and their respective counts
-            $shapesWithCounts = Product::select('product_shape', Product::raw('COUNT(*) as products_count'))
-                ->groupBy('product_shape')
-                ->get();
-
-            $data = $this->getUserWishlistData();
-            return view('frontend.product.products_by_shape', $data, compact('products', 'shape', 'productCount', 'shapesWithCounts'));
+        if ($query) {
+            $vendors->where(function ($q) use ($query) {
+                $q->where('name', 'like', '%' . $query . '%')
+                    ->orWhere('id', 'like', '%' . $query . '%');
+            });
         }
 
-        public function getProductsByMaterial($material)
-        {
-            $products = Product::where('product_material', 'LIKE', "%$material%")->get();
-            $productCount = $products->count();
+        $vendors = $vendors->get();
+        
+        $data = $this->getUserData();
 
-            // Get all unique shapes and their respective counts
-            $materialsWithCounts = Product::select('product_material', Product::raw('COUNT(*) as products_count'))
-                ->groupBy('product_material')
-                ->get();
-
-            $data = $this->getUserWishlistData();
-            return view('frontend.product.products_by_material', $data, compact('products', 'material', 'productCount', 'materialsWithCounts'));
+        if ($vendors->isEmpty()) {
+            return redirect()->route('all.vendors', $data)->with('message', 'Your search was not found!');
         }
+        
+        return view('frontend.vendor.all_vendors', $data, ['vendors' => $vendors]);
+    }
 
-        public function getProductsBySize($size)
-        {
-            $products = Product::where('product_size', 'LIKE', "%$size%")->get();
-            $productCount = $products->count();
+    public function VendorDetails($id)
+    {
+        $vendor = User::findOrFail($id);
+        $products = Product::where('vendor_id', $id)->latest()->get();
+        $productCount = $products->count();
+        $data = $this->getUserData();
 
-            // Get all unique shapes and their respective counts
-            $sizesWithCounts = Product::select('product_size', Product::raw('COUNT(*) as products_count'))
-                ->groupBy('product_size')
-                ->get();
+        return view('frontend.vendor.vendor_details', $data, compact('vendor','products', 'productCount'));
+    } // End Method
 
-            $data = $this->getUserWishlistData();
-            return view('frontend.product.products_by_size', $data, compact('products', 'size', 'productCount', 'sizesWithCounts'));
-        }
+    public function getProductsByShape($shape)
+    {
+        $products = Product::where('product_shape', 'LIKE', "%$shape%")->get();
+        $productCount = $products->count();
+
+        // Get all unique shapes and their respective counts
+        $shapesWithCounts = Product::select('product_shape', Product::raw('COUNT(*) as products_count'))
+            ->groupBy('product_shape')
+            ->get();
+
+        $data = $this->getUserData();
+        return view('frontend.product.products_by_shape', $data, compact('products', 'shape', 'productCount', 'shapesWithCounts'));
+    }
+
+    public function getProductsByMaterial($material)
+    {
+        $products = Product::where('product_material', 'LIKE', "%$material%")->get();
+        $productCount = $products->count();
+
+        // Get all unique shapes and their respective counts
+        $materialsWithCounts = Product::select('product_material', Product::raw('COUNT(*) as products_count'))
+            ->groupBy('product_material')
+            ->get();
+
+        $data = $this->getUserData();
+        return view('frontend.product.products_by_material', $data, compact('products', 'material', 'productCount', 'materialsWithCounts'));
+    }
+
+    public function getProductsBySize($size)
+    {
+        $products = Product::where('product_size', 'LIKE', "%$size%")->get();
+        $productCount = $products->count();
+
+        // Get all unique shapes and their respective counts
+        $sizesWithCounts = Product::select('product_size', Product::raw('COUNT(*) as products_count'))
+            ->groupBy('product_size')
+            ->get();
+
+        $data = $this->getUserData();
+        return view('frontend.product.products_by_size', $data, compact('products', 'size', 'productCount', 'sizesWithCounts'));
+    }
 }

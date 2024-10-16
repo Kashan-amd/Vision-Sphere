@@ -73,7 +73,6 @@
                                 </div>
                                 @if(!empty($product->product_size))
                                     <div class="attr-detail attr-size mb-30">
-                                        <strong class="mr-10" style="width:50px;">Size : </strong>
                                         <select class="form-control unicase-form-control" id="sizeSelect">
                                             <option selected disabled>--Choose Size--</option>
                                             @foreach($product_size as $size)
@@ -85,7 +84,6 @@
 
                                 @if(!empty($product->product_color))
                                     <div class="attr-detail attr-color mb-30">
-                                        <strong class="mr-10" style="width:50px;">Color : </strong>
                                         <select class="form-control unicase-form-control" id="colorSelect">
                                             <option selected disabled>--Choose Color--</option>
                                             @foreach($product_color as $color)
@@ -103,9 +101,17 @@
                                     </div>
 
                                     <div class="product-extra-link2">
-                                        <button type="submit" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                        <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                            <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                            <input type="hidden" name="quantity" value="1" min="1" required>
+                                            <button class="button action-btn button-add-to-cart"><i class="fi-rs-shopping-cart mr-5"></i>Add to Cart</button>
+                                        </form>
+                                    </div>
+                                    <div class="product-extra-link2">
                                         <a aria-label="Add To Wishlist" class="action-btn hover-up" href="{{ route('wishlist.add', $product->id) }}"><i class="fi-rs-heart"></i></a>
-                                        <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                     </div>
                                 </div>
                                 @if($product->vendor_id == NULL)
@@ -146,8 +152,8 @@
                             <!-- Detail Info -->
                         </div>
                     </div>
-                    <div class=" product-info col-lg-12 col-md-12 col-12 col-sm-6 text-center shadow mb-20">
-                        <div class="reviews-info hover-up ">
+                    <div class="product-info col-lg-12 col-md-12 col-12 col-sm-6 text-center shadow mb-20">
+                        <div class="reviews-info hover-up p-20">
                             <h1>{{ round($reviews->average('rating') / 20, 2) }}</h1>
                             <div class="product-rate d-inline-block">
                                 <div class="product-rating" style="width: {{ round($reviews->average('rating'), 1) }}%"></div>
@@ -253,8 +259,7 @@
                                                     @foreach($reviews as $reviewData)
                                                         <div class="single-comment shadow justify-content-between d-flex mb-30">
                                                             <div class="user justify-content-between d-flex">
-                                                                <div class="thumb text-center">
-                                                                    <img src="assets/imgs/blog/author-2.png" alt="" />
+                                                                <div class="thumb align-items-start">
                                                                     <a href="#" class="font-heading text-brand">{{ $reviewData->user->name }}</a>
                                                                 </div>
                                                                 <div class="desc">
@@ -265,10 +270,8 @@
                                                                         </div>
                                                                     </div>
                                                                     <p class="mb-10">{{ $reviewData->comment }}</p>
+                                                                    <span class="font-xs text-muted">{{ $reviewData->created_at->format('Y-m-d') }}</span>
                                                                 </div>
-                                                            </div>
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="font-xs text-muted">{{ $reviewData->created_at }}</span>
                                                             </div>
                                                         </div>
                                                         @endforeach
@@ -392,7 +395,7 @@
                                                     @endif
                                                 </a>
                                             </div>
-                                            <div class="product-action-1">
+                                            <div class="product-action-1 d-lg-block d-md-block d-none">
                                                 <a aria-label="Add To Wishlist" class="action-btn" href="{{ route('wishlist.add', $product->id) }}"><i class="fi-rs-heart"></i></a>
                                                 <!-- <a aria-label="Compare" class="action-btn" href="#"><i class="fi-rs-shuffle"></i></a> -->
                                                 <!-- Add a unique identifier to each quick view button -->
@@ -437,7 +440,14 @@
                                                     </div>
                                                 @endif
                                                 <div class="add-cart">
-                                                    <a class="add" href="#"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                                    <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                        <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                                        <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                                        <input type="hidden" name="quantity" value="1" min="1" required>
+                                                        <button class="add"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -546,7 +556,14 @@
                                                                     <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                                                 </div>
                                                                 <div class="product-extra-link2">
-                                                                    <button type="submit" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                                                    <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                                                        @csrf
+                                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                                        <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                                                        <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                                                        <input type="hidden" name="quantity" value="1" min="1" required>
+                                                                        <button class="button button-add-to-cart"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                             <div class="font-xs">
