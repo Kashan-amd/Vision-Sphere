@@ -30,6 +30,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index'])->name('home');
 
+Route::get('/vton', [IndexController::class, 'vtonIndex'])->name('vton');
+
 // Add to cart routes..to build
 Route::middleware(['auth', 'role:user,admin,vendor'])->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');

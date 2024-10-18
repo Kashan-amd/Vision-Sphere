@@ -40,7 +40,7 @@
     @if(!isset($hidePreloader) || !$hidePreloader)
         @include('frontend.components.preloader')
     @endif
-
+    
     <!-- Vendor JS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}"></script>

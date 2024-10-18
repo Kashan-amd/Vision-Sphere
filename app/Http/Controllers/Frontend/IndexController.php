@@ -20,6 +20,11 @@ class IndexController extends Controller
         return view('frontend.index', $data);
     }
 
+    public function vtonIndex() 
+    {
+        return view('frontend.layouts.vton');
+    }
+
     public function getUserData()
     {
         $wishList_count = 0;

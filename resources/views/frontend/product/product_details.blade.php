@@ -1,4 +1,25 @@
 @extends('frontend\components\master')
+<style>
+.custom-modal .modal-dialog {
+  margin: 0; /* No margin for the dialog */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+}
+
+.custom-modal .modal-content {
+  height: 100%; /* Full height of the modal */
+  border: none; /* Remove border if necessary */
+}
+
+.modal-fullscreen {
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+}
+
+.modal-body {
+  overflow: hidden; /* Hide overflow to prevent scrollbars */
+}
+</style>
 @section('content')
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -34,12 +55,20 @@
                             <!-- End Gallery -->
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
-                            <div class="detail-info pr-30 pl-30">
-                                @if ($product->product_qty > 0)
-                                    <span class="stock-status in-stock">In Stock</span>
-                                @else
-                                    <span class="stock-status out-stock">Out of Stock</span>
-                                @endif
+                            <div class="row detail-info pr-30 pl-30">
+                                <div class="col-9">
+                                    @if ($product->product_qty > 0)
+                                        <span class="stock-status in-stock">In Stock</span>
+                                    @else
+                                        <span class="stock-status out-stock">Out of Stock</span>
+                                    @endif
+                                </div>
+                                <div class="col-3">
+                                    <!-- Button to open the modal -->
+                                    <a href="#" class="button btn-sm action-btn" data-bs-toggle="modal" data-bs-target="#vtonModal">Try On</a>
+
+                                </div>
+                                
                                 <h2 class="title-detail">{{ $product->product_name }}</h2>
                                 <div class="product-detail-rating">
                                     <div class="product-rate-cover text-end">
@@ -595,4 +624,33 @@
             </div>
         </div>
     </div>
+
+
+    <div id="vtonModal" class="modal fade custom-modal" tabindex="-1" aria-hidden="true">
+        <button type="button" class="btn-close" id="JeelizVTOWidgetAdjustExit" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; top: 10px; left: 10px; z-index: 1050;">Close</button>
+        <div class="modal-dialog modal-fullscreen"> <!-- Use fullscreen modal -->
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 0; height: 100vh;"> <!-- Remove padding for full-size widget -->
+                    @include('frontend.layouts.vton') 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Wait for the modal to be fully shown before initializing the Jeeliz widget
+        document.getElementById('vtonModal').addEventListener('shown.bs.modal', function () {
+            console.log('Modal is fully shown, initializing Jeeliz VTO widget');
+            main();  // Call the main function to initialize the Jeeliz widget
+        });
+
+        document.getElementById('JeelizVTOWidgetAdjustExit').addEventListener('click', function() {
+            // Stop or destroy the VTO instance if necessary
+            JEELIZVTOWIDGET.stop(); // Assuming there's a stop or similar function
+            $('#vtonModal').modal('hide'); // Close the modal
+        });
+    </script>
+
+
 @endsection
