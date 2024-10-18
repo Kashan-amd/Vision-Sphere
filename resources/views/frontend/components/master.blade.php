@@ -142,21 +142,6 @@
             document.getElementById('mobile-product-search').focus();
         });
 
-        // Close the search overlay when the close button is clicked
-        document.querySelector('.close-search-btn').addEventListener('click', function () {
-            closeSearchOverlay();
-        });
-
-        // Close the search overlay when clicking outside of it
-        document.addEventListener('click', function (event) {
-            const overlay = document.querySelector('.mobile-search-overlay');
-            const hamburgerMenu = document.getElementById('header-action-icon-2');
-
-            // Check if the click target is not the overlay or the hamburger menu
-            if (!overlay.contains(event.target) && event.target !== hamburgerMenu) {
-                closeSearchOverlay();
-            }
-        });
 
         // Fetch and display search results dynamically when typing in mobile search
         document.getElementById('mobile-product-search').addEventListener('input', function () {
@@ -178,7 +163,7 @@
                             <div class="mobile-search-result-item">
                                 <a href="/product-details/${product.id}/${product.product_slug}">
                                     <div class="mobile-search-result-image">
-                                        <img src="${product.product_thambnail}" alt="${product.product_name}" />
+                                        <img src="/${product.product_thambnail}" alt="${product.product_name}" class="search-result-image"/>
                                     </div>
                                     <div class="mobile-search-result-info">
                                         <span class="mobile-search-result-name">${product.product_name}</span>

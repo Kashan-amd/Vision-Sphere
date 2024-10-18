@@ -64,6 +64,7 @@
         if (sku){
             JEELIZVTOWIDGET.load(sku);
         }
+        
     }
 </script>
 
@@ -71,18 +72,18 @@
     <div id='JeelizVTOWidget'>
         <canvas id='JeelizVTOWidgetCanvas'></canvas>
         <div class='JeelizVTOWidgetControls JeelizVTOWidgetControlsTop'>
-            <button id='JeelizVTOWidgetAdjust'>
+            <button class="jbutton" id='JeelizVTOWidgetAdjust'>
                 <div class="buttonIcon"><i class="fas fa-arrows-alt"></i></div>Adjust
             </button>
         </div>
         <div class='JeelizVTOWidgetControls' id='JeelizVTOWidgetChangeModelContainer'>
-            <button onclick="JEELIZVTOWIDGET.load('rayban_aviator_or_vertFlash')">Model 1</button>
-            <button onclick="JEELIZVTOWIDGET.load('rayban_round_cuivre_pinkBrownDegrade')">Model 2</button>
-            <button onclick="load_modelBySKU()">by SKU</button>
+            <button class="jbutton" onclick="JEELIZVTOWIDGET.load('rayban_aviator_or_vertFlash')">Model 1</button>
+            <button class="jbutton" onclick="JEELIZVTOWIDGET.load('rayban_round_cuivre_pinkBrownDegrade')">Model 2</button>
+            <button class="jbutton" onclick="load_modelBySKU()">by SKU</button>
         </div>
         <div id='JeelizVTOWidgetAdjustNotice'>
             Move the glasses to adjust them.
-            <button class='JeelizVTOWidgetBottomButton' id='JeelizVTOWidgetAdjustExit'>Quit</button>
+            <button class="jbutton" class='JeelizVTOWidgetBottomButton' id='JeelizVTOWidgetAdjustExit' onclick="JeelizVTOWidget.exit_adjustMode()">Quit</button>
         </div>
         <div id='JeelizVTOWidgetLoading'>
             <div class='JeelizVTOWidgetLoadingText'>
