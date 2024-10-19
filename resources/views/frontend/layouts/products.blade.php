@@ -79,12 +79,13 @@
                                     <div class="product-card-bottom">
                                         @if($product->discount_price == NULL)
                                             <div class="product-price">
-                                                <span>PKR {{ $product->selling_price }}</span>
+                                                <span>PKR {{ $product->selling_price }}</span><br>
+                                                <span class="old-price invisible">0101</span>
                                             </div>
                                         @else
                                             <div class="product-price">
-                                                <span>PKR {{ $amount }}</span>
-                                                <span class="old-price d-none d-lg-block d-md-block">PKR {{ $product->selling_price }}</span>
+                                                <span>PKR {{ $amount }}</span><br>
+                                                <span class="old-price">PKR {{ $product->selling_price }}</span>
                                             </div>
                                         @endif
                                         
@@ -248,7 +249,7 @@
 
                             @foreach($catwiseProduct as $product)
                             <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
-                                <div class="product-cart-wrap mb-30 wow animate__animated animate__fadeIn" data-wow-delay=".1s">
+                                <div class="product-cart-wrap mb-30" data-wow-delay=".1s">
                                     <div class="product-img-action-wrap">
                                         <div class="product-img product-img-zoom">
                                             <a href="{{ url('/product-details/'.$product->id.'/'.$product->product_slug) }}">
@@ -260,8 +261,6 @@
                                         </div>
                                         <div class="product-action-1 d-lg-block d-md-block d-none">
                                             <a aria-label="Add To Wishlist" class="action-btn" href="{{ route('wishlist.add', $product->id) }}"><i class="fi-rs-heart"></i></a>
-                                            <!-- <a aria-label="Compare" class="action-btn" href="#"><i class="fi-rs-shuffle"></i></a> -->
-                                            <!-- Add a unique identifier to each quick view button -->
                                             <a aria-label="Quick view" class="action-btn quick-view-btn" data-bs-toggle="modal" data-bs-target="#quickViewModalView{{ $product->id }}"><i class="fi-rs-eye"></i></a>
                                         </div>
                                         <div class="product-badges product-badges-position product-badges-mrg">
@@ -302,17 +301,17 @@
                                                     <span class="old-price">PKR {{ $product->selling_price }}</span>
                                                 </div>
                                             @endif
-                                            <div class="add-cart">
-                                            <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
-                                                @csrf
-                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                <input type="hidden" name="name" value="{{ $product->product_name }}">
-                                                <input type="hidden" name="price" value="{{ $product->selling_price }}">
-                                                <input type="hidden" name="quantity" value="1" min="1" required>
-                                                <button class="add button-add-to-cart"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
-                                            </form>
-                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="add-cart">
+                                        <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                            <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                            <input type="hidden" name="quantity" value="1" min="1" required>
+                                            <button style="width:100%" class="button button-add-to-cart mt-10"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -519,7 +518,7 @@
                                                 @else
                                                     <div class="product-price">
                                                         <span>PKR {{ $amount }}</span>
-                                                        <span class="old-price d-none d-lg-block d-md-block">PKR {{ $product->selling_price }}</span>
+                                                        <span class="old-price d-block">PKR {{ $product->selling_price }}</span>
                                                     </div>
                                                 @endif
                                             </div>

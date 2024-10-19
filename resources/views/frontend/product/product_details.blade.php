@@ -124,9 +124,9 @@
                                 @else
                                     <h6> Sold By <a href="{{ route('vendor.details',$product->vendor->id) }}"> <span class="text-danger"> {{ $product['vendor']['name'] }} </span></a></h6>
                                 @endif
-                                <hr>
 
                                 <div class="font-xs">
+                                    <hr>
                                     <ul class="mr-50 float-start">
                                         <li class="mb-5">Category: <span class="text-brand"><a href="{{ route('category.products', ['id' => $product->category->id, 'slug' => $product->category->slug])}}">{{ $product['category']['name'] }}</a></span></li>
                                         @if ($product->created_at)
@@ -179,77 +179,114 @@
                                     <a class="nav-link" id="Reviews-tab" data-bs-toggle="tab" href="#Reviews">Reviews ({{ $reviews->count() }})</a>
                                 </li>
                             </ul>
-                            <div class="tab-content shop_info_tab entry-main-content">
+                            <div class="tab-content shop_info_tab entry-main-content rounded">
                                 <div class="tab-pane fade show active" id="Description">
                                     <div class="">
                                         {!! $product->long_descp !!}
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="Additional-info">
-                                    <table class="font-md">
-                                        <tbody>
-                                            <tr class="handle-height-ground-to-handle">
-                                                <th>Brand</th>
-                                                <td>
-                                                    <p>{{ $product['brand']['name'] }}</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="stand-up">
-                                                <th>SKU</th>
-                                                <td>
-                                                    <p>{{ $product['product_code'] }}</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="folded-wo-wheels">
-                                                <th>Shape</th>
-                                                <td>
-                                                    <p>{{ $product['product_shape'] }}</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="folded-w-wheels">
-                                                <th>Size</th>
-                                                <td>
-                                                    <p>{{ $product['product_size'] }}</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="door-pass-through">
-                                                <th>Material</th>
-                                                <td>
-                                                    <p>{{ $product['product_material'] }}</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="frame">
-                                                <th>Weight</th>
-                                                <td>
-                                                    <p>{{ $product['product_weight'] }}</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="weight-wo-wheels">
-                                                <th>RX Range</th>
-                                                <td>
-                                                    <p>-20.00~+12.00 </p>
-                                                </td>
-                                            </tr>
-                                            <tr class="weight-capacity">
-                                                <th>PD Range</th>
-                                                <td>
-                                                    <p>54~78</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="width">
-                                                <th>Progressive</th>
-                                                <td>
-                                                    <p>Yes</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="handle-height-ground-to-handle">
-                                                <th>Spring Hing</th>
-                                                <td>
-                                                    <p>Yes</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <table class="font-md">
+                                                <tbody>
+                                                    <tr class="handle-height-ground-to-handle">
+                                                        <th>Brand</th>
+                                                        <td>
+                                                            <p>{{ $product['brand']['name'] }}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="stand-up">
+                                                        <th>SKU</th>
+                                                        <td>
+                                                            <p>{{ $product['product_code'] }}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="folded-wo-wheels">
+                                                        <th>Shape</th>
+                                                        <td>
+                                                            <p>{{ $product['product_shape'] }}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="folded-w-wheels">
+                                                        <th>Size</th>
+                                                        <td>
+                                                            <p>{{ $product['product_size'] }}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="door-pass-through">
+                                                        <th>Material</th>
+                                                        <td>
+                                                            <p>{{ $product['product_material'] }}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="frame">
+                                                        <th>Weight</th>
+                                                        <td>
+                                                            <p>{{ $product['product_weight'] }}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="weight-wo-wheels">
+                                                        <th>RX Range</th>
+                                                        <td>
+                                                            <p>-20.00~+12.00 </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="weight-capacity">
+                                                        <th>PD Range</th>
+                                                        <td>
+                                                            <p>54~78</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="width">
+                                                        <th>Progressive</th>
+                                                        <td>
+                                                            <p>Yes</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="handle-height-ground-to-handle">
+                                                        <th>Spring Hing</th>
+                                                        <td>
+                                                            <p>Yes</p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        @php
+                                            $product_size = $product['product_size'];
+
+                                            $lensWidth = '';
+                                            $bridgeWidth = '';
+                                            $templeLength = '';
+
+                                            // like 'Medium 55-44-136' or 'Wide 58-44-138' (and removing the words)
+                                            if (preg_match('/(\d+)-(\d+)-(\d+)/', $product_size, $matches)) {
+                                                // The matches array will have [full_match, lens_width, bridge_width, temple_length]
+                                                $lensWidth = $matches[1]; 
+                                                $bridgeWidth = $matches[2];
+                                                $templeLength = $matches[3]; 
+                                            }
+                                        @endphp 
+                                        <div class="col-lg-6 col-md-6 col-12 position-relative hover-up">
+                                            <img class="rounded shadow" src="{{ asset('./frontend/assets/imgs/guides/chart.jpg') }}" alt="Size Guide" style="width: 100%;">
+
+                                            <!-- Lens Width -->
+                                            <div class="lens-width-label" style="position: absolute; top: 29%; left: 13%; color: #00d1ff;">
+                                                <span class="fw-bold" style="background: white; padding: 2px 5px;">{{$lensWidth}}</span>
+                                            </div>
+
+                                            <!-- Bridge Width -->
+                                            <div class="bridge-width-label" style="position: absolute; top: 25%; left: 24%; color: #00d1ff;">
+                                                <span class="fw-bold" style="background: white; padding: 2px 5px;">{{$bridgeWidth}}</span>
+                                            </div>
+
+                                            <!-- Temple Length -->
+                                            <div class="temple-length-label" style="position: absolute; top: 29%; right: 25%; color: #00d1ff;">
+                                                <span class="fw-bold" style="background: white; padding: 2px 5px;">{{$templeLength}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="Reviews">
                                     <!--Comments-->
@@ -444,18 +481,18 @@
                                                         <span class="old-price">PKR {{ $product->selling_price }}</span>
                                                     </div>
                                                 @endif
-                                                <div class="add-cart">
-                                                    <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
-                                                        @csrf
-                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                        <input type="hidden" name="name" value="{{ $product->product_name }}">
-                                                        <input type="hidden" name="price" value="{{ $product->selling_price }}">
-                                                        <input type="hidden" name="quantity" value="1" min="1" required>
-                                                        <button class="add"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
-                                                    </form>
-                                                </div>
                                             </div>
                                         </div>
+                                        <div class="add-cart">
+                                        <form method="POST" action="{{ route('cart.add') }}" class="add-to-cart-form">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <input type="hidden" name="name" value="{{ $product->product_name }}">
+                                            <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                            <input type="hidden" name="quantity" value="1" min="1" required>
+                                            <button style="width:100%" class="button button-add-to-cart mt-10"><i class="fi-rs-shopping-cart mr-5"></i>Add</button>
+                                        </form>
+                                    </div>
                                     </div>
                                 </div>
 
@@ -629,3 +666,8 @@
 
 
 @endsection
+
+@php
+    $hideFooterOnMobile = true;
+    $hidePreloaderOnMobile = true;
+@endphp

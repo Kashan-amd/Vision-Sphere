@@ -98,6 +98,6 @@
 @endsection
 
 @php
-    $hideFooter = true;
-    $hidePreloader = false;
+    $hideFooterOnMobile = true;
+    $hidePreloaderOnMobile = true;
 @endphp

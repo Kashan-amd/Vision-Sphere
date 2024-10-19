@@ -57,3 +57,8 @@
     </div>
 </main>
 @endsection
+
+@php
+    $hideFooterOnMobile = true;
+    $hidePreloaderOnMobile = true;
+@endphp

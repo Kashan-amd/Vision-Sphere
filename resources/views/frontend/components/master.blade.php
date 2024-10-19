@@ -34,12 +34,19 @@
     </main>
 
     @if(!isset($hideFooter) || !$hideFooter)
+    <div class="footer-wrapper 
+                @if(isset($hideFooterOnMobile) && $hideFooterOnMobile) d-none d-lg-block d-md-block @endif">
         @include('frontend.components.footer')
+    </div>
     @endif
 
     @if(!isset($hidePreloader) || !$hidePreloader)
-        @include('frontend.components.preloader')
+        <div class="preloader-wrapper 
+                    @if(isset($hidePreloaderOnMobile) && $hidePreloaderOnMobile) d-none d-lg-block d-md-block @endif">
+            @include('frontend.components.preloader')
+        </div>
     @endif
+
     
     <!-- Vendor JS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
