@@ -15,21 +15,33 @@
                     <div class="row mb-50 mt-30">
                         <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
                             <div class="detail-gallery">
-                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                
                                 <!-- MAIN SLIDES -->
-                                <div class="product-image-slider">
-                                    @foreach($product->multiImages as $image)
-                                    <figure class="border-radius-10">
-                                        <img src="{{ asset($image->photo_name) }}" alt="product image" />
-                                    </figure>
+                                <!-- <div class="product-image-slider shadow"> -->
+                                <div class="shadow rounded mb-30">
+                                    @foreach($product->multiImages->take(1) as $image)
+                                        <figure class="border-radius-10">
+                                            <img src="{{ asset($image->photo_name) }}" alt="product image" />
+                                        </figure>
                                     @endforeach
                                 </div>
+
+                                <div class="row ml-10">
+                                    @foreach($product->multiImages as $image)
+                                    <div class="col-6">
+                                        <figure class="col-12 rounded hover-up mb-20">
+                                            <img class="hover-up img-thumbnail" src="{{ asset($image->photo_name) }}" alt="product image" width="95%" height="auto" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openImageModal('{{ asset($image->photo_name) }}')" />
+                                        </figure>
+                                    </div>
+                                    @endforeach
+                                </div>
+
                                 <!-- THUMBNAILS -->
-                                <div class="slider-nav-thumbnails">
+                                <!-- <div class="slider-nav-thumbnails">
                                     @foreach($product->multiImages as $image)
                                     <div><img src="{{ asset($image->photo_name) }}" alt="product image" /></div>
                                     @endforeach
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
@@ -46,7 +58,7 @@
                                 </div>
                                 
                                 <h2 class="title-detail">{{ $product->product_name }}</h2>
-                                <div class="product-detail-rating">
+                                <div class="product-detail-rating text-center pl-20">
                                     <div class="product-rate-cover text-end">
                                         <div class="product-rate d-inline-block">
                                             <div class="product-rating" style="width: {{ round($reviews->average('rating'), 1) }}%"></div>
@@ -638,8 +650,20 @@
         </div>
     </div>
 
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true" style="backdrop-filter: blur(10px); ">
+        <div class="modal-dialog modal-xl modal-dialog-centered"> <!-- Adjusted modal size to extra-large -->
+            <div class="modal-content">
+                <button type="button" class="btn-close invisible" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body text-center"> <!-- Center the image inside the modal -->
+                    <!-- Full-sized image -->
+                    <img id="modalImage" src="" alt="Full-sized product image" class="img-fluid" style="max-width: 100%; max-height: 90vh;" /> <!-- Adjusted image size for responsiveness -->
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <div id="vtonModal" class="modal fade custom-modal" tabindex="-1" aria-hidden="true">
+
+    <div id="vtonModal" class="modal fade custom-modal" tabindex="-1" aria-hidden="true" style="backdrop-filter: blur(10px); ">
         <div class="modal-dialog modal-fullscreen" style="height:90%"> <!-- Use fullscreen modal -->
             <div class="modal-content">
                 <button type="button" class="btn-close" id="exit" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; top: 10px; right: 10px; z-index: 1050"></button>
@@ -662,6 +686,11 @@
             // Stop or destroy the VTO instance if necessary
             JEELIZVTOWIDGET.destroy();
         });
+
+        // open the modal and set the full-size image
+        function openImageModal(imageSrc) {
+            document.getElementById('modalImage').src = imageSrc;
+        }
     </script>
 
 
