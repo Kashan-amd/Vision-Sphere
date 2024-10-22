@@ -28,6 +28,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/offline', function () {
+    return view('frontend.components.offline');
+})->name('offline');
+
+
 Route::get('/', [IndexController::class, 'index'])->name('home');
 
 Route::get('/vton', [IndexController::class, 'vtonIndex'])->name('vton');

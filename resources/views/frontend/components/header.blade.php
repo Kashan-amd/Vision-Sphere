@@ -198,11 +198,16 @@
                                             @foreach($cartItems as $item)
                                                 <li>
                                                     <div class="shopping-cart-img">
-                                                        <a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}"><img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" /></a>
+                                                        <img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" />
                                                     </div>
                                                     <div class="shopping-cart-title">
-                                                        <h4><a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}">{{ $item->product->product_name }}</a></h4>
-                                                        <h4><span>PKR </span>{{ $item->product->selling_price }}</h4>
+                                                        <h4>{{ $item->product->product_name }}</h4>
+                                                        
+                                                        @php
+                                                            $amount = $item->product->selling_price - $item->product->discount_price;
+                                                            $discount = 100 - (($amount / $item->product->selling_price) * 100);
+                                                        @endphp
+                                                        <h4 class="current-price text-brand">PKR {{ $amount }}</h4>
                                                     </div>
                                                     <div class="shopping-cart-delete">
                                                         <button class="remove-item btn btn-sm btn-outline-danger" data-id="{{ $item->product_id }}"><i class="fi-rs-cross-small"></i></button>
@@ -212,7 +217,7 @@
                                         </ul>
                                         <div class="shopping-cart-footer">
                                             <div class="shopping-cart-total">
-                                                <h4>Total <span>PKR 2000.00</span></h4>
+                                                <h4>Total <span>PKR {{ $cartItems->sum(function($item) { return $item->product->selling_price - $item->product->discount_price * $item->quantity; }) }}</span></h4>
                                             </div>
                                         </div>
                                         @endif
