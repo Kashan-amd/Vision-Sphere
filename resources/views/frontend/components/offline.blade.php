@@ -73,6 +73,7 @@
     light.position.set(5, 5, 5).normalize();
     scene.add(light);
 
+
     // Glasses 3D model (made with basic shapes: Torus and Cylinder)
     const glassesGroup = new THREE.Group();
 

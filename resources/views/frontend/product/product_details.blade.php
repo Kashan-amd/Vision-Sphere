@@ -63,7 +63,6 @@
                                         <div class="product-rate d-inline-block">
                                             <div class="product-rating" style="width: {{ round($reviews->average('rating'), 1) }}%"></div>
                                         </div>
-                                        <!-- gotta make reviews dynamic -->
                                         <span class="font-small ml-5 text-muted"> ({{ $reviews->count() }} reviews)</span>
                                     </div>
                                 </div>
