@@ -1,13 +1,13 @@
-<!-- Jeeliz VTO widget scripts and styles -->
-<script src="{{ asset('frontend/assets/vton/dist/JeelizVTOWidget.js') }}"></script>
-<link rel='stylesheet' href=" {{ asset('frontend/assets/vton/css/JeelizVTOWidget.css') }}" />
+<!-- VTO widget scripts and styles -->
+<script src="{{ asset('frontend/assets/vton/dist/VISIONVTOWidget.js') }}"></script>
+<link rel='stylesheet' href=" {{ asset('frontend/assets/vton/css/VISIONVTOWidget.css') }}" />
 
 <script>
     let _isResized = false;
 
     function test_resizeCanvas() {
         let halfHeightPx = Math.round(window.innerHeight / 2).toString() + 'rem';
-        const domWidget = document.getElementById('JeelizVTOWidget');
+        const domWidget = document.getElementById('VISIONVTOWidget');
         domWidget.style.maxHeight = (_isResized) ? 'none' : halfHeightPx;
         _isResized = !_isResized;
     }
@@ -27,13 +27,13 @@
     }
 
     function main() {
-        JEELIZVTOWIDGET.start({
+        VISIONVTOWIDGET.start({
             isShadow: get_isShadow(),
             sku: get_initialSKU(),
             searchImageMask: "{{ asset('frontend/assets/vton/images/logo.png') }}",
             searchImageColor: 0xeeeeee,
             callbackReady: function(){
-                console.log('INFO: JEELIZVTOWIDGET is ready :)');
+                console.log('INFO: VTO is ready :)');
             },
             onError: function(errorLabel){
                 alert('An error happened. errorLabel =' + errorLabel)
@@ -62,31 +62,31 @@
     function load_modelBySKU(){
         const sku = prompt('Please enter a glasses model SKU:', 'rayban_wayfarer_havane_marron');
         if (sku){
-            JEELIZVTOWIDGET.load(sku);
+            VISIONVTOWIDGET.load(sku);
         }
-        
+
     }
 </script>
 
 <div class='content'>
-    <div id='JeelizVTOWidget'>
-        <canvas id='JeelizVTOWidgetCanvas'></canvas>
-        <div class='JeelizVTOWidgetControls JeelizVTOWidgetControlsTop'>
-            <button class="jbutton" id='JeelizVTOWidgetAdjust'>
+    <div id='VISIONVTOWidget'>
+        <canvas id='VISIONVTOWidgetCanvas'></canvas>
+        <div class='VISIONVTOWidgetControls VISIONVTOWidgetControlsTop'>
+            <button class="jbutton" id='VISIONVTOWidgetAdjust'>
                 <div class="buttonIcon"><i class="fas fa-arrows-alt"></i></div>Adjust
             </button>
         </div>
-        <div class='JeelizVTOWidgetControls' id='JeelizVTOWidgetChangeModelContainer'>
-            <button class="jbutton" onclick="JEELIZVTOWIDGET.load('rayban_aviator_or_vertFlash')">Model 1</button>
-            <button class="jbutton" onclick="JEELIZVTOWIDGET.load('rayban_round_cuivre_pinkBrownDegrade')">Model 2</button>
+        <div class='VISIONVTOWidgetControls' id='VISIONVTOWidgetChangeModelContainer'>
+            <button class="jbutton" onclick="VISIONVTOWIDGET.load('rayban_aviator_or_vertFlash')">Model 1</button>
+            <button class="jbutton" onclick="VISIONVTOWIDGET.load('rayban_round_cuivre_pinkBrownDegrade')">Model 2</button>
             <button class="jbutton" onclick="load_modelBySKU()">by SKU</button>
         </div>
-        <div id='JeelizVTOWidgetAdjustNotice'>
+        <div id='VISIONVTOWidgetAdjustNotice'>
             Move the glasses to adjust them.
-            <button class="jbutton" class='JeelizVTOWidgetBottomButton' id='JeelizVTOWidgetAdjustExit' onclick="JeelizVTOWidget.exit_adjustMode()">Quit</button>
+            <button class="jbutton" class='VISIONVTOWidgetBottomButton' id='VISIONVTOWidgetAdjustExit' onclick="VISIONVTOWidget.exit_adjustMode()">Quit</button>
         </div>
-        <div id='JeelizVTOWidgetLoading'>
-            <div class='JeelizVTOWidgetLoadingText'>
+        <div id='VISIONVTOWidgetLoading'>
+            <div class='VISIONVTOWidgetLoadingText'>
                 LOADING...
             </div>
         </div>

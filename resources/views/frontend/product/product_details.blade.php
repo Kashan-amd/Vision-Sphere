@@ -15,7 +15,7 @@
                     <div class="row mb-50 mt-30">
                         <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
                             <div class="detail-gallery">
-                                
+
                                 <!-- MAIN SLIDES -->
                                 <!-- <div class="product-image-slider shadow"> -->
                                 <div class="shadow rounded mb-30">
@@ -54,9 +54,9 @@
                                     @endif
                                 </div>
                                 <div class="col-3">
-                                    <a href="#" class="btn btn-sm tryon-btn" data-bs-toggle="modal" data-bs-target="#vtonModal">Try On</a>
+                                    <a href="#" class="btn btn-sm tryon-btn" data-bs-toggle="modal" data-bs-target="#vtonModal" data-product-id="{{ $product->id }}">Try On</a>
                                 </div>
-                                
+
                                 <h2 class="title-detail">{{ $product->product_name }}</h2>
                                 <div class="product-detail-rating text-center pl-20">
                                     <div class="product-rate-cover text-end">
@@ -274,11 +274,11 @@
                                             // like 'Medium 55-44-136' or 'Wide 58-44-138' (and removing the words)
                                             if (preg_match('/(\d+)-(\d+)-(\d+)/', $product_size, $matches)) {
                                                 // The matches array will have [full_match, lens_width, bridge_width, temple_length]
-                                                $lensWidth = $matches[1]; 
+                                                $lensWidth = $matches[1];
                                                 $bridgeWidth = $matches[2];
-                                                $templeLength = $matches[3]; 
+                                                $templeLength = $matches[3];
                                             }
-                                        @endphp 
+                                        @endphp
                                         <div class="col-lg-6 col-md-6 col-12 position-relative hover-up">
                                             <img class="rounded shadow" src="{{ asset('./frontend/assets/imgs/guides/chart.jpg') }}" alt="Size Guide" style="width: 100%;">
 
@@ -317,7 +317,7 @@
                                                                 </div>
                                                                 <div class="desc">
                                                                     <div class="d-flex justify-content-between mb-10">
-                                                                        
+
                                                                         <div class="product-rate d-inline-block">
                                                                             <div class="product-rating" style="width: {{ $reviewData->rating }}%"></div>
                                                                         </div>
@@ -339,7 +339,7 @@
                                                     </div>
                                                     @php
                                                         $totalReviews = $reviews->count();  // Total number of reviews
-                                                        
+
                                                         $star5 = $product->reviews->where('rating', 5 * 20)->count();  // Count of 5-star reviews
                                                         $star4 = $product->reviews->where('rating', 4 * 20)->count();  // Count of 4-star reviews
                                                         $star3 = $product->reviews->where('rating', 3 * 20)->count();  // Count of 3-star reviews
@@ -406,7 +406,7 @@
                                                             <textarea class="form-control" name="comment" id="comment" rows="4" placeholder="Write your review here"></textarea>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="col-12">
                                                         <div class="form-group">
                                                             <button type="submit" class="button button-contactForm">Submit Review</button>
@@ -667,7 +667,7 @@
             <div class="modal-content">
                 <button type="button" class="btn-close" id="exit" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; top: 10px; right: 10px; z-index: 1050"></button>
                 <div class="modal-body" style="padding: 0; height: 100vh;"> <!-- Remove padding for full-size widget -->
-                    @include('frontend.layouts.vton') 
+                    @include('frontend.layouts.vton')
                 </div>
             </div>
         </div>
@@ -675,15 +675,26 @@
 
 
     <script>
-        // Wait for the modal to be fully shown before initializing the Jeeliz widget
+        document.addEventListener('DOMContentLoaded', function () {
+            const tryOnButtons = document.querySelectorAll('.tryon-btn');
+
+            tryOnButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const productId = this.getAttribute('data-product-id');
+                    console.log('Product ID:', productId);
+                    // Call your main function here and pass the productId
+                    // mainFunction(productId);
+                });
+            });
+        });
+        // Wait for the modal to be fully shown before initializing the widget
         document.getElementById('vtonModal').addEventListener('shown.bs.modal', function () {
-            console.log('Modal is fully shown, initializing Jeeliz VTO widget');
-            main();  // Call the main function to initialize the Jeeliz widget
+            console.log('Modal is fully shown, initializing VTO');
+            main();  // Call the main function to initialize the widget
         });
 
         document.getElementById('exit').addEventListener('click', function() {
-            // Stop or destroy the VTO instance if necessary
-            JEELIZVTOWIDGET.destroy();
+            VISIONVTOWIDGET.destroy();
         });
 
         // open the modal and set the full-size image

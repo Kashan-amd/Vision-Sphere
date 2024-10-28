@@ -4,7 +4,7 @@
   background: rgba(0, 0, 0, 0.5);
   color: #ddd;
   font-weight: bold;
-  font-variant: small-caps;  
+  font-variant: small-caps;
   font-size: 16px;
   padding: 8px;
   min-width: 120px;
@@ -20,7 +20,7 @@
   flex-direction: column;
 }
 
-#JeelizVTOWidget {
+#VISIONVTOWidget {
   flex-grow: 1;
   width: 100%;
   height: 100%;
@@ -29,7 +29,7 @@
   position: relative;
 }
 
-#JeelizVTOWidgetCanvas {
+#VISIONVTOWidgetCanvas {
   position: absolute;
   z-index: 1;
   left: 0;
@@ -42,33 +42,33 @@
   margin: 0 auto;
 }
 
-.JeelizVTOWidgetControls {
+.VISIONVTOWidgetControls {
   position: absolute;
   z-index: 2;
   width: 100%;
 }
 
-.JeelizVTOWidgetControlsTop {
+.VISIONVTOWidgetControlsTop {
   top: 16px;
   height: 40px;
 }
 
-.JeelizVTOWidgetControlsTop > button {
+.VISIONVTOWidgetControlsTop > button {
    width: 45%;
    min-width: auto;
 }
 
-#JeelizVTOWidgetChangeModelContainer {
+#VISIONVTOWidgetChangeModelContainer {
   bottom: 16px;
-  height: 40px;  
+  height: 40px;
 }
 
-#JeelizVTOWidgetChangeModelContainer > button {
+#VISIONVTOWidgetChangeModelContainer > button {
   width: 20%;
   min-width: auto;
 }
 
-#JeelizVTOWidgetLoading {
+#VISIONVTOWidgetLoading {
   position: fixed;
   z-index: 4;
   cursor: wait;
@@ -80,27 +80,27 @@
   background-color: rgba(0,0,0,0.5);
 }
 
-.JeelizVTOWidgetLoadingText {
+.VISIONVTOWidgetLoadingText {
   color: white;
   font-size: 32pt;
   margin-top: 40vh;
 }
 
-#JeelizVTOWidgetAdjustNotice {
+#VISIONVTOWidgetAdjustNotice {
   width: 100%;
   position: absolute;
   background-color: rgba(0,0,0,0.5);
   color: white;
   z-index: 3;
   font-size: 16px;
-  bottom: 0;  
+  bottom: 0;
   justify-content: center;
   padding-top: 2em;
   padding-bottom: 2em;
   display: none;
 }
 
-#JeelizVTOWidgetAdjustExit {
+#VISIONVTOWidgetAdjustExit {
   border: 1px solid white;
   background: transparent;
   position: absolute;
@@ -109,7 +109,7 @@
 }
 
 @media (max-width: 768px) {
-  #JeelizVTOWidget {
+  #VISIONVTOWidget {
     height: 100%;
     width: 100%;
   }
