@@ -26,6 +26,7 @@
     <link href="{{ asset('adminbackend/assets/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('adminbackend/assets/css/icons.css') }}" rel="stylesheet">
     <!-- Theme Style CSS -->
+    <link rel="stylesheet" href="{{ asset('ckeditor/ckeditor5/ckeditor5.css') }}">
     <link rel="stylesheet" href="{{ asset('adminbackend/assets/css/dark-theme.css') }}" />
     <link rel="stylesheet" href="{{ asset('adminbackend/assets/css/semi-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('adminbackend/assets/css/header-colors.css') }}" />
@@ -117,10 +118,14 @@
 
     <script src="{{ asset('adminbackend/assets/plugins/input-tags/js/tagsinput.js') }}"></script>
 
-    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/classic/ckeditor.js"></script>
 
     <script>
-        CKEDITOR.replace('mytextarea');
+        ClassicEditor
+            .create(document.querySelector('#mytextarea'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
 </body>
 

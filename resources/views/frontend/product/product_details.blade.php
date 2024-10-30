@@ -18,12 +18,10 @@
 
                                 <!-- MAIN SLIDES -->
                                 <!-- <div class="product-image-slider shadow"> -->
-                                <div class="shadow rounded mb-30">
-                                    @foreach($product->multiImages->take(1) as $image)
+                                <div class="rounded mb-30">
                                         <figure class="border-radius-10">
-                                            <img src="{{ asset($image->photo_name) }}" alt="product image" />
+                                            <img class="shadow rounded" src="{{ asset($product->product_thambnail) }}" alt="product image" />
                                         </figure>
-                                    @endforeach
                                 </div>
 
                                 <div class="row ml-10">
@@ -205,12 +203,6 @@
                                                         <th>Brand</th>
                                                         <td>
                                                             <p>{{ $product['brand']['name'] }}</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="stand-up">
-                                                        <th>SKU</th>
-                                                        <td>
-                                                            <p>{{ $product['product_code'] }}</p>
                                                         </td>
                                                     </tr>
                                                     <tr class="folded-wo-wheels">
@@ -679,13 +671,32 @@
             const tryOnButtons = document.querySelectorAll('.tryon-btn');
 
             tryOnButtons.forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', async function () {
                     const productId = this.getAttribute('data-product-id');
                     console.log('Product ID:', productId);
-                    // Call your main function here and pass the productId
-                    // mainFunction(productId);
+
+                    // Fetch SKU via AJAX
+                    const response = await fetch(`/get-sku/${productId}`);
+                    const data = await response.json();
+
+                    if (data.sku) {
+                        console.log('ye wala SKU:', data.sku);
+
+                        // Update the URL with the SKU parameter without reloading the page
+                        const newUrl = new URL(window.location.href);
+                        newUrl.searchParams.set('sku', data.sku);
+                        window.history.replaceState(null, '', newUrl);
+
+                        // Open the modal and initialize the widget with updated SKU
+                        const vtonModal = document.getElementById('vtonModal');
+                        $(vtonModal).modal('show');  // Show the modal
+                    } else {
+                        console.error('SKU not found for product.');
+                    }
                 });
             });
+
+
         });
         // Wait for the modal to be fully shown before initializing the widget
         document.getElementById('vtonModal').addEventListener('shown.bs.modal', function () {

@@ -102,7 +102,7 @@
                                 </li>
                             </ul>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -110,12 +110,12 @@
         <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
             <div class="container ">
                 <div class="header-wrap d-flex justify-content-around">
-                    
+
                     <div class="search-form" style="position: relative; width: auto;">
                         <input type="text" id="product-search" name="search" placeholder="Search Items..." autocomplete="off" />
                         <div id="search-results" class="search-results-container"></div>
                     </div>
-                    
+
                     <div class="header-center">
                         <div class="logo logo-width-2">
                             <a href="{{ '/' }}"><img height="40rem" src="{{ asset('frontend/assets/imgs/theme/logo-alt.png') }}" alt="logo" /></a>
@@ -128,7 +128,7 @@
                             <div class="header-action-icon-2">
                                 <a href="#">
                                     <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
-                                    
+
                                     @if(Auth()->user())
                                         <span class="pro-count blue">{{ $wishList_count }} </span>
                                     @else
@@ -167,7 +167,7 @@
                                     </ul>
                                     @else
                                     <ul>
-                                        <li>Such Emptiness!! 🥲 
+                                        <li>Such Emptiness!! 🥲
                                             <br>
                                             Login to view your wishlist..
                                         </li>
@@ -179,7 +179,7 @@
                             <div class="header-action-icon-2">
                                 <a class="mini-cart-icon" href="#">
                                     <img alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
-                                    
+
                                     @if(Auth()->user())
                                         <span class="pro-count blue">{{ $cartItem_count }} </span>
                                     @else
@@ -202,7 +202,7 @@
                                                     </div>
                                                     <div class="shopping-cart-title">
                                                         <h4>{{ $item->product->product_name }}</h4>
-                                                        
+
                                                         @php
                                                             $amount = $item->product->selling_price - $item->product->discount_price;
                                                             $discount = 100 - (($amount / $item->product->selling_price) * 100);
@@ -223,7 +223,7 @@
                                         @endif
                                     @else
                                         <ul>
-                                            <li>Also Empty!! 🥲 
+                                            <li>Also Empty!! 🥲
                                                 <br>
                                                 Login to view your Cart..
                                             </li>
@@ -345,23 +345,9 @@
                                         <li class="position-static">
                                             <a href="#">Shop by <i class="fi-rs-angle-down"></i></a>
                                             <ul class="mega-menu ">
-                                                @foreach ($categories as $category)
-                                                    @php
-                                                        $subcategories = App\Models\SubCategory::where('category_id', $category->id)->get();
-                                                    @endphp
-                                                    @if($subcategories->isNotEmpty())
-                                                        <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:0 5rem 0 0">
-                                                            <a class="menu-title" href="{{ route('category.products', ['id' => $category->id, 'slug' => $category->slug]) }}">{{ $category->name }}</a>
-                                                            <ul>
-                                                                @foreach ($subcategories as $subcategory)
-                                                                    <li><a href="{{ route('subcategory.products', ['id' => $subcategory->id, 'slug' => $subcategory->slug]) }}">{{ $subcategory->name }}</a></li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </li>
-                                                    @endif
-                                                @endforeach
-                                                
-                                                <li class="sub-mega-menu sub-mega-menu-width-31" style="margin:0 2rem 1rem 0">
+
+
+                                                <li class="sub-mega-menu sub-mega-menu-width-31" style="margin:1.5rem 2rem 1rem 0">
                                                     <div class="menu-banner-wrap shadow hover-up">
                                                         <a href="#"><img src="{{ asset('frontend/assets/imgs/banner/banner-menu.png') }}" alt="VisionSphere" /></a>
                                                         <div class="menu-banner-content">
@@ -385,8 +371,8 @@
                                                         </div>
                                                     </div>
                                                 </li>
-                                                
-                                                <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:0 5rem 0 0">
+
+                                                <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:2rem 5rem 0 0">
                                                     <a class="menu-title" href="#">By Material</a>
                                                     <ul>
                                                         @php
@@ -421,7 +407,7 @@
                                                         @endforeach
                                                     </ul>
                                                 </li>
-                                                <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:0 5rem 0 0">
+                                                <li class="sub-mega-menu sub-mega-menu-width-21" style="margin:2rem 5rem 0 0">
                                                     <a class="menu-title" href="#">By Shape</a>
                                                     <ul>
                                                         @php
@@ -524,7 +510,7 @@
                                             <li><a href="page-terms.html">Terms of Service</a></li>
                                         </ul>
                                     </li>
-                                    
+
                                     <li>
                                         <a href="page-about.html">About</a>
                                     </li>
@@ -552,7 +538,7 @@
                             <div class="header-action-icon-2">
                                 <a href="##">
                                     <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
-                                    
+
                                     @if(Auth()->user())
                                         <span class="pro-count blue">{{ $wishList_count }} </span>
                                     @else
@@ -561,7 +547,7 @@
 
                                 </a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                    
+
                                         @if(Auth()->user())
                                             @if($wishList_count < 1)
                                                 <p>such emptiness!! 🥲</p>
@@ -725,7 +711,7 @@
                                                     @endif
                                                 @endforeach
                                             @endforeach
-                                        </li> 
+                                        </li>
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">

@@ -20,25 +20,31 @@ class IndexController extends Controller
         return view('frontend.index', $data);
     }
 
-    public function vtonIndex() 
+    public function vtonIndex()
     {
         return view('frontend.layouts.vton');
+    }
+
+    public function getSKU($productId)
+    {
+        $product = Product::findOrFail($productId);
+        return response()->json(['sku' => $product ? $product->product_code : null]);
     }
 
     public function getUserData()
     {
         $wishList_count = 0;
         $wishlistItems = collect(); // Empty collection if the user is not authenticated
-        
+
         $cartItem_count = 0;
         $cartItems = collect(); // Empty collection if the user is not authenticated
-        
-        if (Auth::check()) { 
+
+        if (Auth::check()) {
             $user = Auth::user();
-            $cartItem_count = Cart::where('user_id', $user->id)->count(); 
+            $cartItem_count = Cart::where('user_id', $user->id)->count();
             $cartItems = $user->cart()->with('product')->get();
 
-            $wishList_count = WishList::where('user_id', $user->id)->count(); 
+            $wishList_count = WishList::where('user_id', $user->id)->count();
             $wishlistItems = $user->wishlist()->with('product')->get();
         }
 
@@ -85,7 +91,7 @@ class IndexController extends Controller
 
         // review data
         $reviews = Review::where('product_id', $id)->get();
-        
+
         // Merge product data with wishlist data and return the view
         return view('frontend.product.product_details', array_merge($data, compact('product', 'product_size', 'product_color', 'relatedProducts', 'reviews')));
     }
@@ -95,10 +101,10 @@ class IndexController extends Controller
     {
         $products = Product::where('category_id', $id)->latest()->get();
         $productCount = $products->count();
-        
+
         // Get user wishlist data
         $data = $this->getUserData();
-        
+
         // Merge category data with wishlist data and return the view
         return view('frontend.product.category_product', array_merge($data, compact('products', 'productCount')));
     }
@@ -108,10 +114,10 @@ class IndexController extends Controller
     {
         $products = Product::where('subcategory_id', $id)->latest()->get();
         $productCount = $products->count();
-        
+
         // Get user wishlist data
         $data = $this->getUserData();
-        
+
         // Merge subcategory data with wishlist data and return the view
         return view('frontend.product.subcategory_product', array_merge($data, compact('products', 'productCount')));
     }
@@ -121,10 +127,10 @@ class IndexController extends Controller
     {
         $products = Product::where('brand_id', $id)->latest()->get();
         $productCount = $products->count();
-        
+
         // Get user wishlist data
         $data = $this->getUserData();
-        
+
         // Merge brand data with wishlist data and return the view
         return view('frontend.product.brand_product', array_merge($data, compact('products', 'productCount')));
     }
@@ -144,13 +150,13 @@ class IndexController extends Controller
         }
 
         $vendors = $vendors->get();
-        
+
         $data = $this->getUserData();
 
         if ($vendors->isEmpty()) {
             return redirect()->route('all.vendors', $data)->with('message', 'Your search was not found!');
         }
-        
+
         return view('frontend.vendor.all_vendors', $data, ['vendors' => $vendors]);
     }
 
