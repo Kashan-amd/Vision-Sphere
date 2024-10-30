@@ -88,7 +88,7 @@
                                                 <span class="old-price">PKR {{ $product->selling_price }}</span>
                                             </div>
                                         @endif
-                                        
+
                                     </div>
                                 </div>
                                 <div class="add-cart">
@@ -475,7 +475,7 @@
                             <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow" id="carausel-4-columns-arrows"></div>
                             <div class="carausel-4-columns carausel-arrow-center" id="carausel-4-columns">
                                 @php
-                                    $productsdata = App\Models\Product::where('status', 1)->orderBy('id', 'ASC')->latest()->limit(10)->get();
+                                    $productsdata = App\Models\Product::where('status', 1)->orderBy('id', 'DESC')->latest()->limit(3)->get();
                                 @endphp
                                 @foreach ($productsdata as $product)
                                     <div class="product-cart-wrap">

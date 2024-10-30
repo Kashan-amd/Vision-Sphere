@@ -1,34 +1,6 @@
-/**
- * Jeeliz Glasses VTO Widget - https://github.com/jeeliz/jeelizGlassesVTOWidget
- *
- * Copyright 2020 WebAR.rocks ( Jeeliz® - https://jeeliz.com )
- *
- * This software library is the proprietary and confidential information of
- * Jeeliz ("Licensor"). You may only use this software library if
- * you have obtained a valid commercial license from Licensor. If you have not
- * obtained a valid commercial license from Licensor, please check out
- * https://jeeliz.com/#pricing for licensing options and pricing.
- *
- * Unauthorized use, reproduction, or distribution of this software library or
- * any portion thereof may result in severe civil and criminal penalties, and
- * will be prosecuted to the maximum extent possible under the law.
- *
- * THIS SOFTWARE LIBRARY IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * IN NO EVENT SHALL LICENSOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE LIBRARY, EVEN
- * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 
-
-
-"use strict"; var $jscomp = $jscomp || {}; $jscomp.scope = {}; $jscomp.owns = function (ja, na) { return Object.prototype.hasOwnProperty.call(ja, na) }; $jscomp.ASSUME_ES5 = !1; $jscomp.ASSUME_NO_NATIVE_MAP = !1; $jscomp.ASSUME_NO_NATIVE_SET = !1; $jscomp.SIMPLE_FROUND_POLYFILL = !1; $jscomp.ISOLATE_POLYFILLS = !1; $jscomp.defineProperty = $jscomp.ASSUME_ES5 || "function" == typeof Object.defineProperties ? Object.defineProperty : function (ja, na, ua) { if (ja == Array.prototype || ja == Object.prototype) return ja; ja[na] = ua.value; return ja };
+/* eslint-disable */
+let VISIONVTO = null; let VISIONVTOWIDGET = null; var $jscomp = $jscomp || {}; $jscomp.scope = {}; $jscomp.owns = function (ja, na) { return Object.prototype.hasOwnProperty.call(ja, na) }; $jscomp.ASSUME_ES5 = !1; $jscomp.ASSUME_NO_NATIVE_MAP = !1; $jscomp.ASSUME_NO_NATIVE_SET = !1; $jscomp.SIMPLE_FROUND_POLYFILL = !1; $jscomp.ISOLATE_POLYFILLS = !1; $jscomp.defineProperty = $jscomp.ASSUME_ES5 || "function" == typeof Object.defineProperties ? Object.defineProperty : function (ja, na, ua) { if (ja == Array.prototype || ja == Object.prototype) return ja; ja[na] = ua.value; return ja };
 $jscomp.getGlobal = function (ja) { ja = ["object" == typeof globalThis && globalThis, ja, "object" == typeof window && window, "object" == typeof self && self, "object" == typeof global && global]; for (var na = 0; na < ja.length; ++na) { var ua = ja[na]; if (ua && ua.Math == Math) return ua } throw Error("Cannot find global object"); }; $jscomp.global = $jscomp.getGlobal(this); $jscomp.IS_SYMBOL_NATIVE = "function" === typeof Symbol && "symbol" === typeof Symbol("x"); $jscomp.TRUST_ES6_POLYFILLS = !$jscomp.ISOLATE_POLYFILLS || $jscomp.IS_SYMBOL_NATIVE;
 $jscomp.polyfills = {}; $jscomp.propertyToPolyfillSymbol = {}; $jscomp.POLYFILL_PREFIX = "$jscp$"; var $jscomp$lookupPolyfilledValue = function (ja, na) { var ua = $jscomp.propertyToPolyfillSymbol[na]; if (null == ua) return ja[na]; ua = ja[ua]; return void 0 !== ua ? ua : ja[na] }; $jscomp.polyfill = function (ja, na, ua, Oa) { na && ($jscomp.ISOLATE_POLYFILLS ? $jscomp.polyfillIsolated(ja, na, ua, Oa) : $jscomp.polyfillUnisolated(ja, na, ua, Oa)) };
 $jscomp.polyfillUnisolated = function (ja, na, ua, Oa) { ua = $jscomp.global; ja = ja.split("."); for (Oa = 0; Oa < ja.length - 1; Oa++) { var xa = ja[Oa]; if (!(xa in ua)) return; ua = ua[xa] } ja = ja[ja.length - 1]; Oa = ua[ja]; na = na(Oa); na != Oa && null != na && $jscomp.defineProperty(ua, ja, { configurable: !0, writable: !0, value: na }) };
@@ -45,7 +17,7 @@ $jscomp.polyfill("Promise", function (ja) {
         function va(fb) {
             return function (vb) {
                 Sa ||
-                    (Sa = !0, fb.call(Ja, vb))
+                (Sa = !0, fb.call(Ja, vb))
             }
         } var Ja = this, Sa = !1; return { resolve: va(this.resolveTo_), reject: va(this.reject_) }
     }; xa.prototype.resolveTo_ = function (va) { if (va === this) this.reject_(new TypeError("A Promise cannot resolve to itself")); else if (va instanceof xa) this.settleSameAsPromise_(va); else { a: switch (typeof va) { case "object": var Ja = null != va; break a; case "function": Ja = !0; break a; default: Ja = !1 }Ja ? this.resolveToNonPromiseObj_(va) : this.fulfill_(va) } }; xa.prototype.resolveToNonPromiseObj_ = function (va) {
@@ -71,16 +43,16 @@ $jscomp.polyfill("Object.is", function (ja) { return ja ? ja : function (na, ua)
 $jscomp.checkStringArgs = function (ja, na, ua) { if (null == ja) throw new TypeError("The 'this' value for String.prototype." + ua + " must not be null or undefined"); if (na instanceof RegExp) throw new TypeError("First argument to String.prototype." + ua + " must not be a regular expression"); return ja + "" }; $jscomp.polyfill("String.prototype.includes", function (ja) { return ja ? ja : function (na, ua) { return -1 !== $jscomp.checkStringArgs(this, na, "includes").indexOf(na, ua || 0) } }, "es6", "es3");
 $jscomp.polyfill("Array.prototype.findIndex", function (ja) { return ja ? ja : function (na, ua) { return $jscomp.findInternal(this, na, ua).i } }, "es6", "es3"); $jscomp.polyfill("Promise.prototype.finally", function (ja) { return ja ? ja : function (na) { return this.then(function (ua) { return Promise.resolve(na()).then(function () { return ua }) }, function (ua) { return Promise.resolve(na()).then(function () { throw ua; }) }) } }, "es9", "es3");
 $jscomp.polyfill("Math.sign", function (ja) { return ja ? ja : function (na) { na = Number(na); return 0 === na || isNaN(na) ? na : 0 < na ? 1 : -1 } }, "es6", "es3");
-var JeelizVTOWidget = function () {
+var VISIONVTOWidget = function () {
     function ja() {
-        Ra.mode = qb.realtime; Ra.isRT = !0; Ba.adjust = document.getElementById("JeelizVTOWidgetAdjust"); if (Ba.adjust) {
-            Ba.adjustNotice = document.getElementById("JeelizVTOWidgetAdjustNotice"); Ba.adjustExit = document.getElementById("JeelizVTOWidgetAdjustExit"); Ba.changeModelContainer = document.getElementById("JeelizVTOWidgetChangeModelContainer"); Ba.buttonResizeCanvas = document.getElementById("buttonResizeCanvas"); var S = Ba.adjust; S && S.addEventListener("click", zb, !1); (S = Ba.adjustExit) &&
+        Ra.mode = qb.realtime; Ra.isRT = !0; Ba.adjust = document.getElementById("VISIONVTOWidgetAdjust"); if (Ba.adjust) {
+            Ba.adjustNotice = document.getElementById("VISIONVTOWidgetAdjustNotice"); Ba.adjustExit = document.getElementById("VISIONVTOWidgetAdjustExit"); Ba.changeModelContainer = document.getElementById("VISIONVTOWidgetChangeModelContainer"); Ba.buttonResizeCanvas = document.getElementById("buttonResizeCanvas"); var S = Ba.adjust; S && S.addEventListener("click", zb, !1); (S = Ba.adjustExit) &&
                 S.addEventListener("click", Gb, !1);[Ba.adjust, Ba.changeModelContainer, Ba.buttonResizeCanvas].forEach(ua)
         } Zb.enabled && Ua.do_instantDetection(Zb.interval, Zb.callback); kc && (kc(!0), kc = null)
-    } function na() { var S = document.createElement("style"); S.setAttribute("type", "text/css"); S.innerHTML = "._jeelizVTOForceHide { display: none!important }._jeelizVTOForceShow { display: revert!important }"; var U = document.getElementsByTagName("head"); 1 <= U.length ? U[0].appendChild(S) : document.body.appendChild(S) } function ua(S) {
+    } function na() { var S = document.createElement("style"); S.setAttribute("type", "text/css"); S.innerHTML = "._VISIONVTOForceHide { display: none!important }._VISIONVTOForceShow { display: revert!important }"; var U = document.getElementsByTagName("head"); 1 <= U.length ? U[0].appendChild(S) : document.body.appendChild(S) } function ua(S) {
         S &&
-            (S.classList.remove("_jeelizVTOForceHide"), "none" === window.getComputedStyle(S).display && S.classList.add("_jeelizVTOForceShow"))
-    } function Oa(S) { S && (S.classList.add("_jeelizVTOForceHide"), S.classList.remove("_jeelizVTOForceShow")) } function xa(S, U) { if (S) for (var pa in U) S.style[pa] = U[pa] } function tb(S) { if (!S) return { width: 0, height: 0 }; S = S.getBoundingClientRect(); return { width: S.width, height: S.height } } function va(S) {
+        (S.classList.remove("_VISIONVTOForceHide"), "none" === window.getComputedStyle(S).display && S.classList.add("_VISIONVTOForceShow"))
+    } function Oa(S) { S && (S.classList.add("_VISIONVTOForceHide"), S.classList.remove("_VISIONVTOForceShow")) } function xa(S, U) { if (S) for (var pa in U) S.style[pa] = U[pa] } function tb(S) { if (!S) return { width: 0, height: 0 }; S = S.getBoundingClientRect(); return { width: S.width, height: S.height } } function va(S) {
         return new Promise(function (U, pa) {
             var Ea = new XMLHttpRequest; Ea.open("GET", S, !0); Ea.onreadystatechange =
                 function () { if (4 === Ea.readyState) if (200 === Ea.status || 0 === Ea.status) try { var Ka = JSON.parse(Ea.responseText); U(Ka) } catch (xb) { pa("INVALID JSON") } else pa("HTTP ERROR " + Ea.status) }; Ea.send()
@@ -89,7 +61,7 @@ var JeelizVTOWidget = function () {
         wb.toggle_loading(!1);
         Ra.mode = qb.realtime; vb("INVALID_SKU")
     } function vb(S) { Kc.error ? Kc.error(S) : console.log("ERROR:", S) } function Yb(S) {
-        var U = tb(Ba.container), pa = Math.abs(gb.displayWidth - U.width), Ea = Math.abs(gb.displayHeight - U.height); if (!S && 1 >= pa && 1 >= Ea && 1 === gb.oFactor) console.log("INFO in JeelizVTOWidget.resize: resolution difference too small. Abort resize"); else if (gb.displayWidth = U.width, gb.displayHeight = U.height, gb.oFactor = 1, console.log("INFO in JeelizVTOWidget.resize: width = " + gb.displayWidth.toString() + " height = " +
+        var U = tb(Ba.container), pa = Math.abs(gb.displayWidth - U.width), Ea = Math.abs(gb.displayHeight - U.height); if (!S && 1 >= pa && 1 >= Ea && 1 === gb.oFactor) console.log("INFO in VISIONVTOWidget.resize: resolution difference too small. Abort resize"); else if (gb.displayWidth = U.width, gb.displayHeight = U.height, gb.oFactor = 1, console.log("INFO in VISIONVTOWidget.resize: width = " + gb.displayWidth.toString() + " height = " +
             gb.displayHeight.toString() + " oFactor = " + (1).toString()), gb.cvWidth = Math.round(1 * gb.displayWidth), gb.cvHeight = Math.round(1 * gb.displayHeight), xa(Ba.cv, { width: gb.displayWidth.toString() + "px", height: gb.displayHeight.toString() + "px" }), Ba.cv.width = gb.cvWidth, Ba.cv.height = gb.cvHeight, Ua) if (Ra.mode === qb.notLoaded) Ua.set_size(gb.cvWidth, gb.cvHeight, !1); else Ua.onLoad(function () { Ua.resize(gb.cvWidth, gb.cvHeight, !1, S) })
     } function zb() {
         [Ba.adjust, Ba.changeModelContainer, Ba.buttonResizeCanvas].forEach(Oa); Ra.mode =
@@ -205,7 +177,7 @@ var JeelizVTOWidget = function () {
             } function b(K) { var R = K.length - 1, Z = K[R]; if ("data:" === Z.substring(0, 5)) return Z; for (Z = ""; 0 <= R; --R) { var sa = K[R], Na = "http" === sa.substring(0, 4).toLowerCase(); Z = sa + Z; if (Na) break } return Z } function d(K, R, Z) { return new Promise(function (sa) { Aa.Jj(R); Fa.ba(); nb.isEnabled = !0; $a.isEnabled = !1; nb.pa || (nb.pa = qc.instance({})); K.ci() && (nb.pa.wg(K.ci()), Aa.ra(nb.pa)); K.set(); $a.isEnabled = !1; t(); var Na = ob.Zh(Z); setTimeout(function () { nb.isEnabled = !1; Aa.Jj(!1); sa(Na) }, 1) }) } function f(K, R) {
                 wa.Xc = .5; return new Promise(function (Z) {
                     $a.bc =
-                        K; $a.isEnabled = !0; $a.D = function () { var sa = jd.instance(R()); $a.D = null; Z(sa) }
+                    K; $a.isEnabled = !0; $a.D = function () { var sa = jd.instance(R()); $a.D = null; Z(sa) }
                 })
             } function l(K, R) { return new Promise(function (Z, sa) { pa(R + K, function (Na) { Na.error ? sa("SKU_NOT_FOUND") : Z({ kn: Na.intrinsic.mod + ".json", hn: Na.intrinsic.mats }) }) }) } function p(K, R) { var Z = b([J.ea, J.wa, J.Vd + "/"]); R = R.map(function (sa) { return Z + sa }); V.model = { url: b([J.ea, J.wa, J.Wd + "/" + K]), ac: R, jh: !1, ih: !1 }; return new Promise(function (sa) { Qa.Hi(V.model, function () { da.isBusy = !1; sa() }) }) } function w(K, R) {
                 if (!R) return K; K = K.slice(0); var Z =
@@ -260,7 +232,7 @@ var JeelizVTOWidget = function () {
                         Ya = K, Da !== Ga.va && Eb.qg(g)))
             } function F() { Ya = Mc.mf(); Xa.isEnabled = !0 } function L() { var K = 15; if (!Ha.Md) { if (!Ha.element.videoWidth) return Eb.stop(), da.request_cameraVideoStream().then(t), !1; var R = Ha.element.currentTime; if (!R) return !0; K = R - Oc; 0 > K && (Oc = R); if (1E3 * K < J.cp) return !0 } Ha.V.refresh(); Oc += K; Ha.ud = K; hb = !0; Fa.ba(); aa.set("s0"); ta.ng.J(); ta.Qc.Tk(0); W.l(!0, !0); aa.set("s62"); ia.kb.J(); Ha.V.h(0); W.l(!1, !1); null !== ia.Kb && (aa.set("s63"), ia.$c.u(), ia.kb.h(0), ia.Kb.h(1), W.l(!1, !1)); return !0 } function D() {
                 ia.bk =
-                    ba.instance({ isPot: !0, isLinear: !0, isFloat: !1, url: J.ea + J.wa + J.ep }); var K = { isPot: !1, isLinear: !0, isFloat: !1, width: ra.width, height: ra.height }; ia.kb = ba.instance(K); ia.$c = ba.instance(K); H.Nj.push(ia.kb, ia.$c); ia.Df = Md.instance({}); J.Sd && (dc = ba.instance({ isPot: !1, isFloat: !1, isLinear: !0, url: (J.Sf || -1 !== J.Rf.indexOf("//") ? "" : J.ea + J.wa) + J.Rf }))
+                ba.instance({ isPot: !0, isLinear: !0, isFloat: !1, url: J.ea + J.wa + J.ep }); var K = { isPot: !1, isLinear: !0, isFloat: !1, width: ra.width, height: ra.height }; ia.kb = ba.instance(K); ia.$c = ba.instance(K); H.Nj.push(ia.kb, ia.$c); ia.Df = Md.instance({}); J.Sd && (dc = ba.instance({ isPot: !1, isFloat: !1, isLinear: !0, url: (J.Sf || -1 !== J.Rf.indexOf("//") ? "" : J.ea + J.wa) + J.Rf }))
             } function G() {
                 function K() { return { width: 3, height: 1, isFloat: !0, isPot: !1, array: new Float32Array([0, .5, .5, 0, 0, 0, 0, 0, 0, 0, 0, 0]) } } var R = {
                     width: 3, height: 1, isFloat: !0, isPot: !1,
@@ -347,9 +319,9 @@ var JeelizVTOWidget = function () {
                         })
                     }, el: function () { var K = cb.Ee, R = cb.De, Z = 1 / Math.tan(.5 * Ha.jf), sa = ob.$() / ob.P(); Ha.$i = [Z, 0, 0, 0, 0, Z / sa, 0, 0, 0, 0, -(R + K) / (R - K), -1, 0, 0, -2 * K * R / (R - K), 0]; Ha.Ae = 1 / Math.tan(J.kp * Math.PI / 360) / Z }, Eg: function (K,
                         R) {
-                        fa = [.5, .5]; K = R / K; R = ob.$() / ob.P(); 90 === Math.abs(cb.rotate) && (K = 1 / K); K > R ? fa[1] *= R / K : fa[0] *= K / R; N[0] = 0; N[1] = 0; N[2] = 0; N[3] = 0; switch (cb.rotate) { case 0: N[0] = fa[0]; N[3] = fa[1]; break; case 180: N[0] = -fa[0]; N[3] = -fa[1]; break; case 90: N[1] = fa[0]; N[2] = -fa[1]; break; case -90: N[1] = -fa[0], N[2] = fa[1] }J.yi || (N[0] *= -1, N[1] *= -1); R = fa; var Z = nc(), sa = cb.FOVforced; Z = (sa ? sa : Z ? cb.FOVmobile : cb.FOVdesktop) * Math.PI / 180; Z = 2 * Math.atan(Math.max(K, 1 / K) / (16 / 9) * Math.tan(.5 * Z)); Ha.jf = 2 * Math.atan(2 * R[0] * Math.tan(.5 * (1 < K ? 2 * Math.atan(1 /
-                            K * Math.tan(.5 * Z)) : Z))); Qa.el()
-                    }, Lg: function () { aa.j("s62", [{ type: "1i", name: "u1", value: 0 }, { type: "mat2", name: "u40", value: N }]) }, Cf: function (K, R) { return db ? Promise.resolve() : new Promise(function (Z, sa) { Qa.ym(K, R); Promise.all([Qa.m(), Qa.zm()]).then(function () { Qa.oi(); db = !0; Z() }).catch(function (Na) { Tb && Tb("GL_INCOMPATIBLE", "Cannot init JEELIZVTO"); sa(Na) }) }) }, ym: function (K, R) {
+                            fa = [.5, .5]; K = R / K; R = ob.$() / ob.P(); 90 === Math.abs(cb.rotate) && (K = 1 / K); K > R ? fa[1] *= R / K : fa[0] *= K / R; N[0] = 0; N[1] = 0; N[2] = 0; N[3] = 0; switch (cb.rotate) { case 0: N[0] = fa[0]; N[3] = fa[1]; break; case 180: N[0] = -fa[0]; N[3] = -fa[1]; break; case 90: N[1] = fa[0]; N[2] = -fa[1]; break; case -90: N[1] = -fa[0], N[2] = fa[1] }J.yi || (N[0] *= -1, N[1] *= -1); R = fa; var Z = nc(), sa = cb.FOVforced; Z = (sa ? sa : Z ? cb.FOVmobile : cb.FOVdesktop) * Math.PI / 180; Z = 2 * Math.atan(Math.max(K, 1 / K) / (16 / 9) * Math.tan(.5 * Z)); Ha.jf = 2 * Math.atan(2 * R[0] * Math.tan(.5 * (1 < K ? 2 * Math.atan(1 /
+                                K * Math.tan(.5 * Z)) : Z))); Qa.el()
+                    }, Lg: function () { aa.j("s62", [{ type: "1i", name: "u1", value: 0 }, { type: "mat2", name: "u40", value: N }]) }, Cf: function (K, R) { return db ? Promise.resolve() : new Promise(function (Z, sa) { Qa.ym(K, R); Promise.all([Qa.m(), Qa.zm()]).then(function () { Qa.oi(); db = !0; Z() }).catch(function (Na) { Tb && Tb("GL_INCOMPATIBLE", "Cannot init VISIONVTO"); sa(Na) }) }) }, ym: function (K, R) {
                         ma.Jb = document.createElement("canvas"); ma.Ab = document.createElement("canvas"); ma.Ab.width = J.width; ma.Ab.height = J.height; ma.fn = ma.Ab.getContext("2d");
                         da.replace_video = function (Z) { Ha.element = Z; Ha.Sg.la = Ha.element; return !0 }; ma.qc = ma.Jb.getContext("2d"); da.capture_background = function (Z, sa) {
                             Z = "undefined" === typeof Z ? K : Z; sa = "undefined" === typeof sa ? R : sa; ma.Jb.width = Z; ma.Jb.height = sa; var Na = Z / sa, sb = 0, kb = 0; if (K / R > Na) { var Sb = R * Na; Na = R; sb = Math.round((K - Sb) / 2) } else Sb = K, Na = K / Na, kb = Math.round((R - Na) / 2); ma.qc.save(); ma.qc.translate(Z, 0); ma.qc.scale(-1, 1); ma.qc.drawImage(Ha.element, sb, kb, Sb, Na, 0, 0, Z, sa); ma.qc.restore(); Z = document.createElement("canvas"); Z.width =
@@ -386,18 +358,18 @@ var JeelizVTOWidget = function () {
                     case "rgb": case "rgba": if (f =
                         /^(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(,\s*([0-9]*\.?[0-9]+)\s*)?$/.exec(l)) { a.r = Math.min(255, parseInt(f[1], 10)) / 255; a.Z = Math.min(255, parseInt(f[2], 10)) / 255; a.b = Math.min(255, parseInt(f[3], 10)) / 255; d(f[5]); return } if (f = /^(\d+)%\s*,\s*(\d+)%\s*,\s*(\d+)%\s*(,\s*([0-9]*\.?[0-9]+)\s*)?$/.exec(l)) { a.r = Math.min(100, parseInt(f[1], 10)) / 100; a.Z = Math.min(100, parseInt(f[2], 10)) / 100; a.b = Math.min(100, parseInt(f[3], 10)) / 100; d(f[5]); return } break; case "hsl": case "hsla": if (f = /^([0-9]*\.?[0-9]+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*(,\s*([0-9]*\.?[0-9]+)\s*)?$/.exec(l)) {
                             l =
-                                parseFloat(f[1]) / 360; var p = parseInt(f[2], 10) / 100, w = parseInt(f[3], 10) / 100; d(f[5]); a.$n(l, p, w); return
+                            parseFloat(f[1]) / 360; var p = parseInt(f[2], 10) / 100, w = parseInt(f[3], 10) / 100; d(f[5]); a.$n(l, p, w); return
                         }
                 }
             } else if (f = /^#([A-Fa-f0-9]+)$/.exec(b)) { f = f[1]; l = f.length; if (3 === l) { a.r = parseInt(f.charAt(0) + f.charAt(0), 16) / 255; a.Z = parseInt(f.charAt(1) + f.charAt(1), 16) / 255; a.b = parseInt(f.charAt(2) + f.charAt(2), 16) / 255; return } if (6 === l) { a.r = parseInt(f.charAt(0) + f.charAt(1), 16) / 255; a.Z = parseInt(f.charAt(2) + f.charAt(3), 16) / 255; a.b = parseInt(f.charAt(4) + f.charAt(5), 16) / 255; return } } b && 0 < b.length && (f = Rd[b], void 0 !== f ? qd(a,
                 f) : console.warn("JETHREE.Color: Unknown color " + b))
         } function Gc(a, b, d, f) { this.F = a || 0; this.G = b || 0; this.H = d || 0; this.T = void 0 !== f ? f : 1 } function rd(a, b, d) { var f = b.F, l = b.G, p = b.H; b = b.T; var w = d.F, h = d.G, m = d.H; d = d.T; a.F = f * d + b * w + l * m - p * h; a.G = l * d + b * h + p * w - f * m; a.H = p * d + b * m + f * h - l * w; a.T = b * d - f * w - l * h - p * m; return a } function fc(a, b) { this.x = a || 0; this.y = b || 0 } function Wa(a, b, d) { this.x = a || 0; this.y = b || 0; this.z = d || 0 } function sd(a, b) { var d = a.x, f = a.y, l = a.z; a.x = f * b.z - l * b.y; a.y = l * b.x - d * b.z; a.z = d * b.y - f * b.x } function gc(a, b, d, f) {
             this.F =
-                a || 0; this.G = b || 0; this.H = d || 0; this.Ta = f || gc.fk
+            a || 0; this.G = b || 0; this.H = d || 0; this.Ta = f || gc.fk
         } function Tc(a, b) { this.min = void 0 !== a ? a : new Wa(Infinity, Infinity, Infinity); this.max = void 0 !== b ? b : new Wa(-Infinity, -Infinity, -Infinity) } function Hc(a) { return (new Wa).dd(a.min, a.max).Fa(.5) } function Sd(a, b) { a.min.min(b); a.max.max(b) } function hc() { this.elements = new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]); 0 < arguments.length && console.error("JETHREE.Matrix4: the constructor no longer reads arguments. use .set() instead.") } function td(a, b, d) {
             var f = b.elements,
-                l = d.elements; d = a.elements; b = f[0]; var p = f[4], w = f[8], h = f[12], m = f[1], q = f[5], x = f[9], I = f[13], t = f[2], y = f[6], z = f[10], k = f[14], g = f[3], F = f[7], L = f[11]; f = f[15]; var D = l[0], G = l[4], e = l[8], n = l[12], A = l[1], P = l[5], B = l[9], E = l[13], M = l[2], u = l[6], v = l[10], Q = l[14], X = l[3], T = l[7], fa = l[11]; l = l[15]; d[0] = b * D + p * A + w * M + h * X; d[4] = b * G + p * P + w * u + h * T; d[8] = b * e + p * B + w * v + h * fa; d[12] = b * n + p * E + w * Q + h * l; d[1] = m * D + q * A + x * M + I * X; d[5] = m * G + q * P + x * u + I * T; d[9] = m * e + q * B + x * v + I * fa; d[13] = m * n + q * E + x * Q + I * l; d[2] = t * D + y * A + z * M + k * X; d[6] = t * G + y * P + z * u + k * T; d[10] = t * e + y * B + z *
-                    v + k * fa; d[14] = t * n + y * E + z * Q + k * l; d[3] = g * D + F * A + L * M + f * X; d[7] = g * G + F * P + L * u + f * T; d[11] = g * e + F * B + L * v + f * fa; d[15] = g * n + F * E + L * Q + f * l; return a
+            l = d.elements; d = a.elements; b = f[0]; var p = f[4], w = f[8], h = f[12], m = f[1], q = f[5], x = f[9], I = f[13], t = f[2], y = f[6], z = f[10], k = f[14], g = f[3], F = f[7], L = f[11]; f = f[15]; var D = l[0], G = l[4], e = l[8], n = l[12], A = l[1], P = l[5], B = l[9], E = l[13], M = l[2], u = l[6], v = l[10], Q = l[14], X = l[3], T = l[7], fa = l[11]; l = l[15]; d[0] = b * D + p * A + w * M + h * X; d[4] = b * G + p * P + w * u + h * T; d[8] = b * e + p * B + w * v + h * fa; d[12] = b * n + p * E + w * Q + h * l; d[1] = m * D + q * A + x * M + I * X; d[5] = m * G + q * P + x * u + I * T; d[9] = m * e + q * B + x * v + I * fa; d[13] = m * n + q * E + x * Q + I * l; d[2] = t * D + y * A + z * M + k * X; d[6] = t * G + y * P + z * u + k * T; d[10] = t * e + y * B + z *
+                v + k * fa; d[14] = t * n + y * E + z * Q + k * l; d[3] = g * D + F * A + L * M + f * X; d[7] = g * G + F * P + L * u + f * T; d[11] = g * e + F * B + L * v + f * fa; d[15] = g * n + F * E + L * Q + f * l; return a
         } function Uc(a, b, d, f, l, p) { this.a = a; this.b = b; this.c = d; this.Ga = f instanceof Wa ? f : new Wa; this.ze = Array.isArray(f) ? f : []; this.color = l instanceof ec ? l : new ec; this.$g = Array.isArray(l) ? l : []; this.$b = void 0 !== p ? p : 0 } function Td(a, b, d) {
             var f = new XMLHttpRequest; f.open("GET", a, !0); var l = f.withCredentials = !1; f.onreadystatechange = function () {
                 404 !== f.status || l || (l = !0, d && d(404)); if (4 === f.readyState &&
@@ -426,7 +398,7 @@ var JeelizVTOWidget = function () {
                 v.R = v.R ? !0 : !1; if (!v.R) {
                     v.v = v.v || "precision lowp float;attribute vec2 a0;varying vec2 vv0;void main(){gl_Position=vec4(a0,0.,1.),vv0=a0*.5+vec2(.5);}"; v.K = v.K || ["a0"]; v.S = v.S || [2]; v.precision = v.precision || t; v.id = x++; void 0 !== v.lj && (v.lj.forEach(function (T, fa) { v.g = v.g.replace(T, v.Ia[fa]) }), v.lj.splice(0)); v.ah = 0; v.S.forEach(function (T) { v.ah += 4 * T }); var Q = d(v.precision); v.qa = b(u, Q + v.v, Q + v.g); v.B = {}; v.i.forEach(function (T) {
                         v.B[T] =
-                            u.getUniformLocation(v.qa, T)
+                        u.getUniformLocation(v.qa, T)
                     }); v.attributes = {}; v.xa = []; v.K.forEach(function (T) { var fa = u.getAttribLocation(v.qa, T); v.attributes[T] = fa; v.xa.push(fa) }); if (v.o) { u.useProgram(v.qa); q = v; m = v.id; for (var X in v.o) u.uniform1i(v.B[X], v.o[X]) } v.Oa = !0
                 }
             } function l(u) { Db.Cj(M); m !== u.id && (M.M(), m = u.id, q = u, c.useProgram(u.qa), u.xa.forEach(function (v) { 0 !== v && c.enableVertexAttribArray(v) })) } function p(u, v, Q) { f(u, v, Q); u.useProgram(v.qa); u.enableVertexAttribArray(v.attributes.a0); m = -1; return q = v } function w() {
@@ -503,7 +475,7 @@ var JeelizVTOWidget = function () {
                 zb: function () { return I }, m: function () { if (!I) { B = Ea(A, 2); E = Ea(P, 2); t = "highp"; c.getShaderPrecisionFormat && (c.getShaderPrecisionFormat(c.FRAGMENT_SHADER, c.MEDIUM_FLOAT), c.getShaderPrecisionFormat(c.FRAGMENT_SHADER, c.LOW_FLOAT)); for (var u in B) f(c, B[u], u); aa.set("s0"); c.enableVertexAttribArray(0); I = !0 } }, uc: function (u) { u.forEach(function (v) { M.oa(v) }) }, oa: function (u) { B[u.id] = u; f(c, u, u.id) }, Cm: function (u,
                     v, Q) { v || (v = u); B[v] = Object.create(E[u]); B[v].Lm = !0; E[u].Ia && E[u].Ia.forEach(function (X, T) { var fa = ""; "gl_Frag" === X.substring(0, 7) ? (X = new RegExp("[,;]?" + X, "g"), fa = ";") : X = new RegExp(X, "g"); B[v].g = B[v].g.replace(X, fa + Q[T]) }); f(c, B[v], v) }, set: function (u) { var v = B[u]; v.R && (v.R = !1, f(c, v, u)); l(v) }, Eb: function (u) { return p(u, w(), "s48") }, he: function (u) { return p(u, { g: "void main(){gl_FragColor=vec4(.5,.5,.5,.5);}", i: [], precision: t }, "s49") }, Kl: function (u) { return "undefined" === typeof B[u] ? !1 : B[u].Oa }, M: function () {
                         -1 !==
-                            m && (m = -1, q.xa.forEach(function (u) { 0 !== u && c.disableVertexAttribArray(u) }))
+                        m && (m = -1, q.xa.forEach(function (u) { 0 !== u && c.disableVertexAttribArray(u) }))
                     }, je: function () { var u = 0; q.xa.forEach(function (v, Q) { Q = q.S[Q]; c.vertexAttribPointer(v, Q, c.FLOAT, !1, q.ah, u); u += 4 * Q }) }, Il: function () { c.enableVertexAttribArray(0) }, fc: function () { M.hc(c) }, hc: function (u) { u.vertexAttribPointer(q.xa[0], 2, u.FLOAT, !1, 8, 0) }, ie: function (u, v) { c.uniform1i(q.B[u], v) }, C: function (u, v) { c.uniform1f(q.B[u], v) }, O: function (u, v, Q) { c.uniform2f(q.B[u], v, Q) }, Bg: function (u, v) { c.uniform2fv(q.B[u], v) }, Dg: function (u, v) {
                         c.uniform3fv(q.B[u],
                             v)
@@ -565,7 +537,7 @@ var JeelizVTOWidget = function () {
                         }, Fe: function (E) { E !== l && (c.activeTexture(p[E]), l = E) }, instance: function (E) {
                             function M() {
                                 qa =
-                                    void 0 !== N.la.videoWidth ? N.la.videoWidth : N.la.width; oa = void 0 !== N.la.videoHeight ? N.la.videoHeight : N.la.height
+                                void 0 !== N.la.videoWidth ? N.la.videoWidth : N.la.width; oa = void 0 !== N.la.videoHeight ? N.la.videoHeight : N.la.height
                             } function u(ea) { var za = c.getError(); if ("FUCKING_BIG_ERROR" === za) return !1; c.texImage2D(c.TEXTURE_2D, 0, wa, bb, db, ea); za = c.getError(); za !== c.NO_ERROR && bb !== c.RGBA && (bb = c.RGBA, c.texImage2D(c.TEXTURE_2D, 0, wa, bb, db, ea)); return !0 } function v() {
                                 if (!Y) {
                                     a(ka); Xa && c.pixelStorei(c.UNPACK_FLIP_Y_WEBGL, Xa); N.isPot ? (c.texParameteri(c.TEXTURE_2D, c.TEXTURE_WRAP_S, N.isMirrorX ? c.MIRRORED_REPEAT : c.REPEAT), c.texParameteri(c.TEXTURE_2D,
@@ -673,7 +645,7 @@ var JeelizVTOWidget = function () {
                                 c.DEPTH_COMPONENT16, q, x); c.framebufferRenderbuffer(b, c.DEPTH_ATTACHMENT, c.RENDERBUFFER, t); c.clearDepth(1)
                         }, bind: function (F, L) { k !== p.ma && (c.bindFramebuffer(b, I), p.ma = k); m && m.u(); L && c.viewport(0, 0, q, x); F && c.clear(c.COLOR_BUFFER_BIT | c.DEPTH_BUFFER_BIT) }, mh: function () { k !== p.ma && (c.bindFramebuffer(b, I), p.ma = k) }, clear: function () { c.clear(c.COLOR_BUFFER_BIT | c.DEPTH_BUFFER_BIT) }, Qe: function () { c.clear(c.COLOR_BUFFER_BIT) }, th: function () { c.clear(c.DEPTH_BUFFER_BIT) }, Wc: function () { c.viewport(0, 0, q, x) }, u: function () {
                             k !==
-                                p.ma && (c.bindFramebuffer(b, I), p.ma = k)
+                            p.ma && (c.bindFramebuffer(b, I), p.ma = k)
                         }, rtt: function (F) { m = F; p.ma !== k && (c.bindFramebuffer(c.FRAMEBUFFER, I), p.ma = k); F.u() }, aa: function () { c.bindFramebuffer(b, null); p.ma = -1 }, resize: function (F, L) { q = F; x = L; t && (c.bindRenderbuffer(c.RENDERBUFFER, t), c.renderbufferStorage(c.RENDERBUFFER, c.DEPTH_COMPONENT16, q, x)) }, remove: function () {
                             I === a || z || (c.bindFramebuffer(b, I), c.framebufferTexture2D(b, c.COLOR_ATTACHMENT0, c.TEXTURE_2D, null, 0), t && c.framebufferRenderbuffer(b, c.DEPTH_ATTACHMENT, c.RENDERBUFFER, null), c.bindFramebuffer(b,
                                 null), p.ma = -1, c.deleteFramebuffer(I), t && c.deleteRenderbuffer(t)); z = !0
@@ -770,7 +742,7 @@ var JeelizVTOWidget = function () {
                                 !1), A = l.hg), A.h(0), A; var P = l.output; if (a.normalize || h.Ld) n = a.normalize, aa.set(h.Ld ? "s9" : "s8"), aa.C("u10", n ? y : 1), l.gg.J(), P.h(0), W.l(!1, !1), P = l.gg; n = null; switch (h.type) { case "cpuRGBA2Float": P.Fh(!1); A ? n = e.Fn(P).then(h.D) : (P = e.Gn(P), h.D(P)); break; case "cpuMeanFloat": P.Fh(!0); if (A) n = P.In().then(h.D); else { P = P.Jn(); for (var B = 0; B < P.length; ++B); h.D(P) } break; case "gpuRawAvg": case "gpuRaw": P.h(0); case "none": null !== h.D && h.D(P) }A && null === n && (n = Promise.resolve()); return n
                         }, te: function (n) { a.za = n; b(); d() }, Do: function (n) {
                             n &&
-                                (h.type = n.Zd || "none", h.D = n.Yd || null, h.isLinear = n.eg ? !0 : !1); d(); n = "undefined" !== typeof a.classesCount && a.classesCount ? a.classesCount : a.size * a.size; for (var A = 0, P = 0, B = 0; A < n; ++A)h.buffer.push(P + (a.size - 1 - B) * a.size), h.results.push([-1, -1, -1, -1]), ++P, P === a.size && (P = 0, ++B); h.Ld = "gpuRawAvg" === h.type || "cpuMeanFloat" === h.type; if (a.normalize || h.Ld) l.gg = ba.instance({ isFloat: !0, isPot: !0, width: a.size })
+                            (h.type = n.Zd || "none", h.D = n.Yd || null, h.isLinear = n.eg ? !0 : !1); d(); n = "undefined" !== typeof a.classesCount && a.classesCount ? a.classesCount : a.size * a.size; for (var A = 0, P = 0, B = 0; A < n; ++A)h.buffer.push(P + (a.size - 1 - B) * a.size), h.results.push([-1, -1, -1, -1]), ++P, P === a.size && (P = 0, ++B); h.Ld = "gpuRawAvg" === h.type || "cpuMeanFloat" === h.type; if (a.normalize || h.Ld) l.gg = ba.instance({ isFloat: !0, isPot: !0, width: a.size })
                         }, Fn: function (n) { return n.Hn().then(f) }, Gn: function (n) { n = n.dj(); f(n); return h.results }, A: function () {
                             for (var n in l) {
                                 var A =
@@ -932,7 +904,7 @@ var JeelizVTOWidget = function () {
                     var d = Object.assign({}, a, b), f = [], l = null, p = -1, w = null, h = !1; for (b = d.Xf[0]; b <= d.Xf[1]; ++b)f[b] = null; return {
                         J: function (m, q) {
                             q !==
-                                p && (l && l.remove(), l = ba.instance({ isLinear: d.isLinear, isPot: !0, width: q })); if (h = d.Jm && q < .5 * m) { m = Math.floor(Math.log2(m)); var x = d.Xf; x = m = Math.min(Math.max(m, x[0]), x[1]); if (!f[x]) { var I = ba.instance({ isPot: !0, isMipmap: !0, xi: !0, width: Math.pow(2, x) }); f[x] = { V: I, Ni: -1 } } m = f[m]; w = m.V; m.Ni !== q && (x = Math.log2(q), w.h(0), w.zj(x), ba.aa(0), m.Ni = q) } else w = l; p = q; w.J()
+                            p && (l && l.remove(), l = ba.instance({ isLinear: d.isLinear, isPot: !0, width: q })); if (h = d.Jm && q < .5 * m) { m = Math.floor(Math.log2(m)); var x = d.Xf; x = m = Math.min(Math.max(m, x[0]), x[1]); if (!f[x]) { var I = ba.instance({ isPot: !0, isMipmap: !0, xi: !0, width: Math.pow(2, x) }); f[x] = { V: I, Ni: -1 } } m = f[m]; w = m.V; m.Ni !== q && (x = Math.log2(q), w.h(0), w.zj(x), ba.aa(0), m.Ni = q) } else w = l; p = q; w.J()
                         }, h: function (m) { w.h(m); h && w.Ec() }, ya: function (m) { w.ya(m) }, remove: function () { l && l.remove(); f.forEach(function (m) { m && m.V.remove() }) }
                     }
                 }
@@ -969,7 +941,7 @@ var JeelizVTOWidget = function () {
                 fa[0] = Y.left; fa[1] = Y.top; u.width = Math.round(L.width / 4); u.height = Math.round(L.height / 4); v.width = u.width; v.height = u.height; u.style.width = L.offsetWidth + "px"; u.style.height = L.offsetHeight + "px"; u.style.left = fa[0] + "px"; u.style.top = fa[1] + "px"; setTimeout(w, 0)
             } function w() { Q.drawImage(L, 0, 0, u.width, u.height); X.drawImage(u, 0, 0); T = !0; document.body.appendChild(u); N && (N(), N = !1) } function h() { u.style.transitionDuration = "0ms"; u.style.opacity = "1"; u.style.transform = ""; T && (document.body.removeChild(u), T = !1) } function m() {
                 ra &&
-                    (window.clearTimeout(ra), ra = null)
+                (window.clearTimeout(ra), ra = null)
             } function q(Y) { I(Y, qa, 0); I(Y, oa, 1); return Math.sqrt(qa[0] * qa[0] + oa[0] * oa[0]) } function x(Y, ia) { void 0 !== Y.changedTouches || void 0 !== Y.touches ? I(Y, ia, 0) : (ia[0] = Y.pageX, ia[1] = Y.pageY) } function I(Y, ia, ta) { Y.touches.length > ta ? (ia[0] = Y.touches[ta].pageX, ia[1] = Y.touches[ta].pageY) : (ia[0] = Y.changedTouches[ta].pageX, ia[1] = Y.changedTouches[ta].pageY) } function t() { G.forEach(function (Y) { L.removeEventListener(Y.type, Y.sb, !1) }); return G.splice(0, G.length) } function y(Y) {
                 Y.forEach(function (ia) {
                     z(ia.type,
@@ -995,7 +967,7 @@ var JeelizVTOWidget = function () {
         }); V.zh = !0; V.Ah = !0; V.yh = !1; V.Qa = !0; var eb = { ee: 3.5, Db: "images/debug/picsou.png", Tc: 45, Of: .785, Pf: .3925, Pd: 5, Od: 2, Nf: 0, Mf: 0, fp: "images/backgrounds/bg1.jpg", gp: "images/backgrounds/bg1_light.jpg", ck: 1, dk: 2 }; J.fx = [4, 50]; J.Oc = [-110, 0]; J.Ej = .2; J.Fj = 3; J.le = [0, -2, 20]; J.kc = [.85, 1]; V.Rc = 2.1289; V.jg = 1; eb.ee = 2.5858; eb.Of = .4388;
         eb.Pf = .118; eb.Db = "images/debug/hdri2.png"; eb.Tc = 180; eb.sg = .8065; eb.Pd = 5.3887; eb.Od = .5351; eb.Nf = -.3019; eb.Mf = 0; eb.ck = 3.5288; eb.dk = 6.2168; var nd = { element: null, Lh: null, Md: !1, wh: null, V: null, Sg: null, deviceId: -1, jf: -1, ud: 0, $i: null, Ae: -1 }, Ha = Object.assign({}, nd), Tb = null, Dc = [], Fc = [], Rc = null, Wc = null, Sc = null, ab = null, wd = J.un, xd = window.devicePixelRatio || 1; var Cc = { Ll: Math.max(wd[0] / xd, 1), ff: Math.min(xd, wd[1]) }; var ib = null; da.onLoad = function (a) { da.ready ? a() : Dc.push(a) }; da.onHalfLoad = function (a) {
             da.load_model ? a() :
-                Fc.push(a)
+            Fc.push(a)
         }; da.onWebcamAsk = function (a) { Rc = a }; da.onContextLost = function (a) { Wc = a }; da.onWebcamGet = function (a) { Sc = a }; da.get_onHalfLoadCallstack = function () { return Fc }; da.set_size = function (a, b, d) { d = d ? Cc.ff : 1; J.width = a * d; J.height = b * d }; da.get_videoDevices = function (a) { id(a) }; da.set_videoDevice = function (a) { Ha.deviceId = a }; da.set_videoSizes = function (a, b, d, f, l, p) { cb.idealWidth = a; cb.idealHeight = b; cb.minWidth = d; cb.maxWidth = f; cb.minHeight = l; cb.maxHeight = p }; da.set_loading = function (a, b, d) {
             a && (J.Sf = !0, J.Rf = a); "number" ===
                 typeof b && (a = new ec(b), J.Rd = [a.r, a.Z, a.b, 0]); "number" === typeof d && (J.Td = d)
@@ -1015,7 +987,7 @@ var JeelizVTOWidget = function () {
                 Ue: "jeefitCanvas", sa: f, width: a.width, height: a.height, debug: !1,
                 dg: function () { Wc && Wc() }, premultipliedAlpha: !0
             }) ? J.Lc ? od() : Pd() : (Tb && Tb("GL_INCOMPATIBLE", "Cannot init Context"), !1)
-        }; da.request_cameraVideoStream = function () { return od().then(function () { ib.Nl(J.width, J.height, 0) }) }; window.JEELIZVTO = da; var kd = function () {
+        }; da.request_cameraVideoStream = function () { return od().then(function () { ib.Nl(J.width, J.height, 0) }) }; VISIONVTO = da; var kd = function () {
             function a() { Fa.aa(); c.viewport(0, 0, 1, 1); aa.set("s74"); f.h(0); W.l(!1); c.readPixels(0, 0, 1, 1, c.RGBA, c.UNSIGNED_BYTE, p); b(0 < p[0]) } var b = null, d = !1, f = null, l = !1, p = null, w = {
                 m: function (h) {
                     if (l) return !1; f = h; aa.uc([{
@@ -1032,7 +1004,7 @@ var JeelizVTOWidget = function () {
                 } return function (b, d, f) { b = Xc.Math.Rp(b, 1); d = Xc.Math.Pe(d, 0, 1); f = Xc.Math.Pe(f, 0, 1); 0 === d ? this.r = this.Z = this.b = f : (d = .5 >= f ? f * (1 + d) : f + d - f * d, f = 2 * f - d, this.r = a(f, d, b + 1 / 3), this.Z = a(f, d, b), this.b = a(f, d, b - 1 / 3)); return this }
             }(), clone: function () { return new this.constructor(this.r, this.Z, this.b) }, N: function (a) { this.r = a.r; this.Z = a.Z; this.b = a.b; return this }, add: function (a) { this.r += a.r; this.Z += a.Z; this.b += a.b; return this }, multiply: function (a) { this.r *= a.r; this.Z *= a.Z; this.b *= a.b; return this }, Fa: function (a) {
                 this.r *=
-                    a; this.Z *= a; this.b *= a; return this
+                a; this.Z *= a; this.b *= a; return this
             }, rb: function (a, b) { void 0 === b && (b = 0); this.r = a[b]; this.Z = a[b + 1]; this.b = a[b + 2]; return this }
         }; var Rd = {}; Gc.prototype = {
             constructor: Gc, get x() { return this.F }, set x(a) { this.F = a }, get y() { return this.G }, set y(a) { this.G = a }, get z() { return this.H }, set z(a) { this.H = a }, get w() { return this.T }, set w(a) { this.T = a }, set: function (a, b, d, f) { this.F = a; this.G = b; this.H = d; this.T = f; return this }, clone: function () { return new this.constructor(this.F, this.G, this.H, this.T) }, N: function (a) {
@@ -1069,7 +1041,7 @@ var JeelizVTOWidget = function () {
         }; gc.fk = "XYZ"; gc.prototype = {
             constructor: gc, get x() { return this.F }, set x(a) { this.F = a }, get y() { return this.G }, set y(a) { this.G = a }, get z() { return this.H }, set z(a) { this.H = a }, get order() { return this.Ta }, set order(a) { this.Ta = a }, set: function (a, b, d, f) {
                 this.F =
-                    a; this.G = b; this.H = d; this.Ta = f || this.Ta; return this
+                a; this.G = b; this.H = d; this.Ta = f || this.Ta; return this
             }, clone: function () { return new this.constructor(this.F, this.G, this.H, this.Ta) }, N: function (a) { this.F = a.F; this.G = a.G; this.H = a.H; this.Ta = a.Ta; return this }, rb: function (a) { this.F = a[0]; this.G = a[1]; this.H = a[2]; void 0 !== a[3] && (this.Ta = a[3]); return this }
         }; Tc.prototype = {
             constructor: Tc, set: function (a, b) { this.min.N(a); this.max.N(b); return this }, clone: function () { return (new this.constructor).N(this) }, N: function (a) { this.min.N(a.min); this.max.N(a.max); return this },
@@ -1271,42 +1243,42 @@ var JeelizVTOWidget = function () {
             }; return G
         }(), Za = function () {
             var a = {}, b = [], d = !1, f = 0, l = 0, p = -1, w = -1, h = 1, m = null, q = !1, x = null, I = !1, t = !1, y = !1, z = !1, k = !1, g = !1, F = -1, L = -1, D = !1,
-                G = !1, e = null, n = null, A = -1, P = -1, B = null, E = -1, M, u = null, v = null, Q = null, X = null, T = null, fa = null, N = null, ra = [{ type: "1f", name: "u88", value: 0 }, { type: "1f", name: "u153", value: 0 }, { type: "1f", name: "u154", value: 0 }, { type: "1f", name: "u83", value: 1 }, { type: "1f", name: "u79", value: 0 }, { type: "1f", name: "u80", value: 0 }, { type: "1f", name: "u90", value: 1 }], Pa = {
-                    m: function (H, r) {
-                        a.Fg = H; ha.Vg(); Yc.ef(); Wb.ef(H.Be); p = H.hf; w = H.np; h = H.Ae; F = H.$f; L = H.ag; var O = [{ type: "1f", name: "u83", value: p }, { type: "1f", name: "u79", value: F }, { type: "1f", name: "u80", value: L },
-                        { type: "1f", name: "u84", value: H.Yn }, { type: "mat4", name: "u78", value: H.Cn }, { type: "2f", name: "u42", value: H.ek }]; H.Tg = O; var ca = [{ type: "3f", name: "u85", value: [0, 0, 0] }, { type: "3f", name: "u86", value: H.dh }, { type: "3f", name: "u87", value: H.bh }, { type: "1f", name: "u88", value: 0 }, { type: "1f", name: "u89", value: H.Be }, { type: "1f", name: "u90", value: 1 }]; H.Vj = ca; Pa.Bm(H, r); d || void 0 !== H.Ha || (H.Ha = [0, 0, 120]); G = D = J.vf; if (!d && D) {
-                            r = 1 * ha.vb(); var ka = 1 * ha.ub(), la = { isLinear: !0, isPot: !1, width: r, height: ka }; e = ba.instance(la); n = ba.instance(la);
-                            A = 1 / r; P = 1 / ka
-                        } O = [{ type: "1i", name: "u41", value: 1 }, { type: "3f", name: "u81", value: H.Ha }, { type: "1f", name: "u149", value: H.gd }, { type: "1f", name: "u150", value: H.Mb }].concat(O, ca); m = H.Oc; ca = [{ type: "1f", name: "u153", value: m[0] }, { type: "1f", name: "u154", value: m[1] }]; ha.ca() ? (r = [{ type: "1i", name: "u1", value: 0 }], ka = [{ type: "1i", name: "u157", value: 2 }], C.j("s106NNGLcolor", O.concat(ca)), C.j("s106NNGLtexture", [].concat(r, O, ca)), C.j("s106NNGLtextureNormalMap", [].concat(r, ka, O, ca)), C.j("s106NNGLtextureParamsMap", [{
-                            type: "1i", name: "u76",
-                            value: 2
-                        }].concat(r, O, ca)), C.j("s106NNGLtextureNormalParamsMap", [{ type: "1i", name: "u76", value: 3 }].concat(r, ka, O, ca))) : (C.j("s110", O.concat(ca)), C.j("s111", [{ type: "1i", name: "u1", value: 0 }].concat(O)), C.j("s112", O), C.j("s113", O), C.j("s114", O.concat([{ type: "1i", name: "u157", value: 0 }])), C.j("s115", O), C.j("s116", O.concat([{ type: "1i", name: "u76", value: 0 }]))); C.j("s82", [{ type: "2f", name: "u97", value: H.Mg }]); C.j(V.ga_ ? "s96" : "s97", [{ type: "1f", name: "u119", value: H.Ie }, { type: "3f", name: "u120", value: H.pg }, {
-                            type: "1f",
-                            name: "u121", value: H.Ve
-                        }, { type: "1f", name: "u122", value: 1 }, { type: "3f", name: "u117", value: H.jk }]); if (M = H.Sd) B = H.bn, E = H.Td, C.j("s95", [{ type: "4f", name: "u106", value: H.Rd }, { type: "1f", name: "u109", value: H.Qf }, { type: "2f", name: "u107", value: H.an }, { type: "1f", name: "u111", value: Math.sign(E) }]); b.forEach(function (ma) { ma.pj(H) }); d = !0
-                    }, dc: function (H) { t && ya.ia.dc(H); z && ya.ua.dc(H) }, Bm: function (H, r) {
-                        void 0 !== ya.ia && H.jc && ha.ca() && (ya.ia.m(H), I = !0, r.push(function (O) { ya.ia.dc(O); t = !y })); void 0 !== ya.ua && H.od && (ya.ua.m(H),
-                            r.push(function (O) { ya.ua.dc(O); z = !0 })); void 0 !== ya.rc && H.Le && (ya.rc.m(H), g = k = !0); void 0 !== ya.mb && (ya.mb.m(H), x = ya.mb.Dm({ width: H.Gc, height: 2 * H.Gc, depth: 1.5 * H.Gc, Gl: -H.zf, Wa: H.xf, kl: H.yf }), q = !0)
-                    }, yo: function (H, r, O, ca) { H && (N = H, I && ya.ia.ec(H), z && ya.ua.ec(H), k && ya.rc.ec(H), b.forEach(function (ka) { ka.ec(H) })); O && (X = O); ca && (T = ca) }, Fb: function (H) {
-                        ha.ca() ? (C.j("s106NNGLcolor", H), C.j("s106NNGLtexture", H), C.j("s106NNGLtextureNormalMap", H), C.j("s106NNGLtextureParamsMap", H), C.j("s106NNGLtextureNormalParamsMap",
-                            H)) : (C.j("s110", H), C.j("s111", H), C.j("s112", H), C.j("s113", H), C.j("s114", H), C.j("s115", H), C.j("s116", H))
-                    }, eb: function (H, r, O) { var ca = [H[0] + r[0], H[1] + r[1], H[2] + r[2]]; ca = [ca[0] + O[0], ca[1] + O[1], ca[2] + O[2]]; a.ce = ca; a.ln = r; a.$o = O; Pa.Fb([{ type: "3f", name: "u147", value: ca }]); ha.ca() && (I && ya.ia.eb(H, r, O), z && ya.ua.eb(ca)); q && ya.mb.eb(H, O) }, fb: function (H, r, O) { var ca = H * r * O; a.mn = r; a.ap = O; a.vm = H; Pa.Fb([{ type: "1f", name: "u148", value: ca }]); ha.ca() && (I && ya.ia.fb(H * r, O), z && ya.ua.fb(ca)); q && ya.mb.fb(H, O) }, jj: function () {
-                        Pa.eb(a.ce,
-                            a.ln, a.$o); Pa.fb(a.vm, a.mn, a.ap); Pa.Aj(a.rx); Pa.m(a.Fg); Pa.wj(a.Ok, a.Mb)
-                    }, Aj: function (H) { a.rx = H; Pa.Fb([{ type: "1f", name: "u82", value: H }]); ha.ca() && (I && ya.ia.zg(H), z && ya.ua.zg(H)) }, wj: function (H, r) { a.Ok = H; a.Mb = r; Pa.Fb([{ type: "1f", name: "u149", value: H }, { type: "1f", name: "u150", value: r }]) }, qo: function (H) { m = H; 0 === f && Pa.Fb([{ type: "1f", name: "u153", value: m[0] }, { type: "1f", name: "u154", value: m[1] }]) }, cb: function (H) {
-                        function r() { q && ya.mb.toggle(!1); M && C.j("s95", [{ type: "1f", name: "u110", value: 0 }]) } 0 >= H ? (l = 0, 0 !== f &&
-                            (f = 0, Wb.Sn(), q && ya.mb.toggle(!0), M && C.j("s95", [{ type: "1f", name: "u110", value: 1 }]))) : 1 <= H ? (l = 1, 1 !== f && (f = 1, Wb.Ij(!0)), r()) : (l = H, 2 !== f && (Wb.Ij(!1), f = 2, r())); C.j("s97", [{ type: "1f", name: "u122", value: 1 - H }]); var O = 1 - H; ra[0].value = l; ra[1].value = m[0] * O + -300 * H; ra[2].value = m[1] * O + -300 * H; ra[3].value = p * O + H * w; ra[4].value = F * O; ra[5].value = L * O; ra[6].value = O + H * h; t && ya.ia.Ag(l, ra); z && ya.ua.Ag(l, ra); Pa.Fb(ra)
-                    }, Dl: function (H) { N.h(1); H.forEach(function (r) { r.yl() }); q && x.W() }, Vm: function () { return 1 === f }, Je: function (H) { N.ya(H) },
-                    mk: function (H) { b.push(H) }, Kg: function (H) { y = !H; t = H && I }, Jg: function (H) { g = H && k }, vg: function (H) { z && ha.ca() && ya.ua.Co(H) }, Gb: function (H) { ha.ca() && (I && ya.ia.Gb(H), z && ya.ua.Gb(H)) }, Al: function (H, r) { if (!G) return !1; e.J(); H.h(0); C.set("s88"); C.O("u14", 0, P); W.l(!1, !1); n.u(); e.h(0); C.O("u14", A, 0); W.l(!1, !1); C.set("s89"); r.J(); n.h(0); W.l(!1, !1); return !0 }, Hj: function (H) { G = H && D }, resize: function (H, r, O) { D && (H *= O, r *= O, e.resize(H, r), n.resize(H, r), A = 1 / H, P = 1 / r) }, tg: function (H, r) {
-                        var O = H.P(), ca = H.$(), ka = {
-                            width: O, height: ca,
-                            isPot: !1
-                        }; I && (Q && Q.remove(), Q = ba.instance(ka)); u && u.remove(); u = Fa.instance({ width: O, height: ca }); k || z ? (ya.rc.ug(O, ca), v && v.remove(), v = ba.instance(ka)) : v = H; I && ya.ia.ug(O, ca); r && (fa && fa.remove(), fa = ba.instance(ka))
-                    }, wl: function (H) {
-                        var r = null; switch (f) { case 0: r = H; break; case 2: u.bind(!1, !0); fa.u(); C.set("s77"); C.C("u13", l); H.h(1); T.h(0); W.l(!0, !0); r = fa; break; case 1: r = T }if (!t || 1 === f || !ha.ca()) return r; r.ya(0); g && ya.rc.W(r, v); u.bind(!1, !g); z && (g ? r.h(0) : (v.u(), C.set("s1"), W.l(!0, !0)), ya.ua.W()); v.h(0); X.ya(2);
-                        ya.ia.W(); Q.u(); C.set("s1"); g || z ? v.h(0) : r.h(0); W.l(!0, !V.ga_); ya.ia.add(); return Q
-                    }, nk: function (H, r) { if (!t) return H; X.ya(2); ya.ia.W(); Fa.ba(); C.set("s76"); r.J(); ya.ia.om().h(0); W.l(!0, !0); C.set("s1"); c.enable(c.BLEND); c.blendFunc(c.ONE, c.ONE_MINUS_SRC_ALPHA); H.h(0); W.l(!1, !1); c.disable(c.BLEND); return r }, Bl: function (H, r) { if (!M) return !1; C.set("s95"); C.C("u108", H * E); B.h(1); Za.Je(2); v ? v.h(3) : r.h(3); return !0 }, A: function () { d = !1; l = f = 0; w = p = -1; h = 1; m = null; L = F = -1; q = !1; x = null; g = k = z = y = t = I = !1; ya.ia.A(); ya.La.A() }
-                };
+            G = !1, e = null, n = null, A = -1, P = -1, B = null, E = -1, M, u = null, v = null, Q = null, X = null, T = null, fa = null, N = null, ra = [{ type: "1f", name: "u88", value: 0 }, { type: "1f", name: "u153", value: 0 }, { type: "1f", name: "u154", value: 0 }, { type: "1f", name: "u83", value: 1 }, { type: "1f", name: "u79", value: 0 }, { type: "1f", name: "u80", value: 0 }, { type: "1f", name: "u90", value: 1 }], Pa = {
+                m: function (H, r) {
+                    a.Fg = H; ha.Vg(); Yc.ef(); Wb.ef(H.Be); p = H.hf; w = H.np; h = H.Ae; F = H.$f; L = H.ag; var O = [{ type: "1f", name: "u83", value: p }, { type: "1f", name: "u79", value: F }, { type: "1f", name: "u80", value: L },
+                    { type: "1f", name: "u84", value: H.Yn }, { type: "mat4", name: "u78", value: H.Cn }, { type: "2f", name: "u42", value: H.ek }]; H.Tg = O; var ca = [{ type: "3f", name: "u85", value: [0, 0, 0] }, { type: "3f", name: "u86", value: H.dh }, { type: "3f", name: "u87", value: H.bh }, { type: "1f", name: "u88", value: 0 }, { type: "1f", name: "u89", value: H.Be }, { type: "1f", name: "u90", value: 1 }]; H.Vj = ca; Pa.Bm(H, r); d || void 0 !== H.Ha || (H.Ha = [0, 0, 120]); G = D = J.vf; if (!d && D) {
+                        r = 1 * ha.vb(); var ka = 1 * ha.ub(), la = { isLinear: !0, isPot: !1, width: r, height: ka }; e = ba.instance(la); n = ba.instance(la);
+                        A = 1 / r; P = 1 / ka
+                    } O = [{ type: "1i", name: "u41", value: 1 }, { type: "3f", name: "u81", value: H.Ha }, { type: "1f", name: "u149", value: H.gd }, { type: "1f", name: "u150", value: H.Mb }].concat(O, ca); m = H.Oc; ca = [{ type: "1f", name: "u153", value: m[0] }, { type: "1f", name: "u154", value: m[1] }]; ha.ca() ? (r = [{ type: "1i", name: "u1", value: 0 }], ka = [{ type: "1i", name: "u157", value: 2 }], C.j("s106NNGLcolor", O.concat(ca)), C.j("s106NNGLtexture", [].concat(r, O, ca)), C.j("s106NNGLtextureNormalMap", [].concat(r, ka, O, ca)), C.j("s106NNGLtextureParamsMap", [{
+                        type: "1i", name: "u76",
+                        value: 2
+                    }].concat(r, O, ca)), C.j("s106NNGLtextureNormalParamsMap", [{ type: "1i", name: "u76", value: 3 }].concat(r, ka, O, ca))) : (C.j("s110", O.concat(ca)), C.j("s111", [{ type: "1i", name: "u1", value: 0 }].concat(O)), C.j("s112", O), C.j("s113", O), C.j("s114", O.concat([{ type: "1i", name: "u157", value: 0 }])), C.j("s115", O), C.j("s116", O.concat([{ type: "1i", name: "u76", value: 0 }]))); C.j("s82", [{ type: "2f", name: "u97", value: H.Mg }]); C.j(V.ga_ ? "s96" : "s97", [{ type: "1f", name: "u119", value: H.Ie }, { type: "3f", name: "u120", value: H.pg }, {
+                        type: "1f",
+                        name: "u121", value: H.Ve
+                    }, { type: "1f", name: "u122", value: 1 }, { type: "3f", name: "u117", value: H.jk }]); if (M = H.Sd) B = H.bn, E = H.Td, C.j("s95", [{ type: "4f", name: "u106", value: H.Rd }, { type: "1f", name: "u109", value: H.Qf }, { type: "2f", name: "u107", value: H.an }, { type: "1f", name: "u111", value: Math.sign(E) }]); b.forEach(function (ma) { ma.pj(H) }); d = !0
+                }, dc: function (H) { t && ya.ia.dc(H); z && ya.ua.dc(H) }, Bm: function (H, r) {
+                    void 0 !== ya.ia && H.jc && ha.ca() && (ya.ia.m(H), I = !0, r.push(function (O) { ya.ia.dc(O); t = !y })); void 0 !== ya.ua && H.od && (ya.ua.m(H),
+                        r.push(function (O) { ya.ua.dc(O); z = !0 })); void 0 !== ya.rc && H.Le && (ya.rc.m(H), g = k = !0); void 0 !== ya.mb && (ya.mb.m(H), x = ya.mb.Dm({ width: H.Gc, height: 2 * H.Gc, depth: 1.5 * H.Gc, Gl: -H.zf, Wa: H.xf, kl: H.yf }), q = !0)
+                }, yo: function (H, r, O, ca) { H && (N = H, I && ya.ia.ec(H), z && ya.ua.ec(H), k && ya.rc.ec(H), b.forEach(function (ka) { ka.ec(H) })); O && (X = O); ca && (T = ca) }, Fb: function (H) {
+                    ha.ca() ? (C.j("s106NNGLcolor", H), C.j("s106NNGLtexture", H), C.j("s106NNGLtextureNormalMap", H), C.j("s106NNGLtextureParamsMap", H), C.j("s106NNGLtextureNormalParamsMap",
+                        H)) : (C.j("s110", H), C.j("s111", H), C.j("s112", H), C.j("s113", H), C.j("s114", H), C.j("s115", H), C.j("s116", H))
+                }, eb: function (H, r, O) { var ca = [H[0] + r[0], H[1] + r[1], H[2] + r[2]]; ca = [ca[0] + O[0], ca[1] + O[1], ca[2] + O[2]]; a.ce = ca; a.ln = r; a.$o = O; Pa.Fb([{ type: "3f", name: "u147", value: ca }]); ha.ca() && (I && ya.ia.eb(H, r, O), z && ya.ua.eb(ca)); q && ya.mb.eb(H, O) }, fb: function (H, r, O) { var ca = H * r * O; a.mn = r; a.ap = O; a.vm = H; Pa.Fb([{ type: "1f", name: "u148", value: ca }]); ha.ca() && (I && ya.ia.fb(H * r, O), z && ya.ua.fb(ca)); q && ya.mb.fb(H, O) }, jj: function () {
+                    Pa.eb(a.ce,
+                        a.ln, a.$o); Pa.fb(a.vm, a.mn, a.ap); Pa.Aj(a.rx); Pa.m(a.Fg); Pa.wj(a.Ok, a.Mb)
+                }, Aj: function (H) { a.rx = H; Pa.Fb([{ type: "1f", name: "u82", value: H }]); ha.ca() && (I && ya.ia.zg(H), z && ya.ua.zg(H)) }, wj: function (H, r) { a.Ok = H; a.Mb = r; Pa.Fb([{ type: "1f", name: "u149", value: H }, { type: "1f", name: "u150", value: r }]) }, qo: function (H) { m = H; 0 === f && Pa.Fb([{ type: "1f", name: "u153", value: m[0] }, { type: "1f", name: "u154", value: m[1] }]) }, cb: function (H) {
+                    function r() { q && ya.mb.toggle(!1); M && C.j("s95", [{ type: "1f", name: "u110", value: 0 }]) } 0 >= H ? (l = 0, 0 !== f &&
+                        (f = 0, Wb.Sn(), q && ya.mb.toggle(!0), M && C.j("s95", [{ type: "1f", name: "u110", value: 1 }]))) : 1 <= H ? (l = 1, 1 !== f && (f = 1, Wb.Ij(!0)), r()) : (l = H, 2 !== f && (Wb.Ij(!1), f = 2, r())); C.j("s97", [{ type: "1f", name: "u122", value: 1 - H }]); var O = 1 - H; ra[0].value = l; ra[1].value = m[0] * O + -300 * H; ra[2].value = m[1] * O + -300 * H; ra[3].value = p * O + H * w; ra[4].value = F * O; ra[5].value = L * O; ra[6].value = O + H * h; t && ya.ia.Ag(l, ra); z && ya.ua.Ag(l, ra); Pa.Fb(ra)
+                }, Dl: function (H) { N.h(1); H.forEach(function (r) { r.yl() }); q && x.W() }, Vm: function () { return 1 === f }, Je: function (H) { N.ya(H) },
+                mk: function (H) { b.push(H) }, Kg: function (H) { y = !H; t = H && I }, Jg: function (H) { g = H && k }, vg: function (H) { z && ha.ca() && ya.ua.Co(H) }, Gb: function (H) { ha.ca() && (I && ya.ia.Gb(H), z && ya.ua.Gb(H)) }, Al: function (H, r) { if (!G) return !1; e.J(); H.h(0); C.set("s88"); C.O("u14", 0, P); W.l(!1, !1); n.u(); e.h(0); C.O("u14", A, 0); W.l(!1, !1); C.set("s89"); r.J(); n.h(0); W.l(!1, !1); return !0 }, Hj: function (H) { G = H && D }, resize: function (H, r, O) { D && (H *= O, r *= O, e.resize(H, r), n.resize(H, r), A = 1 / H, P = 1 / r) }, tg: function (H, r) {
+                    var O = H.P(), ca = H.$(), ka = {
+                        width: O, height: ca,
+                        isPot: !1
+                    }; I && (Q && Q.remove(), Q = ba.instance(ka)); u && u.remove(); u = Fa.instance({ width: O, height: ca }); k || z ? (ya.rc.ug(O, ca), v && v.remove(), v = ba.instance(ka)) : v = H; I && ya.ia.ug(O, ca); r && (fa && fa.remove(), fa = ba.instance(ka))
+                }, wl: function (H) {
+                    var r = null; switch (f) { case 0: r = H; break; case 2: u.bind(!1, !0); fa.u(); C.set("s77"); C.C("u13", l); H.h(1); T.h(0); W.l(!0, !0); r = fa; break; case 1: r = T }if (!t || 1 === f || !ha.ca()) return r; r.ya(0); g && ya.rc.W(r, v); u.bind(!1, !g); z && (g ? r.h(0) : (v.u(), C.set("s1"), W.l(!0, !0)), ya.ua.W()); v.h(0); X.ya(2);
+                    ya.ia.W(); Q.u(); C.set("s1"); g || z ? v.h(0) : r.h(0); W.l(!0, !V.ga_); ya.ia.add(); return Q
+                }, nk: function (H, r) { if (!t) return H; X.ya(2); ya.ia.W(); Fa.ba(); C.set("s76"); r.J(); ya.ia.om().h(0); W.l(!0, !0); C.set("s1"); c.enable(c.BLEND); c.blendFunc(c.ONE, c.ONE_MINUS_SRC_ALPHA); H.h(0); W.l(!1, !1); c.disable(c.BLEND); return r }, Bl: function (H, r) { if (!M) return !1; C.set("s95"); C.C("u108", H * E); B.h(1); Za.Je(2); v ? v.h(3) : r.h(3); return !0 }, A: function () { d = !1; l = f = 0; w = p = -1; h = 1; m = null; L = F = -1; q = !1; x = null; g = k = z = y = t = I = !1; ya.ia.A(); ya.La.A() }
+            };
             return Pa
         }(), Aa = function () {
             function a() { h.forEach(function (r) { r.El(v) }) } function b() { h.forEach(function (r) { r.sd(v) }) } function d() { h.forEach(function (r) { r.Cl(v) }) } function f() { h.forEach(function (r) { r.td(v) }) } function l() { v ? Za.Dl(h) : h.forEach(function (r) { r.zl() }) } function p() { E && clearTimeout(E); E = setTimeout(function () { e = !1; E = null }, 16) } function w(r) { r() } var h = [], m = [], q = { ha: !1, position: !1, Cb: !1 }, x = [], I = [], t = null, y = 0, z = null, k = null, g = null, F = null, L = !1, D = !1, G = !1, e = !1, n = !1, A = !1, P = null, B = null, E = null, M = null,
@@ -1369,19 +1341,19 @@ var JeelizVTOWidget = function () {
                             c.RGBA
                     }, Rm: function () { return h.zi }, Wl: function () { return h.Ng }, en: function (k) { z.na() ? c.drawBuffers(z.kf(k)) : h.drawBuffers.drawBuffersWEBGL(z.kf(k)) }, expand: function () { Aa.wake(); z.resize(window.innerWidth, window.innerHeight); Aa.va() }, resize: function (k, g) { !b || k === d && g === f || (d = k, f = g, b.width = d, b.height = f, q && (yb.resize(), a())) }, Vg: function () { var k = [{ type: "2f", name: "u14", value: [1 / ha.vb(), 1 / ha.ub()] }]; C.j("s83", k); C.j("s81", k) }, Xg: function (k) { m = k; a() }, Ma: function (k, g) { b.addEventListener(k, g, !1) }, pd: function () {
                         l =
-                            -1; return !1
+                        -1; return !1
                     }, sh: function () { return 0 <= l }, vq: function () { }, Gq: function () { }, Tq: function () { var k = document.getElementById("loading"); k && (k.style.display = "block") }, xm: function () { var k = document.getElementById("loading"); k && (k.style.display = "none") }, I: function () { z.sh() && (ba.Uj(), Aa.I(), W.I(), Kb.I(), V.ga_ && Lb.I(), qc.I(), Ic.I(), C.I(), ba.I(), c.flush(), c = null) }, A: function () { Aa.A(); Za.A(); C.A(); tc.A(); Kb.A(); Object.assign(h, w); q = I = !1 }
                 }; return z
         }(), yb = function () {
             var a = !1, b = !1, d = []; return {
                 m: function () { }, instance: function (f) {
                     void 0 ===
-                        f.hj && (f.hj = !0); void 0 === f.Ee && (f.Ee = .1); void 0 === f.De && (f.De = 100); void 0 === f.direction && (f.direction = [0, 0, -1]); void 0 === f.Uh && (f.Uh = 45); var l = new hc, p = new Wa(50, -50, -400), w = null; l.setPosition(p); var h = new Int8Array(20), m = new Int8Array(20), q = 0, x = 0, I = 0, t = 0, y = {
-                            W: function () { m[C.Ad()] || (C.Vc("u128", l.elements), m[C.Ad()] = 1); h[C.Ad()] || (C.Vc("u140", w), h[C.Ad()] = 1) }, cf: function () { x || (C.Vc("u128", l.elements), x = 1); q || (C.O("u129", w[0], w[5]), q = 1) }, df: function () { I || (C.Cg("u117", p.x, p.y, p.z), I = 1) }, Nb: function () {
-                                t ||
-                                    (C.Cg("u158", p.x, p.y, p.z), t = 1)
-                            }, uh: function () { var z = f.Ee, k = f.De, g = Math.tan(.5 * f.Uh * Math.PI / 180); w = [.5 / g, 0, 0, 0, 0, .5 * ha.Rl() / g, 0, 0, 0, 0, -(k + z) / (k - z), -1, 0, 0, -2 * k * z / (k - z), 0]; for (z = 0; 20 > z; ++z)h[z] = 0; q = 0 }, ro: function (z, k) { p.nj(k[0]).oj(k[1]).z = k[2]; l.elements.set(z); for (z = 0; 20 > z; ++z)m[z] = 0; t = I = x = 0 }, gj: function () { for (var z = t = I = 0; 20 > z; ++z)m[z] = 0 }
-                        }; y.uh(); a = y; b = !0; f.hj && d.push(y); return y
+                    f.hj && (f.hj = !0); void 0 === f.Ee && (f.Ee = .1); void 0 === f.De && (f.De = 100); void 0 === f.direction && (f.direction = [0, 0, -1]); void 0 === f.Uh && (f.Uh = 45); var l = new hc, p = new Wa(50, -50, -400), w = null; l.setPosition(p); var h = new Int8Array(20), m = new Int8Array(20), q = 0, x = 0, I = 0, t = 0, y = {
+                        W: function () { m[C.Ad()] || (C.Vc("u128", l.elements), m[C.Ad()] = 1); h[C.Ad()] || (C.Vc("u140", w), h[C.Ad()] = 1) }, cf: function () { x || (C.Vc("u128", l.elements), x = 1); q || (C.O("u129", w[0], w[5]), q = 1) }, df: function () { I || (C.Cg("u117", p.x, p.y, p.z), I = 1) }, Nb: function () {
+                            t ||
+                            (C.Cg("u158", p.x, p.y, p.z), t = 1)
+                        }, uh: function () { var z = f.Ee, k = f.De, g = Math.tan(.5 * f.Uh * Math.PI / 180); w = [.5 / g, 0, 0, 0, 0, .5 * ha.Rl() / g, 0, 0, 0, 0, -(k + z) / (k - z), -1, 0, 0, -2 * k * z / (k - z), 0]; for (z = 0; 20 > z; ++z)h[z] = 0; q = 0 }, ro: function (z, k) { p.nj(k[0]).oj(k[1]).z = k[2]; l.elements.set(z); for (z = 0; 20 > z; ++z)m[z] = 0; t = I = x = 0 }, gj: function () { for (var z = t = I = 0; 20 > z; ++z)m[z] = 0 }
+                    }; y.uh(); a = y; b = !0; f.hj && d.push(y); return y
                 }, W: function () { b && a.W() }, cf: function () { b && a.cf() }, df: function () { b && a.df() }, Nb: function () { b && a.Nb() }, resize: function () { d.forEach(function (f) { f.uh() }) },
                 lf: function () { return a }
             }
@@ -1423,7 +1395,7 @@ var JeelizVTOWidget = function () {
                         m: function () {
                             function y() {
                                 2 ===
-                                    ++z && (t.pb = ba.instance({ isFloat: Ia.ja(), U: !0, isPot: !1, isLinear: !0, width: w, height: w / 2, L: 3 }), Fa.ba(), t.pb.J(), C.set("s86"), C.C("u100", p.xc), C.C("u101", p.vc), t.xd.h(0), t.pa.h(1), W.l(!0, !0), f())
+                                ++z && (t.pb = ba.instance({ isFloat: Ia.ja(), U: !0, isPot: !1, isLinear: !0, width: w, height: w / 2, L: 3 }), Fa.ba(), t.pb.J(), C.set("s86"), C.C("u100", p.xc), C.C("u101", p.vc), t.xd.h(0), t.pa.h(1), W.l(!0, !0), f())
                             } var z = 0; w = V.Nk[ha.X()]; x = Math.log2(w) - 1; p.Lb && (t.xd = ba.instance({ isPot: !1, url: p.Lb, D: y, L: 3, isFlipY: !1 }), t.pa = ba.instance({ isPot: !1, url: p.wc, D: y, L: 3, isFlipY: !1 }))
                         }, wg: function (y) { t.pb = y; f() }, hd: function (y) { m && (q.h(y), C.C("u118", q.P())) }, jd: function (y) { m && t.Kd.h(y) }, Ch: function () { C.C("u3", x) }, Wh: function () { return x },
                         P: function () { return w }, zc: function (y) { m ? y() : I.push(y) }, I: function () { t.xd && t.xd.remove(); t.pa && t.pa.remove(); t.yb.remove(); t.Qd.remove(); t.Jd.remove(); q.remove(); t.Kd.remove(); t.pb.remove() }
@@ -1440,7 +1412,7 @@ var JeelizVTOWidget = function () {
         }, Wb = function () {
             function a(M) { var u = (e - V.Oe) / (V.ph - V.Oe); u = 1 - Math.pow(1 - u, V.rp); e += M * (1 + u * V.sp); e = Math.min(Math.max(e, V.Oe), V.ph); E.ib() } function b(M) {
                 -1 !==
-                    h && (F = g = 0, w(), a(V.pp * M.deltaY / window.innerHeight), M.preventDefault())
+                h && (F = g = 0, w(), a(V.pp * M.deltaY / window.innerHeight), M.preventDefault())
             } function d() { D += g; G += F; G = Math.min(Math.max(G, V.xn), V.wn); E.ib() } function f(M) {
                 if (0 === h || -1 === h) return !1; var u = void 0 !== M.touches && M.touches.length; M.preventDefault(); if (2 === h) { var v = ud(M.touches[0].pageX, M.touches[0].pageY, M.touches[1].pageX, M.touches[1].pageY); a(-(z - v) * V.yn); z = v } else v = u ? M.touches[0].clientX : M.clientX, M = u ? M.touches[0].clientY : M.clientY, g = 2 * (v - t) * Math.PI / ha.P(), F = 2 * (M - y) * Math.PI / ha.$(), 4 === h ? (B[0] += g * V.Ui, B[1] -=
                     F * V.Ui, B[0] = Math.min(Math.max(B[0], -V.Xi), V.Xi), B[1] = Math.min(Math.max(B[1], -V.Yi), V.Yi), E.ib()) : d(), t = v, y = M
@@ -1495,7 +1467,7 @@ var JeelizVTOWidget = function () {
                                     !0; T.forEach(function (ca) { ca.I() }); T = Array(r.length); fa = !1; r = r.map(function (ca, ka) { return "string" === typeof ca ? Ud(-1 === ca.indexOf(".json") ? ca + ".json" : ca).then(function (la) { la.name = ca; return t(la, ka, ca) }) : t(ca, ka, !1) }); Promise.all(r).then(function () { H && (ra = !0, Pa = !1, H.zc(function () { fa && H.vh(); H.Zj(); Aa.Gb(H); Aa.oe(!0); O && O(H) }, 4), H.bf()) })
                             }, Zj: function () { u.splice(0); E.forEach(function (r, O) { T[O] && T[O].Um() && u.push(r) }) }, zc: function (r, O) { Q && ra && !Pa ? r(H) : P.push({ sb: r, order: O ? O : 0 }) }, bf: function () {
                                 Q && ra &&
-                                    !Pa && (P.sort(function (r, O) { return 0 > r.order - O.order ? 1 : -1 }), P.forEach(function (r) { r.sb(H) }), P.splice(0))
+                                !Pa && (P.sort(function (r, O) { return 0 > r.order - O.order ? 1 : -1 }), P.forEach(function (r) { r.sb(H) }), P.splice(0))
                             }, remove: function () { H.I(); H = null }, I: function () { v = Q = !1; L && L.remove(); T.forEach(function (r) { r.I() }); e && G.remove(); E.splice(0) }, pm: function () { return A.size().x }, qm: function () { return A.size().y }, fq: function () { return A.size().z }, Tl: function () { return Hc(A).x }, Ul: function () { return Hc(A).y }, Up: function () { return Hc(A).z }, aq: function () { return A.min.y }, replace: function (r, O, ca) {
                                 if (r === B) return O && H && (H.bf(),
                                     O(H)), !1; B = r; Aa.oe(!1); Vc(r, function (ka) { d(ka).then(function () { O && O(H) }).catch(function (la) { ca && ca(la) }) }, ca); return !0
@@ -1509,7 +1481,7 @@ var JeelizVTOWidget = function () {
                     a = V.Ob ? new Worker("js/worker.php") : {
                         postMessage: function (m) {
                             w.data =
-                                m; Zc.rn(w)
+                            m; Zc.rn(w)
                         }, terminate: function () { }
                     }; a.onmessage = function (m) { switch (m.data[0]) { case 3: for (var q = 0; 16 > q; ++q)l[q] = m.data[q + 1]; for (q = 0; 3 > q; ++q)p[q] = m.data[q + 17]; yb.lf().ro(l, p); break; case 6: h.lo(), b = !0, Wb.ib(!1), V.ga_ && (Lb.enable(), Lb.ge()) } }; f = new Float32Array(6); f[0] = 2; V.Ob || Zc.no(a)
                 }, Lo: function () { V.Ah || (d = !0) }, Xq: function () { d = !1 }, Zn: function (m, q) { if (q || b && d) f[1] = m[0], f[2] = m[1], f[3] = m[2], f[4] = m[3], f[5] = m[4], a.postMessage(f) }, lo: function () { a.postMessage([5, V.qh]) }, I: function () { V.Ob && a.terminate() }
@@ -1584,26 +1556,26 @@ var JeelizVTOWidget = function () {
             }
         }; ya.La = function () {
             var a = { Tc: 45, sg: 1, Db: "../../images/debug/picsou.png", ee: .8, Of: 3.14 / 6, Pf: .314, Pd: 4, Od: .5, Nf: -.25, Ym: 1, da: 256, Mf: .15 }, b = { qb: null, Pb: null, screen: null }, d = !1, f = !1, l = -1, p = null,
-                w = null, h = null, m = Math.PI / 180, q = [1, 1], x = !1, I = {
-                    m: function (t) { l = t.width; t = { isFloat: Ia.ja(), U: !0, isPot: !1, isMipmap: !1, width: l, height: l / 2, L: 3 }; b.qb && (b.qb.remove(), b.Pb.remove()); b.Pb = ba.instance(Object.assign({ isLinear: !1 }, t)); b.qb = Pc.instance(Object.assign({ isLinear: !0 }, t)); C.j("s120", [{ type: "1i", name: "u159", value: 0 }]); C.j("s121", [{ type: "1i", name: "u96", value: 0 }, { type: "1i", name: "u104", value: 1 }, { type: "1i", name: "u164", value: 2 }]); I.$j(); x = !0 }, $j: function () {
-                        C.j("s121", [{ type: "1f", name: "u165", value: a.Of }, {
-                            type: "1f",
-                            name: "u166", value: a.Pf
-                        }, { type: "1f", name: "u167", value: a.Pd }, { type: "1f", name: "u168", value: a.Od }, { type: "1f", name: "u169", value: a.Nf }])
-                    }, tq: function () { return f }, ra: function (t) { p = t }, Sc: function () {
-                        w = "uniform sampler2D u159;uniform vec2 u160,u161,u10;uniform int u162;uniform float u163,u145;varying vec2 vv0;const float h=3.141593;const vec2 i=vec2(.5);const float e=1.2;const vec3 g=vec3(1.);void main(){vec2 c=vec2(vv0.x*2.,-vv0.y+.5)*h,a=i+u10*(c-u160)/u161;float b=1.;if(u162==0){if(a.x<0.||a.x>1.||a.y<0.||a.y>1.)discard;}else b*=smoothstep(-e,0.,a.x),b*=1.-smoothstep(1.,1.+e,a.x),b*=smoothstep(-e,0.,a.y),b*=1.-smoothstep(1.,1.+e,a.y);vec3 d=mix(u163*g,texture2D(u159,a).rgb*u145,b*g);gl_FragColor=vec4(d,1.);}";
-                        h = "uniform sampler2D u96,u104,u164;uniform float u165,u166,u167,u168,u169,u170;varying vec2 vv0;const float f=3.141593;const vec2 h=vec2(.5);const vec3 i=vec3(1.);void main(){float j=(vv0.x*2.-1.)*f,c=(-vv0.y+.5)*f;vec4 a=texture2D(u164,h);float d=a.r,k=u167*a.g,l=u168*(a.b+u169),b=a.a,g=asin(cos(b)*cos(d)),m=atan(cos(b)*sin(d),-sin(b)),n=acos(sin(c)*sin(g)+cos(c)*cos(g)*cos(j-m)),o=1.-smoothstep(u165-u166,u165+u166,n);vec3 p=i*(max(l,0.)+max(k,0.)*o),q=texture2D(u96,vv0).rgb,r=texture2D(u104,vv0).rgb;gl_FragColor=vec4(mix(p+r,q,u170),1.);}";
-                        C.oa("s120", { name: "_", g: w, i: "u159 u160 u162 u161 u163 u145 u10".split(" "), precision: "highp" }); C.oa("s121", { name: "_", g: h, i: "u164 u165 u166 u167 u168 u169 u104 u96 u170".split(" "), precision: "highp" })
-                    }, Ig: function (t, y, z, k, g, F, L, D) { C.O("u160", y, z); C.ie("u162", k ? 1 : 0); C.O("u161", g, g / F); C.Bg("u10", L); t.h(0); W.l(D, D) }, hi: function () { return b.qb.bi() }, oh: function (t) { I.m({ width: a.da }); I.ak(t, !1, 1); f = !0 }, nh: function () {
-                        d && b.screen.tm() === a.Db || (d = !1, b.screen && b.screen.remove(), b.screen = ba.instance({
-                            url: a.Db,
-                            isFloat: !1, D: function () { d = !0 }
-                        }))
-                    }, yg: function (t) { Object.assign(a, t) }, ib: function (t) { I.yg(t); x && (I.$j(), I.nh()) }, ak: function (t, y, z) {
-                        Fa.ba(); b.Pb.J(); C.set("s120"); C.C("u163", a.Mf); C.C("u145", a.Ym); I.Ig(t, Math.PI, 0, !0, 90 * m, t.P() / t.$(), q, !0); d && (t = a.da, C.C("u145", a.ee), c.viewport(0, 0, t / 2, t / 2), I.Ig(b.screen, 0, 0, !1, 2 * a.Tc * m, 2 * a.sg, q, !1), c.viewport(t / 2, 0, t / 2, t / 2), I.Ig(b.screen, 2 * Math.PI, 0, !1, 2 * a.Tc * m, 2 * a.sg, q, !1)); y ? (C.set("s121"), C.C("u170", 1 - z), b.qb.tj(0), b.Pb.h(1), y.h(2), W.l(!1, !1), p.wg(b.qb.bi())) :
-                            p.wg(b.Pb)
-                    }, A: function () { x = !1; Object.assign(b, { qb: null, Pb: null, screen: null }); f = d = !1; l = -1; p = null }
-                }; return I
+            w = null, h = null, m = Math.PI / 180, q = [1, 1], x = !1, I = {
+                m: function (t) { l = t.width; t = { isFloat: Ia.ja(), U: !0, isPot: !1, isMipmap: !1, width: l, height: l / 2, L: 3 }; b.qb && (b.qb.remove(), b.Pb.remove()); b.Pb = ba.instance(Object.assign({ isLinear: !1 }, t)); b.qb = Pc.instance(Object.assign({ isLinear: !0 }, t)); C.j("s120", [{ type: "1i", name: "u159", value: 0 }]); C.j("s121", [{ type: "1i", name: "u96", value: 0 }, { type: "1i", name: "u104", value: 1 }, { type: "1i", name: "u164", value: 2 }]); I.$j(); x = !0 }, $j: function () {
+                    C.j("s121", [{ type: "1f", name: "u165", value: a.Of }, {
+                        type: "1f",
+                        name: "u166", value: a.Pf
+                    }, { type: "1f", name: "u167", value: a.Pd }, { type: "1f", name: "u168", value: a.Od }, { type: "1f", name: "u169", value: a.Nf }])
+                }, tq: function () { return f }, ra: function (t) { p = t }, Sc: function () {
+                    w = "uniform sampler2D u159;uniform vec2 u160,u161,u10;uniform int u162;uniform float u163,u145;varying vec2 vv0;const float h=3.141593;const vec2 i=vec2(.5);const float e=1.2;const vec3 g=vec3(1.);void main(){vec2 c=vec2(vv0.x*2.,-vv0.y+.5)*h,a=i+u10*(c-u160)/u161;float b=1.;if(u162==0){if(a.x<0.||a.x>1.||a.y<0.||a.y>1.)discard;}else b*=smoothstep(-e,0.,a.x),b*=1.-smoothstep(1.,1.+e,a.x),b*=smoothstep(-e,0.,a.y),b*=1.-smoothstep(1.,1.+e,a.y);vec3 d=mix(u163*g,texture2D(u159,a).rgb*u145,b*g);gl_FragColor=vec4(d,1.);}";
+                    h = "uniform sampler2D u96,u104,u164;uniform float u165,u166,u167,u168,u169,u170;varying vec2 vv0;const float f=3.141593;const vec2 h=vec2(.5);const vec3 i=vec3(1.);void main(){float j=(vv0.x*2.-1.)*f,c=(-vv0.y+.5)*f;vec4 a=texture2D(u164,h);float d=a.r,k=u167*a.g,l=u168*(a.b+u169),b=a.a,g=asin(cos(b)*cos(d)),m=atan(cos(b)*sin(d),-sin(b)),n=acos(sin(c)*sin(g)+cos(c)*cos(g)*cos(j-m)),o=1.-smoothstep(u165-u166,u165+u166,n);vec3 p=i*(max(l,0.)+max(k,0.)*o),q=texture2D(u96,vv0).rgb,r=texture2D(u104,vv0).rgb;gl_FragColor=vec4(mix(p+r,q,u170),1.);}";
+                    C.oa("s120", { name: "_", g: w, i: "u159 u160 u162 u161 u163 u145 u10".split(" "), precision: "highp" }); C.oa("s121", { name: "_", g: h, i: "u164 u165 u166 u167 u168 u169 u104 u96 u170".split(" "), precision: "highp" })
+                }, Ig: function (t, y, z, k, g, F, L, D) { C.O("u160", y, z); C.ie("u162", k ? 1 : 0); C.O("u161", g, g / F); C.Bg("u10", L); t.h(0); W.l(D, D) }, hi: function () { return b.qb.bi() }, oh: function (t) { I.m({ width: a.da }); I.ak(t, !1, 1); f = !0 }, nh: function () {
+                    d && b.screen.tm() === a.Db || (d = !1, b.screen && b.screen.remove(), b.screen = ba.instance({
+                        url: a.Db,
+                        isFloat: !1, D: function () { d = !0 }
+                    }))
+                }, yg: function (t) { Object.assign(a, t) }, ib: function (t) { I.yg(t); x && (I.$j(), I.nh()) }, ak: function (t, y, z) {
+                    Fa.ba(); b.Pb.J(); C.set("s120"); C.C("u163", a.Mf); C.C("u145", a.Ym); I.Ig(t, Math.PI, 0, !0, 90 * m, t.P() / t.$(), q, !0); d && (t = a.da, C.C("u145", a.ee), c.viewport(0, 0, t / 2, t / 2), I.Ig(b.screen, 0, 0, !1, 2 * a.Tc * m, 2 * a.sg, q, !1), c.viewport(t / 2, 0, t / 2, t / 2), I.Ig(b.screen, 2 * Math.PI, 0, !1, 2 * a.Tc * m, 2 * a.sg, q, !1)); y ? (C.set("s121"), C.C("u170", 1 - z), b.qb.tj(0), b.Pb.h(1), y.h(2), W.l(!1, !1), p.wg(b.qb.bi())) :
+                        p.wg(b.Pb)
+                }, A: function () { x = !1; Object.assign(b, { qb: null, Pb: null, screen: null }); f = d = !1; l = -1; p = null }
+            }; return I
         }(); ya.mb = function () {
             var a = !1, b = !0, d = null, f = null, l = 1, p = null, w = {
                 Sc: function () {
@@ -1665,26 +1637,26 @@ var JeelizVTOWidget = function () {
             }; return M
         }(); ya.ua = function () {
             var a = !1, b = null, d = 0, f = 0, l = 0, p = [{ type: "1f", name: "u172", value: 1 }],
-                w = null, h = null, m = null, q = {
-                    Sc: function () {
-                        C.oa("s127", { name: "_", v: "attribute vec3 a0;uniform vec2 u182,u183;varying vec2 vv0;void main(){vec2 a=2.*(a0.xy-u183)/u182;gl_Position=vec4(a,0.,1.),vv0=a0.xy;}", g: "uniform vec2 u91;uniform float u184,u185,u186;varying vec2 vv0;void main(){vec2 b=vec2(sign(vv0.x)*.5*u184,u185),a=vv0-b,c=u186*a,d=(c-a)*u91;gl_FragColor=vec4(d,0.,1.);}", i: "u182 u183 u184 u185 u186 u91".split(" "), K: ["a0"], S: [3], precision: "highp" }); C.oa("s128", {
-                            name: "_", v: "attribute vec3 a0;varying vec2 vv0,vv1;uniform sampler2D u41;uniform vec3 u147;uniform vec2 u42,u182,u183;uniform float u148;const float n=0.,o=0.;const vec2 e=vec2(1.);const vec3 p=vec3(1.);const vec2 F=vec2(-1.,1.),q=vec2(.16,.5),r=vec2(.5,.5),s=vec2(.84,.5);uniform mat4 u78;uniform vec3 u81,u85,u86,u87;uniform float u79,u80,u88,u89,u82,u83,u84,u90;mat3 t(vec3 c){vec3 b=cos(c),a=sin(c);return mat3(b.y*b.z,b.y*a.z,a.y,-a.x*a.y*b.z+b.x*a.z,-a.x*a.y*a.z-b.x*b.z,a.x*b.y,b.x*a.y*b.z+a.x*a.z,b.x*a.y*a.z-a.x*b.z,-b.x*b.y);}void main(){vec4 d=texture2D(u41,q);vec2 f=u88*e;vec3 c=u88*p;vec2 u=mix(d.a*u42,e,f),g=(2.*d.gb-e)*(1.-f);g.x*=-1.;vec3 a=mix(texture2D(u41,r).rgb+vec3(u82,0.,0.),u85,c);float v=mix(texture2D(u41,s).r,0.,u88);a.z+=v;mat3 w=t(a);vec3 x=mix(u147,u86,c);float y=mix(u148,u89,u88);vec3 b=mix(u81,u87,c);b.x+=u79*sin(a.y),b.y+=u80*sin(a.x)*step(0.,a.x);float h=cos(a.z),i=sin(a.z);mat2 z=mat2(h,i,-i,h);b.xy=z*b.xy;float A=mix(u84,1.,u88);vec2 j=u83/u;vec3 k=a0;float B=max(0.,-a0.z-n)*o;k.x+=B*sign(a0.x)*(1.-u88);vec3 C=w*(k+x)*y+b;vec2 D=j*A;vec3 E=vec3(g*D,-j)+C*vec3(1.,-1.,-1.);gl_Position=u78*(vec4(u90*e,e)*vec4(E,1.)),gl_Position*=vec4(-1.,1.,1.,1.),vv0=vec2(.5,.5)+(a0.xy-u183)/u182,vv1=vec2(.5,.5)+.5*gl_Position.xy/gl_Position.w;}",
-                            g: "uniform sampler2D u187,u188;uniform float u172;varying vec2 vv0,vv1;void main(){vec2 a=u172*texture2D(u187,vv0).rg;gl_FragColor=texture2D(u188,a+vv1);}", i: "u172 u41 u187 u188 u182 u183 u42 u81 u148 u147".split(" ").concat(C.Cd(), C.Dd()), K: ["a0"], S: [3], precision: "lowp"
-                        }); a = !0
-                    }, m: function (x) {
-                        if (a) {
-                            if (void 0 === x.jc || !x.od) return !1; h = ba.instance({ isFloat: !0, isPot: !1, isMipmap: !1, isLinear: !1, width: 256, height: 128, L: 4 }); m = Fa.instance({ width: 256, height: 128 }); C.j("s128", [{ type: "1i", name: "u41", value: 1 }, {
-                                type: "1i",
-                                name: "u187", value: 2
-                            }, { type: "1i", name: "u188", value: 0 }, { type: "3f", name: "u81", value: x.Ha }, { type: "1f", name: "u172", value: 1 }].concat(x.Vj, x.Tg)); f = x.Xe; l = x.We; d = x.Ye
-                        }
-                    }, ec: function (x) { b = x }, dc: function (x) { w = x; w.zc(q.Te) }, Te: function () {
-                        c.viewport(0, 0, 256, 128); m.u(); h.u(); var x = w.pm(), I = w.qm(), t = [{ type: "2f", name: "u182", value: [x, I] }, { type: "2f", name: "u183", value: [w.Tl(), w.Ul()] }]; C.j("s127", t.concat([{ type: "1f", name: "u184", value: f }, { type: "1f", name: "u185", value: l }, { type: "1f", name: "u186", value: d }, {
-                            type: "2f", name: "u91",
-                            value: [1 / x, -1 / I]
-                        }])); w.Dh(); C.j("s128", t)
-                    }, W: function () { C.set("s128"); b.h(1); h.h(2); w.Dh() }, eb: function (x) { C.j("s128", [{ type: "3f", name: "u147", value: x }]); C.M() }, fb: function (x) { C.j("s128", [{ type: "1f", name: "u148", value: x }]); C.M() }, zg: function (x) { C.j("s128", [{ type: "1f", name: "u82", value: x }]); C.M() }, Co: function (x) { d = x; q.Te(); C.M(); Aa.animate(Date.now()) }, Gb: function (x) { x && (w = x); q.Te() }, Ag: function (x, I) { p.u172 = 1 - x; C.j("s128", p); C.j("s128", I) }, I: function () { }
-                }; return q
+            w = null, h = null, m = null, q = {
+                Sc: function () {
+                    C.oa("s127", { name: "_", v: "attribute vec3 a0;uniform vec2 u182,u183;varying vec2 vv0;void main(){vec2 a=2.*(a0.xy-u183)/u182;gl_Position=vec4(a,0.,1.),vv0=a0.xy;}", g: "uniform vec2 u91;uniform float u184,u185,u186;varying vec2 vv0;void main(){vec2 b=vec2(sign(vv0.x)*.5*u184,u185),a=vv0-b,c=u186*a,d=(c-a)*u91;gl_FragColor=vec4(d,0.,1.);}", i: "u182 u183 u184 u185 u186 u91".split(" "), K: ["a0"], S: [3], precision: "highp" }); C.oa("s128", {
+                        name: "_", v: "attribute vec3 a0;varying vec2 vv0,vv1;uniform sampler2D u41;uniform vec3 u147;uniform vec2 u42,u182,u183;uniform float u148;const float n=0.,o=0.;const vec2 e=vec2(1.);const vec3 p=vec3(1.);const vec2 F=vec2(-1.,1.),q=vec2(.16,.5),r=vec2(.5,.5),s=vec2(.84,.5);uniform mat4 u78;uniform vec3 u81,u85,u86,u87;uniform float u79,u80,u88,u89,u82,u83,u84,u90;mat3 t(vec3 c){vec3 b=cos(c),a=sin(c);return mat3(b.y*b.z,b.y*a.z,a.y,-a.x*a.y*b.z+b.x*a.z,-a.x*a.y*a.z-b.x*b.z,a.x*b.y,b.x*a.y*b.z+a.x*a.z,b.x*a.y*a.z-a.x*b.z,-b.x*b.y);}void main(){vec4 d=texture2D(u41,q);vec2 f=u88*e;vec3 c=u88*p;vec2 u=mix(d.a*u42,e,f),g=(2.*d.gb-e)*(1.-f);g.x*=-1.;vec3 a=mix(texture2D(u41,r).rgb+vec3(u82,0.,0.),u85,c);float v=mix(texture2D(u41,s).r,0.,u88);a.z+=v;mat3 w=t(a);vec3 x=mix(u147,u86,c);float y=mix(u148,u89,u88);vec3 b=mix(u81,u87,c);b.x+=u79*sin(a.y),b.y+=u80*sin(a.x)*step(0.,a.x);float h=cos(a.z),i=sin(a.z);mat2 z=mat2(h,i,-i,h);b.xy=z*b.xy;float A=mix(u84,1.,u88);vec2 j=u83/u;vec3 k=a0;float B=max(0.,-a0.z-n)*o;k.x+=B*sign(a0.x)*(1.-u88);vec3 C=w*(k+x)*y+b;vec2 D=j*A;vec3 E=vec3(g*D,-j)+C*vec3(1.,-1.,-1.);gl_Position=u78*(vec4(u90*e,e)*vec4(E,1.)),gl_Position*=vec4(-1.,1.,1.,1.),vv0=vec2(.5,.5)+(a0.xy-u183)/u182,vv1=vec2(.5,.5)+.5*gl_Position.xy/gl_Position.w;}",
+                        g: "uniform sampler2D u187,u188;uniform float u172;varying vec2 vv0,vv1;void main(){vec2 a=u172*texture2D(u187,vv0).rg;gl_FragColor=texture2D(u188,a+vv1);}", i: "u172 u41 u187 u188 u182 u183 u42 u81 u148 u147".split(" ").concat(C.Cd(), C.Dd()), K: ["a0"], S: [3], precision: "lowp"
+                    }); a = !0
+                }, m: function (x) {
+                    if (a) {
+                        if (void 0 === x.jc || !x.od) return !1; h = ba.instance({ isFloat: !0, isPot: !1, isMipmap: !1, isLinear: !1, width: 256, height: 128, L: 4 }); m = Fa.instance({ width: 256, height: 128 }); C.j("s128", [{ type: "1i", name: "u41", value: 1 }, {
+                            type: "1i",
+                            name: "u187", value: 2
+                        }, { type: "1i", name: "u188", value: 0 }, { type: "3f", name: "u81", value: x.Ha }, { type: "1f", name: "u172", value: 1 }].concat(x.Vj, x.Tg)); f = x.Xe; l = x.We; d = x.Ye
+                    }
+                }, ec: function (x) { b = x }, dc: function (x) { w = x; w.zc(q.Te) }, Te: function () {
+                    c.viewport(0, 0, 256, 128); m.u(); h.u(); var x = w.pm(), I = w.qm(), t = [{ type: "2f", name: "u182", value: [x, I] }, { type: "2f", name: "u183", value: [w.Tl(), w.Ul()] }]; C.j("s127", t.concat([{ type: "1f", name: "u184", value: f }, { type: "1f", name: "u185", value: l }, { type: "1f", name: "u186", value: d }, {
+                        type: "2f", name: "u91",
+                        value: [1 / x, -1 / I]
+                    }])); w.Dh(); C.j("s128", t)
+                }, W: function () { C.set("s128"); b.h(1); h.h(2); w.Dh() }, eb: function (x) { C.j("s128", [{ type: "3f", name: "u147", value: x }]); C.M() }, fb: function (x) { C.j("s128", [{ type: "1f", name: "u148", value: x }]); C.M() }, zg: function (x) { C.j("s128", [{ type: "1f", name: "u82", value: x }]); C.M() }, Co: function (x) { d = x; q.Te(); C.M(); Aa.animate(Date.now()) }, Gb: function (x) { x && (w = x); q.Te() }, Ag: function (x, I) { p.u172 = 1 - x; C.j("s128", p); C.j("s128", I) }, I: function () { }
+            }; return q
         }(); ya.rc = function () {
             var a = [0, -.5], b =
                 !1, d = !1, f = null, l = null, p = null, w = null, h = null, m = -1, q = -1; return {
@@ -1713,11 +1685,11 @@ var JeelizVTOWidget = function () {
                 }, Zc: function (b, d, f) {
                     function l() { if (3 === ++m && d) { var q = a.instance({ Zf: b.modelURL, Uf: b.materialsURLs, background: p, nd: w, pa: h }); d(q) } } var p = null, w = null, h = null, m = 0; ba.Zc(b.background, function (q) { !q && f ? f() : (p = q, l()) }); ba.Zc(b.dataState, function (q) { !q && f ? f() : (w = q, l()) }); ba.Zc(b.light, function (q) {
                         !q &&
-                            f ? f() : (h = q, l())
+                        f ? f() : (h = q, l())
                     })
                 }
             }; return a
-        }(); return Nb || window.JEELIZVTO
+        }(); return Nb || VISIONVTO
     }(), Ad = function () {
         function S(pa, Ea) { var Ka = Object.prototype.toString.call(pa), xb = 0, La = pa.length; if ("[object Array]" === Ka || "[object NodeList]" === Ka || "[object HTMLCollection]" === Ka || "[object Object]" === Ka || "undefined" !== typeof jQuery && pa instanceof jQuery || "undefined" !== typeof Elements && pa instanceof Elements) for (; xb < La; xb++)Ea(pa[xb]); else Ea(pa) } var U = function (pa, Ea) {
             function Ka() {
@@ -1747,10 +1719,10 @@ var JeelizVTOWidget = function () {
                     var U = Object.assign({
                         settings: null, NNCPath: null, assetsPath: Mb.appstaticURL + Mb.assetsPath, catalog: null, faceDetectionCallback: null, faceDetectionInterval: 1E3,
                         placeHolder: null, canvas: null, onError: null, callbackReady: null, onWebcamGet: null, callbacks: {}, searchImageMask: null, searchImageColor: null, searchImageRotationSpeed: null, isShadow: !0, isRequestCamera: !0, sku: null, modelStandalone: null
-                    }, S); console.log("INFO in JeelizVTOWidget.js: start()"); return new Promise(function (pa, Ea) {
+                    }, S); console.log("INFO in VISIONVTOWidget.js: start()"); return new Promise(function (pa, Ea) {
                         if (Ra.mode !== qb.notLoaded) wb.resume().catch(function (xb) { }).finally(pa); else {
                             na(); if (U.settings) for (var Ka in U.settings) Mb[Ka] = U.settings[Ka]; U.NNCPath && Ua.set_NNCPath(U.NNCPath); U.faceDetectionCallback &&
-                                (Zb.enabled = !0, Zb.callback = U.faceDetectionCallback, Zb.interval = U.faceDetectionInterval); ed = Object.assign({}, he, U.callbacks); Ba.container = U.placeHolder || document.getElementById("JeelizVTOWidget"); if (!Ba.container) throw Error("Cannot find a <div> element with id=JeelizVTOWidget to append the VTO widget."); Ba.cv = U.canvas || document.getElementById("JeelizVTOWidgetCanvas"); Ba.cv || (Ba.cv = document.createElement("canvas"), Ba.container.appendChild(Ba.cv)); Ba.cv.style.position = "absolute"; Ba.loading = document.getElementById("JeelizVTOWidgetLoading");
+                                (Zb.enabled = !0, Zb.callback = U.faceDetectionCallback, Zb.interval = U.faceDetectionInterval); ed = Object.assign({}, he, U.callbacks); Ba.container = U.placeHolder || document.getElementById("VISIONVTOWidget"); if (!Ba.container) throw Error("Cannot find a <div> element with id=VISIONVTOWidget to append the VTO widget."); Ba.cv = U.canvas || document.getElementById("VISIONVTOWidgetCanvas"); Ba.cv || (Ba.cv = document.createElement("canvas"), Ba.container.appendChild(Ba.cv)); Ba.cv.style.position = "absolute"; Ba.loading = document.getElementById("VISIONVTOWidgetLoading");
                             Kc.error = U.onError; kc = U.callbackReady; jc(); Ka = tb(Ba.container); if (!Ka.width) return Promise.reject("PLACEHOLDER_NULL_WIDTH"); if (!Ka.height) return Promise.reject("PLACEHOLDER_NULL_HEIGHT"); Yb(!0); Jc && xc(); (U.searchImageMask || U.searchImageColor || U.searchImageRotationSpeed) && Ua.set_loading(U.searchImageMask, U.searchImageColor, U.searchImageRotationSpeed); Ra.mode = qb.initializing; lc = U.assetsPath; uc = U.catalog; if (U.onWebcamGet) Ua.onWebcamGet(U.onWebcamGet); Ua.init2({
                                 basePath: lc, cv: Ba.cv, width: gb.cvWidth, height: gb.cvHeight,
                                 isRequestCamera: U.isRequestCamera, callbackReady: ja
@@ -1766,18 +1738,21 @@ var JeelizVTOWidget = function () {
                     Ra.isRT && Ua.set_videoSizes(S,
                         U, pa, Ea, Ka, xb)
                 }, resize: function () { ic && clearTimeout(ic); ic = setTimeout(function () { ic && clearTimeout(ic); ic = null; Yb(!0) }, 420) }, set_scale: function (S) { Ua.set_scale(S) }, reset_resizeSensor: xc, toggle_resizeSensor: function (S) { Jc !== S && ((Jc = S) ? xc() : Lc()) }, capture_image: function (S, U, pa) { Ua && Ua.ready ? Ua.capture_image(S, U, pa, !1) : U(!1) }, toggle_loading: function (S) { S ? (ua(Ba.loading), vc("LOADING_START")) : (Oa(Ba.loading), vc("LOADING_END")) }, load_modelStandalone: function (S, U) {
-                    if (Ra.mode === qb.notLoaded) throw Error("You should call JEELIZVTOWIDGET.start() first");
+                    if (Ra.mode === qb.notLoaded) throw Error("You should call VISIONVTOWIDGET.start() first");
                     if (!Ra.isRT) throw Error("Loading standalone models is only available in RT mode"); Ra.mode === qb.paused && wb.resume().catch(function (Ka) { }); Ra.mode = qb.loadingModel; wb.toggle_loading(!0); var pa = function () { wb.toggle_loading(!1); U && U() }, Ea = "undef"; "string" === typeof S ? (Ea = S, Sa(S, Ea).then(pa).catch(fb)) : (Ea = "RANDOM_SKU_" + Date.now().toString(), ad(Ea, S, pa)); Ra.sku = Ea; Ra.materialsReplacements = ""
                 }, load_glassesDB: function (S, U, pa) {
-                    if (Ra.mode === qb.notLoaded) throw Error("You should call JEELIZVTOWIDGET.start() first");
+                    if (Ra.mode === qb.notLoaded) throw Error("You should call VISIONVTOWIDGET.start() first");
                     if (Ra.isRT) { wb.toggle_loading(!0); var Ea = pa ? JSON.stringify(pa) : ""; S === Ra.sku && Ea === Ra.materialsReplacements ? (wb.toggle_loading(!1), U && U()) : (Ra.sku = S, Ra.materialsReplacements = Ea, Ra.mode = qb.loadingModel, Ra.mode === qb.paused && wb.resume().catch(function (Ka) { }), S ? uc && uc[S] ? dd(S, uc[S], U, pa) : va(Mb.glassesDBURL + S).then(function (Ka) { if (Ka.error) return fb(); dd(S, Ka.intrinsic, U, pa) }).catch(fb) : (Ra.mode = qb.realtime, wb.toggle_loading(!1), Ua.start_rendering(), U && U())) }
                 }, enter_adjustMode: zb, exit_adjustMode: Gb, set_LUT: function (S) {
                     return Ua &&
                         Ua.ready ? Ua.set_LUT(S || null) : Promise.reject("NOT_READY")
                 }, tweak_autoVTOModel: $c
             }; return wb
-}(); window.JEELIZVTO = JEELIZVTO;
-window.JEELIZVTOWIDGET = {
-    VERSION: JEELIZVTO.VERSION, capture_image: JeelizVTOWidget.capture_image, destroy: JeelizVTOWidget.destroy, enter_adjustMode: JeelizVTOWidget.enter_adjustMode, exit_adjustMode: JeelizVTOWidget.exit_adjustMode, load: JeelizVTOWidget.load_glassesDB, load_modelStandalone: JeelizVTOWidget.load_modelStandalone, pause: JeelizVTOWidget.pause, preFetch: JeelizVTOWidget.preFetch, request_cameraVideoStream: JEELIZVTO.request_cameraVideoStream, reset_resizeSensor: JeelizVTOWidget.reset_resizeSensor, toggle_resizeSensor: JeelizVTOWidget.toggle_resizeSensor,
-    resize: JeelizVTOWidget.resize, resume: JeelizVTOWidget.resume, set_LUT: JeelizVTOWidget.set_LUT, set_scale: JeelizVTOWidget.set_scale, set_videoRotation: JeelizVTOWidget.set_videoRotation, set_videoSizes: JeelizVTOWidget.set_videoSizes, start: JeelizVTOWidget.start, tweak_autoVTOModel: JeelizVTOWidget.tweak_autoVTOModel
+}();
+VISIONVTOWIDGET = {
+    VERSION: VISIONVTO.VERSION, capture_image: VISIONVTOWidget.capture_image, destroy: VISIONVTOWidget.destroy, enter_adjustMode: VISIONVTOWidget.enter_adjustMode, exit_adjustMode: VISIONVTOWidget.exit_adjustMode, load: VISIONVTOWidget.load_glassesDB, load_modelStandalone: VISIONVTOWidget.load_modelStandalone, pause: VISIONVTOWidget.pause, preFetch: VISIONVTOWidget.preFetch, request_cameraVideoStream: VISIONVTO.request_cameraVideoStream, reset_resizeSensor: VISIONVTOWidget.reset_resizeSensor, toggle_resizeSensor: VISIONVTOWidget.toggle_resizeSensor,
+    resize: VISIONVTOWidget.resize, resume: VISIONVTOWidget.resume, set_LUT: VISIONVTOWidget.set_LUT, set_scale: VISIONVTOWidget.set_scale, set_videoRotation: VISIONVTOWidget.set_videoRotation, set_videoSizes: VISIONVTOWidget.set_videoSizes, start: VISIONVTOWidget.start, tweak_autoVTOModel: VISIONVTOWidget.tweak_autoVTOModel
 };
+
+export { VISIONVTO, VISIONVTOWIDGET };
+/* eslint-enable */

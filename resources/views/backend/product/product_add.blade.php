@@ -131,8 +131,11 @@
                                     </script>
 
 
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-6 position-relative">
                                         <label for="inputCostPerPrice" class="form-label">Product Code</label>
+                                        <span class="info-icon" style="cursor:pointer;color:blue;font-size:10px" data-bs-toggle="tooltip" data-bs-placement="right" title="Code for 3D Model! Check the CSV for model code e.g. rayban_aviator_or_vert">
+                                            <i class="bx bx-question "> see! </i>
+                                        </span>
                                         <input type="text" name="product_code" class="form-control" id="inputCostPerPrice" placeholder="00.00" required>
                                     </div>
 
@@ -302,3 +305,13 @@
 </script>
 
 @endsection
+
+<script>
+    // Initialize all tooltips on the page
+    document.addEventListener('DOMContentLoaded', function () {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    });
+</script>

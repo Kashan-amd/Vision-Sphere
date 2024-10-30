@@ -36,6 +36,7 @@ Route::get('/offline', function () {
 Route::get('/', [IndexController::class, 'index'])->name('home');
 
 Route::get('/vton', [IndexController::class, 'vtonIndex'])->name('vton');
+Route::get('/get-sku/{productId}', [IndexController::class, 'getSKU'])->name('get.sku');
 
 // Add to cart routes..to build
 Route::middleware(['auth', 'role:user,admin,vendor'])->group(function () {
@@ -159,7 +160,7 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
     Route::post('/vendor/profile/update', [VendorController::class, 'VendorProfileUpdate'])->name('vendor.profile.update');
 
     Route::middleware(['status:active'])->group(function () {
-        
+
         // Product All Route
         Route::controller(VendorProductController::class)->group(function(){
             Route::get('/vendor/all/product' , 'VendorAllProduct')->name('vendor.all.product');
