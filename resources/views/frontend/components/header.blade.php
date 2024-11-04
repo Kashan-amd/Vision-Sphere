@@ -505,17 +505,17 @@
                                     <li>
                                         <a href="#">Misc <i class="fi-rs-angle-down"></i></a>
                                         <ul class="sub-menu">
-                                            <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
-                                            <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
-                                            <li><a href="page-terms.html">Terms of Service</a></li>
+                                            <li><a href="{{ route('purchase.guide') }}">Purchase Guide</a></li>
+                                            <li><a href="{{ route('privacy.policy') }}">Privacy Policy</a></li>
+                                            <li><a href="{{ route('terms.service') }}">Terms of Service</a></li>
                                         </ul>
                                     </li>
 
                                     <li>
-                                        <a href="page-about.html">About</a>
+                                        <a href="{{ route('about') }}">About</a>
                                     </li>
                                     <li>
-                                        <a href="page-contact.html">Contact</a>
+                                        <a href="{{ route('contact') }}">Contact</a>
                                     </li>
                                 </ul>
                             </nav>

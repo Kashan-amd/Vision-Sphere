@@ -118,13 +118,12 @@
                     <div class="footer-link-widget col wow animate__animated animate__fadeInUp d-none d-lg-block d-md-block" data-wow-delay=".4s">
                     <h4 class="widget-title">Company</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
-                            <li><a href="#">About VisionSphere</a></li>
-                            <li><a href="#">Why Choose VisionSphere</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="{{ route('about') }}">About VisionSphere</a></li>
+                            <li><a href="{{ route('why.vision.sphere') }}">Why Choose VisionSphere</a></li>
+                            <li><a href="{{ route('privacy.policy') }}">Privacy Policy</a></li>
+                            <li><a href="{{ route('terms.service') }}">Terms &amp; Conditions</a></li>
+                            <li><a href="{{ route('purchase.guide') }}">Purchase Guide</a></li>
                             <li><a href="{{ route('become.vendor') }}">Become a Vendor</a></li>
-                            <li><a href="#">Careers</a></li>
                         </ul>
                     </div>
                 </div>
