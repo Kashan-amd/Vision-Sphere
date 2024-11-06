@@ -205,6 +205,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
+
+// Static Pages Routes
+Route::get('/privacy-policy', [IndexController::class, 'privacyPolicy'])->name('privacy.policy');
+Route::get('/about', [IndexController::class, 'about'])->name('about');
+Route::get('/terms-of-service', [IndexController::class, 'termsOfService'])->name('terms.service');
+Route::get('/purchase-guide', [IndexController::class, 'purchaseGuide'])->name('purchase.guide');
+Route::get('/why-vision-sphere', [IndexController::class, 'whyVisionSphere'])->name('why.vision.sphere');
+Route::get('/contact', [IndexController::class, 'contact'])->name('contact');
 
 require __DIR__.'/auth.php';
