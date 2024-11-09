@@ -1,5 +1,5 @@
     <!-- Header  -->
-    <header class="header-area header-style-1 header-height-2 container">
+    <header class="header-area header-style-1 header-height-2">
         <div class="header-top header-top-ptb-1 d-none d-lg-block">
             <div class="container">
                 <div class="row align-items-center">
@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-        <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+        <div class="header-middle ptb-20 d-none d-lg-block">
             <div class="container ">
                 <div class="header-wrap d-flex justify-content-around">
 
@@ -621,269 +621,269 @@
     </header>
    <!-- End Header  -->
 
-   <div class="mobile-header-active mobile-header-wrapper-style">
-    <div class="mobile-header-wrapper-inner">
-        <div class="mobile-header-top justify-content-end">
-            <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
-                <button style="background-color:#00cdff" class="close-style search-close">
-                    <i class="icon-top"></i>
-                    <i class="icon-bottom"></i>
-                </button>
-            </div>
-        </div>
-        <div class="mobile-header-content-area">
-            <!-- Always visible btn... -->
-            <div class="mb-20">
-                <button type="button" class="btn btn-outline-dark" id="main-product-search">Searching for something...</button>
-            </div>
-
-            <!-- Search Overlay -->
-            <div class="mobile-search-overlay">
-                <div class="mobile-search-overlay-header">
-                    <input type="text" id="mobile-product-search" class="mobile-search-input" name="search" placeholder="Search Here..." autocomplete="off" />
-                    <button class="close-search-btn">close</button>
-                </div>
-
-                <!-- Search results container -->
-                <div id="mobile-search-results" class="mobile-search-results">
-                    <!-- Search result items will be inserted here -->
+    <div class="mobile-header-active mobile-header-wrapper-style">
+        <div class="mobile-header-wrapper-inner">
+            <div class="mobile-header-top justify-content-end">
+                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+                    <button style="background-color:#00cdff" class="close-style search-close">
+                        <i class="icon-top"></i>
+                        <i class="icon-bottom"></i>
+                    </button>
                 </div>
             </div>
+            <div class="mobile-header-content-area">
+                <!-- Always visible btn... -->
+                <div class="mb-20">
+                    <button type="button" class="btn btn-outline-dark" id="main-product-search">Searching for something...</button>
+                </div>
 
-            <div class="mobile-menu-wrap mobile-header-border">
-                <!-- mobile menu start -->
-                <nav>
-                    <ul class="mobile-menu font-heading">
-                        <li class="menu-item-has-children">
-                            <a href="{{ '/' }}">Home</a>
-                        </li>
-                        <li class="menu-item-has-children">
-                            <a href="#">Brands</a>
-                            <ul class="dropdown">
-                                @if ($brands->isEmpty())
-                                    <li><a href="#">No brands found</a></li>
-                                @else
-                                    @foreach ($brands as $brand)
+                <!-- Search Overlay -->
+                <div class="mobile-search-overlay">
+                    <div class="mobile-search-overlay-header">
+                        <input type="text" id="mobile-product-search" class="mobile-search-input" name="search" placeholder="Search Here..." autocomplete="off" />
+                        <button class="close-search-btn">close</button>
+                    </div>
+
+                    <!-- Search results container -->
+                    <div id="mobile-search-results" class="mobile-search-results">
+                        <!-- Search result items will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="mobile-menu-wrap mobile-header-border">
+                    <!-- mobile menu start -->
+                    <nav>
+                        <ul class="mobile-menu font-heading">
+                            <li class="menu-item-has-children">
+                                <a href="{{ '/' }}">Home</a>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="#">Brands</a>
+                                <ul class="dropdown">
+                                    @if ($brands->isEmpty())
+                                        <li><a href="#">No brands found</a></li>
+                                    @else
+                                        @foreach ($brands as $brand)
+                                        <li>
+                                            <a href="{{ route('brand.products', ['id' => $brand->id, 'slug' => $brand->slug]) }}">{{ $brand->name }}</a>
+                                        </li>
+                                        @endforeach
+                                    @endif
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children">
+                            <a href="#">Categories</a>
+                                <ul class="dropdown">
                                     <li>
-                                        <a href="{{ route('brand.products', ['id' => $brand->id, 'slug' => $brand->slug]) }}">{{ $brand->name }}</a>
+                                        @foreach ($categories as $category)
+                                            <a href="{{ route('category.products', ['id' => $category->id, 'slug' => $category->slug]) }}">{{ $category->name }}</a><br>
+                                        @endforeach
                                     </li>
-                                    @endforeach
-                                @endif
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children">
-                           <a href="#">Categories</a>
-                            <ul class="dropdown">
-                                <li>
-                                    @foreach ($categories as $category)
-                                        <a href="{{ route('category.products', ['id' => $category->id, 'slug' => $category->slug]) }}">{{ $category->name }}</a><br>
-                                    @endforeach
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children">
-                            <a href="#">Shop By</a>
-                            <ul class="dropdown">
-                                <li class="menu-item-has-children">
-                                    <a href="#">Frame Material</a>
-                                    <ul class="dropdown">
-                                        <li>
-                                            @php
-                                                $productMaterials = App\Models\Product::select('product_material')
-                                                                        ->distinct()
-                                                                        ->whereNotNull('product_material')
-                                                                        ->get();
-                                            @endphp
-                                            @foreach ($productMaterials as $material)
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="#">Shop By</a>
+                                <ul class="dropdown">
+                                    <li class="menu-item-has-children">
+                                        <a href="#">Frame Material</a>
+                                        <ul class="dropdown">
+                                            <li>
                                                 @php
-                                                    $materialArray = explode(',', $material->product_material);
+                                                    $productMaterials = App\Models\Product::select('product_material')
+                                                                            ->distinct()
+                                                                            ->whereNotNull('product_material')
+                                                                            ->get();
                                                 @endphp
-
-                                                @foreach ($materialArray as $singleMaterial)
+                                                @foreach ($productMaterials as $material)
                                                     @php
-                                                        $trimmedMaterial = trim($singleMaterial);
+                                                        $materialArray = explode(',', $material->product_material);
                                                     @endphp
 
-                                                    @if (!empty($trimmedMaterial))
-                                                        <a href="{{ route('products.by.material', ['material' => $trimmedMaterial]) }}">
-                                                            {{ $trimmedMaterial }}
-                                                        </a><br>
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="#">Frame Shape</a>
-                                    <ul class="dropdown">
-                                        <li>
-                                            @php
-                                                $productShapes = App\Models\Product::select('product_shape')
-                                                                        ->distinct()
-                                                                        ->whereNotNull('product_shape')
-                                                                        ->get();
-
-                                                $uniqueShapes = [];
-                                            @endphp
-                                            @foreach ($productShapes as $product)
-                                                @php
-                                                    // Split shapes by commas if a product has multiple shapes
-                                                    $shapesArray = explode(',', $product->product_shape);
-                                                @endphp
-
-                                                @foreach ($shapesArray as $shape)
-                                                    @php
-                                                        $trimmedShape = trim($shape);
-                                                    @endphp
-
-                                                    <!-- Check if the shape is unique, and add it to the array if it's not already there -->
-                                                    @if (!in_array($trimmedShape, $uniqueShapes) && !empty($trimmedShape))
+                                                    @foreach ($materialArray as $singleMaterial)
                                                         @php
-                                                            $uniqueShapes[] = $trimmedShape;
+                                                            $trimmedMaterial = trim($singleMaterial);
                                                         @endphp
-                                                        <a href="{{ route('products.by.shape', ['shape' => $trimmedShape]) }}">
-                                                            {{ $trimmedShape }}
-                                                        </a><br>
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="#">Frame Size</a>
-                                    <ul class="dropdown">
-                                        <li>
-                                            @php
-                                                // Retrieve distinct product sizes and store them uniquely in an array
-                                                $productSizes = App\Models\Product::select('product_size')
-                                                                        ->distinct()
-                                                                        ->whereNotNull('product_size')
-                                                                        ->get();
 
-                                                $uniqueSizes = []; // Array to hold unique sizes
-                                            @endphp
-
-                                            @foreach ($productSizes as $product)
-                                                @php
-                                                    // Split sizes by commas if a product has multiple sizes
-                                                    $sizesArray = explode(',', $product->product_size);
-                                                @endphp
-
-                                                @foreach ($sizesArray as $size)
-                                                    @php
-                                                        $trimmedSize = trim($size); // Remove extra spaces
-                                                    @endphp
-
-                                                    <!-- Check if the size is unique, and add it to the array if it's not already there -->
-                                                    @if (!in_array($trimmedSize, $uniqueSizes) && !empty($trimmedSize))
-                                                        @php
-                                                            $uniqueSizes[] = $trimmedSize;
-                                                        @endphp
-                                                            <a href="{{ route('products.by.size', ['size' => $trimmedSize]) }}">
-                                                                {{ $trimmedSize }}
+                                                        @if (!empty($trimmedMaterial))
+                                                            <a href="{{ route('products.by.material', ['material' => $trimmedMaterial]) }}">
+                                                                {{ $trimmedMaterial }}
                                                             </a><br>
-                                                    @endif
+                                                        @endif
+                                                    @endforeach
                                                 @endforeach
-                                            @endforeach
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
-                        <li class="menu-item-has-children">
-                            <a href="#">Misc</a>
-                            <ul class="dropdown">
-                                <li><a href="page-about.html">About Us</a></li>
-                                <li><a href="page-contact.html">Contact</a></li>
-                                <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
-                                <li><a href="page-terms.html">Terms of Service</a></li>
-                            </ul>
-                        </li>
-                        <!-- <li class="menu-item-has-children">
-                            <a href="#">Language</a>
-                            <ul class="dropdown">
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">German</a></li>
-                                <li><a href="#">Spanish</a></li>
-                            </ul>
-                        </li> -->
-                    </ul>
-                </nav>
-                <!-- mobile menu end -->
-            </div>
-            <div class="mobile-header-info-wrap">
-                <div class="single-mobile-header-info-wrap">
-                @if(auth()->check())
-                    @if(auth()->user()->role === 'user')
-                        <a href="{{ route('user.dashboard') }}"><i class="lable ml-0">Account</i></a>
-                        <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                            <ul>
-                                <li>
-                                    <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>My Account</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-label mr-10"></i>My Points</a>
-                                </li>
-                                <li>
-                                    <a href="shop-wishlist.html"><i class="fi fi-rs-heart mr-10"></i>My Wishlist</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
-                                </li>
-                            </ul>
-                        </div>
-                    @elseif(auth()->user()->role === 'admin')
-                        <a href="{{ route('admin.dashboard') }}">
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                        <a href="#">Frame Shape</a>
+                                        <ul class="dropdown">
+                                            <li>
+                                                @php
+                                                    $productShapes = App\Models\Product::select('product_shape')
+                                                                            ->distinct()
+                                                                            ->whereNotNull('product_shape')
+                                                                            ->get();
+
+                                                    $uniqueShapes = [];
+                                                @endphp
+                                                @foreach ($productShapes as $product)
+                                                    @php
+                                                        // Split shapes by commas if a product has multiple shapes
+                                                        $shapesArray = explode(',', $product->product_shape);
+                                                    @endphp
+
+                                                    @foreach ($shapesArray as $shape)
+                                                        @php
+                                                            $trimmedShape = trim($shape);
+                                                        @endphp
+
+                                                        <!-- Check if the shape is unique, and add it to the array if it's not already there -->
+                                                        @if (!in_array($trimmedShape, $uniqueShapes) && !empty($trimmedShape))
+                                                            @php
+                                                                $uniqueShapes[] = $trimmedShape;
+                                                            @endphp
+                                                            <a href="{{ route('products.by.shape', ['shape' => $trimmedShape]) }}">
+                                                                {{ $trimmedShape }}
+                                                            </a><br>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                        <a href="#">Frame Size</a>
+                                        <ul class="dropdown">
+                                            <li>
+                                                @php
+                                                    // Retrieve distinct product sizes and store them uniquely in an array
+                                                    $productSizes = App\Models\Product::select('product_size')
+                                                                            ->distinct()
+                                                                            ->whereNotNull('product_size')
+                                                                            ->get();
+
+                                                    $uniqueSizes = []; // Array to hold unique sizes
+                                                @endphp
+
+                                                @foreach ($productSizes as $product)
+                                                    @php
+                                                        // Split sizes by commas if a product has multiple sizes
+                                                        $sizesArray = explode(',', $product->product_size);
+                                                    @endphp
+
+                                                    @foreach ($sizesArray as $size)
+                                                        @php
+                                                            $trimmedSize = trim($size); // Remove extra spaces
+                                                        @endphp
+
+                                                        <!-- Check if the size is unique, and add it to the array if it's not already there -->
+                                                        @if (!in_array($trimmedSize, $uniqueSizes) && !empty($trimmedSize))
+                                                            @php
+                                                                $uniqueSizes[] = $trimmedSize;
+                                                            @endphp
+                                                                <a href="{{ route('products.by.size', ['size' => $trimmedSize]) }}">
+                                                                    {{ $trimmedSize }}
+                                                                </a><br>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
+                            <li class="menu-item-has-children">
+                                <a href="#">Misc</a>
+                                <ul class="dropdown">
+                                    <li><a href="page-about.html">About Us</a></li>
+                                    <li><a href="page-contact.html">Contact</a></li>
+                                    <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
+                                    <li><a href="page-terms.html">Terms of Service</a></li>
+                                </ul>
+                            </li>
+                            <!-- <li class="menu-item-has-children">
+                                <a href="#">Language</a>
+                                <ul class="dropdown">
+                                    <li><a href="#">English</a></li>
+                                    <li><a href="#">French</a></li>
+                                    <li><a href="#">German</a></li>
+                                    <li><a href="#">Spanish</a></li>
+                                </ul>
+                            </li> -->
+                        </ul>
+                    </nav>
+                    <!-- mobile menu end -->
+                </div>
+                <div class="mobile-header-info-wrap">
+                    <div class="single-mobile-header-info-wrap">
+                    @if(auth()->check())
+                        @if(auth()->user()->role === 'user')
+                            <a href="{{ route('user.dashboard') }}"><i class="lable ml-0">Account</i></a>
+                            <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                                <ul>
+                                    <li>
+                                        <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>My Account</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-label mr-10"></i>My Points</a>
+                                    </li>
+                                    <li>
+                                        <a href="shop-wishlist.html"><i class="fi fi-rs-heart mr-10"></i>My Wishlist</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        @elseif(auth()->user()->role === 'admin')
+                            <a href="{{ route('admin.dashboard') }}">
+                                <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
+                            </a>
+                            <a href="{{ route('admin.dashboard') }}"><span class="lable ml-0">Account</span></a>
+                            <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                                <ul>
+                                    <li>
+                                        <a href="{{ route('admin.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>Admin Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        @elseif(auth()->user()->role === 'vendor')
+                            <a href="{{ route('vendor.dashboard') }}">
+                                <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
+                            </a>
+                            <a href="{{ route('vendor.dashboard') }}"><span class="lable ml-0">Account</span></a>
+                            <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                                <ul>
+                                    <li>
+                                        <a href="{{ route('vendor.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>Vendor Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        @endif
+                    @else
+                        <a href="{{ route('login') }}">
                             <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
                         </a>
-                        <a href="{{ route('admin.dashboard') }}"><span class="lable ml-0">Account</span></a>
-                        <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                            <ul>
-                                <li>
-                                    <a href="{{ route('admin.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>Admin Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
-                                </li>
-                            </ul>
-                        </div>
-                    @elseif(auth()->user()->role === 'vendor')
-                        <a href="{{ route('vendor.dashboard') }}">
-                            <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
-                        </a>
-                        <a href="{{ route('vendor.dashboard') }}"><span class="lable ml-0">Account</span></a>
-                        <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                            <ul>
-                                <li>
-                                    <a href="{{ route('vendor.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>Vendor Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
-                                </li>
-                            </ul>
-                        </div>
+                        <a href="{{ route('login') }}"><span class="lable ml-0">Login</span></a>
+                        <span class="lable" style="margin-left: 2px; margin-right: 2px;"> | </span>
+                        <a href="{{ route('register') }}"><span class="lable ml-0">Register</span></a>
                     @endif
-                @else
-                    <a href="{{ route('login') }}">
-                        <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
-                    </a>
-                    <a href="{{ route('login') }}"><span class="lable ml-0">Login</span></a>
-                    <span class="lable" style="margin-left: 2px; margin-right: 2px;"> | </span>
-                    <a href="{{ route('register') }}"><span class="lable ml-0">Register</span></a>
-                @endif
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <!--End header-->

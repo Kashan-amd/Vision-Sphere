@@ -1,12 +1,12 @@
-<section class="popular-categories section-padding">
+<section class="popular-categories section-padding pl-10 pr-10">
     <div class="container wow animate__animated animate__fadeIn">
-        <div class="section-title">
-            <div class="title">
-                <h3 class="d-none d-lg-block d-md-block">Featured Categories</h3>
-                <h4 class="d-block d-lg-none d-md-none" >Featured Categories</h4>
-            </div>
-            <!-- <div class="slider-arrow slider-arrow-2 flex-right carausel-10-columns-arrow" id="carausel-10-columns-arrows"></div> -->
-        </div>
+{{--        <div class="section-title">--}}
+{{--            <div class="title">--}}
+{{--                <h3 class="d-none d-lg-block d-md-block">Featured Categories</h3>--}}
+{{--                <h4 class="d-block d-lg-none d-md-none" >Featured Categories</h4>--}}
+{{--            </div>--}}
+{{--            <!-- <div class="slider-arrow slider-arrow-2 flex-right carausel-10-columns-arrow" id="carausel-10-columns-arrows"></div> -->--}}
+{{--        </div>--}}
         <div class="carausel-10-columns-cover position-relative">
             <div class="carausel-10-columns" id="carausel-10-columns">
 
@@ -22,10 +22,7 @@
                             $products = App\Models\Product::where('category_id', $category->id)->count();
                         @endphp
 
-                        <div class="card-2 bg-3 wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-                            <figure class="img-hover-scale overflow-hidden">
-                                <a href="{{ route('category.products', ['id' => $category->id, 'slug' => $category->slug])}}"><img src="{{ asset('upload/categories/'.$category->image) }}" alt="" /></a>
-                            </figure>
+                        <div class="card pb-3 pt-3 ml-5 mr-5 mb-10 text-center bg-3 wow animate__animated animate__fadeInUp" data-wow-delay=".2s" style="height:5rem; border: #0b0b0b 1px solid">
                             <h6><a href="{{ route('category.products', ['id' => $category->id, 'slug' => $category->slug])}}">{{ $category->name }}</a></h6>
                             <span>{{ $products }} items</span>
                         </div>

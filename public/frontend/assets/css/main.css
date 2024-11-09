@@ -4,6 +4,7 @@ TABLE CONTENT
  Import Google Fonts
  Include Third Party CSS Library
  GENERAL
+ Spline
  HEADER
  Offcanvas Sidebar
  Search form
@@ -2880,7 +2881,7 @@ input.qty-val {
       -ms-flex-pack: end;
           justify-content: end;
 }
-
+/*dashboard user*/
 .dashboard-menu ul {
   padding: 0;
   margin: 0;
@@ -2920,7 +2921,56 @@ input.qty-val {
 .dashboard-menu ul li:not(:last-child) {
   margin-bottom: 10px;
 }
+.dashboard-menu .nav-item {
+    margin: auto; /* Adjust spacing between items */
+    transition: transform 0.3s ease;
+}
 
+.dashboard-menu .nav-item:hover {
+    transform: translateY(-10px);
+}
+
+.dashboard-menu .nav-link img {
+    width: 9rem; /* Adjust icon size */
+    height: auto; /* Adjust icon size */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-menu .nav-link img:hover {
+    transform: scale(1.1);
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-fill-out {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 25px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-fill-out:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+}
+
+.breadcrumb a {
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: #0056b3;
+}
+/*end*/
 .tab-header {
   display: -webkit-box;
   display: -ms-flexbox;

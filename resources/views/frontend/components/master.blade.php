@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" defaultThemeMode="dark"">
 
 <head>
     <meta charset="utf-8" />
     <title>VisionSphere</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    
+
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta property="og:title" content="" />
@@ -14,40 +14,36 @@
     <meta property="og:image" content="" />
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontend/assets/imgs/theme/logo.png') }}" />
-    <!-- Template CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/animate.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css?v=5.3') }}" />
      <!-- Toaster -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
-    <!-- Toaster   -->
+
 </head>
 
 <body>
-    <!-- Modal -->
-
+    
     @include('frontend.components.header')
 
     <main class="main">
-
         @yield('content')
-
     </main>
 
     @if(!isset($hideFooter) || !$hideFooter)
-    <div class="footer-wrapper 
+    <div class="footer-wrapper
                 @if(isset($hideFooterOnMobile) && $hideFooterOnMobile) d-none d-lg-block d-md-block @endif">
         @include('frontend.components.footer')
     </div>
     @endif
 
     @if(!isset($hidePreloader) || !$hidePreloader)
-        <div class="preloader-wrapper 
+        <div class="preloader-wrapper
                     @if(isset($hidePreloaderOnMobile) && $hidePreloaderOnMobile) d-none d-lg-block d-md-block @endif">
             @include('frontend.components.preloader')
         </div>
     @endif
 
-    
     <!-- Vendor JS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}"></script>
@@ -69,10 +65,11 @@
     <script src="{{ asset('frontend/assets/js/plugins/jquery.vticker-min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/plugins/jquery.theia.sticky.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/plugins/jquery.elevatezoom.js') }}"></script>
-    <!-- Template  JS -->
+    <!-- JS -->
     <script src="{{ asset('frontend/assets/js/main.js?v=5.3') }}"></script>
     <script src="{{ asset('frontend/assets/js/shop.js?v=5.3') }}"></script>
-
+    <!-- spline -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.35/build/spline-viewer.js"></script>
     <!-- Toaster -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
@@ -87,7 +84,6 @@
             });
         }
     </script>
-
 
     <script type="text/javascript">
         document.querySelectorAll('.remove-item').forEach(button => {
@@ -110,20 +106,20 @@
                 });
             });
         });
-        
+
         $(document).ready(function() {
             $('#product-search').on('keyup', function() {
                 let query = $(this).val();
 
                 // Only fetch results if the query is at least 1 character long
-                if (query.length > 0) { 
+                if (query.length > 0) {
                     $.ajax({
                         url: "{{ route('product.search') }}",
                         type: "GET",
                         data: { search: query },
                         success: function(data) {
                             $('#search-results').html(""); // Clear previous results
-                            
+
                             if (data.length > 0) {
                                 $.each(data, function(index, product) {
                                     $('#search-results').append(`
@@ -144,7 +140,7 @@
                         }
                     });
                 } else {
-                    $('#search-results').html(""); 
+                    $('#search-results').html("");
                 }
             });
         });
@@ -167,7 +163,7 @@
         document.getElementById('mobile-product-search').addEventListener('input', function () {
             let query = this.value;
             let resultsDiv = document.getElementById('mobile-search-results');
-            
+
             if (query.length === 0) {
                 resultsDiv.innerHTML = '';
                 return;
@@ -202,7 +198,6 @@
 
     </script>
 
-
     <script>
      @if(Session::has('message'))
      var type = "{{ Session::get('alert-type','info') }}"
@@ -222,7 +217,7 @@
      }
      @endif
     </script>
-    
+
 </body>
 
 </html>

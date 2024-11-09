@@ -15,7 +15,7 @@
     function get_initialSKU(){
         const queryString = window.location.search;
         const URLParams = new URLSearchParams(queryString);
-        const sku = URLParams.get('sku') || 'rayban_aviator_or_vertFlash';
+        const sku = URLParams.get('sku');
         console.log('Initial SKU =', sku);
         return sku;
     }

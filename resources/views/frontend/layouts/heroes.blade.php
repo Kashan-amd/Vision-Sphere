@@ -2,18 +2,20 @@
 <!-- <div class="mobile-promotion" style="background-color:#67b1ce;margin:0 0 -20px 0;">
     <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>1 Month</strong> left</span>
 </div> -->
+<section class="home-slider position-relative mb-1 mt-20">
 
-<section class="home-slider position-relative mb-30">
     <div class="container">
         <div class="home-slide-cover mt-10">
             <div class="hero-slider-1 style-4 dot-style-1 dot-style-1-position-1">
+
                 @php
                     $sliders = App\Models\Slider::all();
                 @endphp
 
                 @if ($sliders->isEmpty())
                     <div class="single-hero-slider single-animation-wrap" style="background-image: url({{ asset('frontend/assets/imgs/slider/slider.jpg') }})">
-                        <div class="slider-content">
+                        
+                        <div class="slider-content ">
                             <h1 class="display-2 mb-40">
                                 Elevate<br />
                                 Your Look!
@@ -47,6 +49,7 @@
             </div>
             <div class="slider-arrow hero-slider-1-arrow"></div>
         </div>
+
         <div class="mobile-promotion  mt-2" style="border-radius: 5px;">
         <div class="row text-center">
             <div class="col-4">
@@ -72,4 +75,5 @@
 
 </section>
 <!--End hero slider-->
+
 

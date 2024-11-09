@@ -1,4 +1,4 @@
-<section class="product-tabs section-padding position-relative">
+<section class="product-tabs card shadow m-3 section-padding position-relative">
     <div class="container">
         <div class="section-title style-2 wow animate__animated animate__fadeIn">
             <h3> New Products </h3>
@@ -32,8 +32,8 @@
             <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
                 <div class="row product-grid-4">
                     @foreach($products as $product)
-                        <div class="col-lg-1-5 col-md-4 col-6 col-sm-6">
-                            <div class="product-cart-wrap mb-30 wow animate__animated animate__fadeIn" data-wow-delay=".1s">
+                        <div class="col-lg-1-5 col-md-4 col-6 col-sm-6 hover-up">
+                            <div class="product-cart-wrap shadow mb-30 wow animate__animated animate__fadeIn" data-wow-delay=".1s">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
                                         <a href="{{ url('/product-details/'.$product->id.'/'.$product->product_slug) }}">
@@ -248,7 +248,7 @@
                         @endphp
 
                             @foreach($catwiseProduct as $product)
-                            <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
+                            <div class="col-lg-1-5 col-md-4 col-12 col-sm-6 hover-up">
                                 <div class="product-cart-wrap mb-30" data-wow-delay=".1s">
                                     <div class="product-img-action-wrap">
                                         <div class="product-img product-img-zoom">

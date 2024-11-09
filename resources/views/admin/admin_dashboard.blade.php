@@ -72,7 +72,7 @@
 				<h5 class="mb-0">Analytics & Reporting</h5>
 			</div>
 			<div class="font-15 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i>
-				
+
 			</div>
 		</div>
 		<hr>
