@@ -1,4 +1,4 @@
-<section class="product-tabs card shadow m-3 section-padding position-relative">
+<section class="product-tabs card shadow m-3 section-padding position-relative p-20">
     <div class="container">
         <div class="section-title style-2 wow animate__animated animate__fadeIn">
             <h3> New Products </h3>
@@ -556,7 +556,7 @@
 
 
 <!--Special Products-->
-<section class="section-padding mb-30">
+<section class="product-tabs card shadow m-3 mb-30 p-25">
     <div class="container">
         <div class="row">
             @php
@@ -730,7 +730,6 @@
     </div>
 </section>
 <!--End Special Products-->
-
 
 <!-- Category Product -->
 @php

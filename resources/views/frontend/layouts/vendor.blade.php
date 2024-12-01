@@ -1,5 +1,5 @@
 <!--Vendor List -->
-<div class="container">
+<div class="card shadow m-3 mb-30 p-25">
     <div class="section-title wow animate__animated animate__fadeIn" data-wow-delay="0">
         <h3 class="">Vendor Shops
             <a class="show-all" href="{{ route('all.vendors') }}">

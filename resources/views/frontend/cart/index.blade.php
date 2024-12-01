@@ -17,7 +17,7 @@
             <div class="shop-product-fillter mt-40">
                 <div class="total-product">
                     @if (count($cartItems) > 0)
-                        <p>We Got <strong class="text-brand">{{ count($cartItems) }}</strong> items for you!</p>
+                        <p>Only <strong class="text-brand">{{ count($cartItems) }}</strong> item! Add more🔥</p>
                     @else
                         <h3 class="text-danger mb-3">No Items in cart..<span>Add something!</span></h3>
                     @endif

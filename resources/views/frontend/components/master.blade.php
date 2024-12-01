@@ -107,32 +107,108 @@
             });
         });
 
+        // this is ultra fast super sayian 99 level 101 machine learning blockchain search 🔥
         $(document).ready(function() {
-            $('#product-search').on('keyup', function() {
-                let query = $(this).val();
+            $.ajax({
+                url: "/search-suggestions",
+                type: "GET",
+                success: function(data) {
+                    let suggestionsHTML = '';
 
-                // Only fetch results if the query is at least 1 character long
+                    // Show categories
+                    if (data.categories.length > 0) {
+                        data.categories.forEach(category => {
+                            suggestionsHTML += `<button class="tag-btn">${category}</button>`;
+                        });
+                        suggestionsHTML += '</div>';
+                    }
+
+                    // Show sub-categories
+                    if (data.subCategories.length > 0) {
+                        data.subCategories.forEach(subCategory => {
+                            suggestionsHTML += `<button class="tag-btn">🔥${subCategory}</button>`;
+                        });
+                        suggestionsHTML += '</div>';
+                    }
+
+                    // Show shape
+                    if (data.shapes.length > 0) {
+                        data.shapes.forEach(shape => {
+                            suggestionsHTML += `<button class="tag-btn">${shape}</button>`;
+                        });
+                        suggestionsHTML += '</div>';
+                    }
+
+                    // Show color
+                    if (data.colors.length > 0) {
+                        data.colors.forEach(color => {
+                            suggestionsHTML += `<button class="tag-btn">🔥${color}</button>`;
+                        });
+                        suggestionsHTML += '</div>';
+                    }
+
+                    // Show tags
+                    if (data.tags.length > 0) {
+                        data.tags.forEach(tag => {
+                            suggestionsHTML += `<button class="tag-btn">${tag}</button>`;
+                        });
+                        suggestionsHTML += '</div>';
+                    }
+
+                    $('.popular-tags').html(suggestionsHTML);
+
+                    // Allow users to click tags to populate the search bar
+                    $('.tag-btn').on('click', function() {
+                        const tag = $(this).text().trim();
+                        $('#product-search').val(tag).trigger('keyup');
+                    });
+                },
+                error: function(error) {
+                    console.error("Error fetching suggestions:", error);
+                    $('.popular-tags').html("<p>Error loading popular tags. Please try again later.</p>");
+                }
+            });
+        });
+
+
+        $(document).ready(function() {
+            // Navbar search
+            $('#nav-product-search').on('keyup', function() {
+                let query = $(this).val().trim();
+            });
+
+            // Full-page search overlay
+            $('#open-full-search').on('click', function() {
+                $('#search-overlay').fadeIn();
+                $('#product-search').focus();
+            });
+
+            $('#close-search').on('click', function() {
+                $('#search-overlay').fadeOut();
+                $('#product-search').val('');
+                $('#search-results').hide();
+            });
+
+            $('#product-search').on('keyup', function() {
+                let query = $(this).val().trim();
                 if (query.length > 0) {
                     $.ajax({
                         url: "{{ route('product.search') }}",
                         type: "GET",
                         data: { search: query },
                         success: function(data) {
-                            $('#search-results').html(""); // Clear previous results
-
+                            $('#search-results').empty().show();
                             if (data.length > 0) {
                                 $.each(data, function(index, product) {
                                     $('#search-results').append(`
-                                        <a href="/product-details/${product.id}/${product.product_slug}" class="list-group-item list-group-item-action search-result-item">
-                                            <img src="/${product.product_thambnail}" alt="${product.product_name}" class="search-result-image"/>
-                                            <div class="search-result-info">
-                                                <span class="search-result-name">${product.product_name}</span>
-                                            </div>
+                                        <a href="/product-details/${product.id}/${product.product_slug}" class="search-result-item">
+                                            <img src="/${product.product_thambnail}" alt="${product.product_name}" class="search-result-image" style="width:100%"/>
+                                            <span class="search-result-name">${product.product_name}</span>
                                         </a>
                                     `);
                                 });
                             } else {
-                                $('#search-results').append(`<div class="list-group-item">No products found</div>`);
+                                $('#search-results').append(`<div>No products found</div>`);
                             }
                         },
                         error: function(error) {
@@ -140,10 +216,11 @@
                         }
                     });
                 } else {
-                    $('#search-results').html("");
+                    $('#search-results').hide();
                 }
             });
         });
+
 
         // Close the search overlay when the close button is clicked
         document.querySelector('.close-search-btn').addEventListener('click', function closeSearchOverlay() {

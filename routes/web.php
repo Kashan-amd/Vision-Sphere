@@ -186,6 +186,8 @@ Route::post('/product/{id}/review', [ProductController::class, 'storeReview'])->
 
 // search products
 Route::get('/product/search', [IndexController::class, 'search'])->name('product.search');
+Route::get('/search-suggestions', [IndexController::class, 'getSearchSuggestions']);
+
 
 // Shop by routes
 Route::get('/products/shape/{shape}', [IndexController::class, 'getProductsByShape'])->name('products.by.shape');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Brand;
+use App\Models\Category;
+use App\Models\SubCategory;
 use App\Models\User;
 use App\Models\Review;
 use App\Models\WishList;
@@ -51,7 +53,6 @@ class IndexController extends Controller
         return compact('wishList_count', 'wishlistItems', 'cartItem_count', 'cartItems');
     }
 
-    
     public function search(Request $request)
     {
         $query = $request->input('search');
@@ -60,13 +61,59 @@ class IndexController extends Controller
             return response()->json([]);
         }
 
-        $products = Product::where('product_name', 'LIKE', "%{$query}%")
-                            ->orWhere('product_slug', 'LIKE', "%{$query}%")
-                            ->limit(10)
-                            ->get(['id', 'product_name', 'product_slug', 'product_thambnail']);
+        $products = Product::with('brand', 'category')->where('product_name', 'LIKE', "%{$query}%")
+            ->orWhere('product_slug', 'LIKE', "%{$query}%")
+            ->orWhere('product_tags', 'LIKE', "%{$query}%")
+            ->orWhere('product_color', 'LIKE', "%{$query}%")
+            ->orWhere('product_shape', 'LIKE', "%{$query}%")
+            ->orWhereHas('category', function ($q) use ($query) {
+                $q->where('name', 'LIKE', "%{$query}%");
+            })
+            ->limit(10)
+            ->get(['id', 'product_name', 'product_slug', 'product_thambnail']);
         // Return the results as JSON
         return response()->json($products);
     }
+    
+
+    public function getSearchSuggestions() {
+        $categories = Category::inRandomOrder()->take(3)->pluck('name');
+        $subCategories = SubCategory::inRandomOrder()->take(2)->pluck('name');
+        $colorCollections = Product::inRandomOrder()->take(4)->pluck('product_color');
+        $shapeCollections = Product::inRandomOrder()->take(4)->pluck('product_shape');
+        $tagsCollections = Product::inRandomOrder()->take(5)->pluck('product_tags');
+    
+        $colors = $colorCollections->flatMap(function ($color) {
+            return explode(',', $color);
+        })
+        ->map('trim') // Trim whitespace around each color
+        ->unique() // Ensure colors are unique
+        ->values(); // Re-index the collection
+
+        $shapes = $shapeCollections->flatMap(function ($shape) {
+            return explode(',', $shape);
+        })
+        ->map('trim') 
+        ->unique() 
+        ->values(); 
+
+
+        $tags = $tagsCollections->flatMap(function ($tags) {
+            return explode(',', $tags);
+        })
+        ->map('trim')
+        ->unique()
+        ->values();
+
+        return response()->json([
+            'categories' => $categories,
+            'subCategories' => $subCategories,
+            'colors' => $colors,
+            'shapes' => $shapes,
+            'tags' => $tags,
+        ]);
+    }
+    
 
     public function ProductDetails($id, $slug)
     {

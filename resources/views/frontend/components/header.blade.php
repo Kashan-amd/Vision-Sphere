@@ -107,136 +107,176 @@
                 </div>
             </div>
         </div>
+
         <div class="header-middle ptb-20 d-none d-lg-block">
-            <div class="container ">
-                <div class="header-wrap d-flex justify-content-around">
-
-                    <div class="search-form" style="position: relative; width: auto;">
-                        <input type="text" id="product-search" name="search" placeholder="Search Items..." autocomplete="off" />
-                        <div id="search-results" class="search-results-container"></div>
+            <div class="container">
+                <div class="header-wrap d-flex justify-content-between">
+                    <!-- Standard Navbar Search -->
+                    <div class="search-form">
+                        {{-- <input type="text" id="nav-product-search" name="search" placeholder="Search..." autocomplete="off" /> --}}
+                        <button class="btn btn-outline-secondary" id="open-full-search">Search 🔍</button>
                     </div>
+        
+                    <!-- Full-screen overlay search -->
+                    <div class="search-overlay" id="search-overlay">
+                        <span class="close-search" id="close-search"><p class="hover-up">close</p></span>
+                        <div class="search-form row">
+                            <input type="text" id="product-search" name="search" placeholder="Search your way through..." autocomplete="on" />
+                            <div id="search-results" class="main-search-results-container"></div>
 
+                            <div class="suggestions-container card shadow rounded mt-20">
+                                <h5>Popular Searches</h5>
+                                <div class="popular-tags">
+                                    <p>Loading suggestions...</p>
+                                </div>
+                                
+                            
+                                <div class="product-grid">
+                                    @php
+                                        $products = App\Models\Product::inRandomOrder()->take(5)->get();
+                                    @endphp
+                                    @foreach ($products as $product)
+                                        <div class="product-card">
+                                            <img src="{{ asset($product->product_thambnail) }}" alt="Glasses 1">
+                                            <p class="name"><span class="current"> {{ $product->product_name }} </span></p>
+                                            <p class="price"><span class="current">PKR {{ $product->selling_price }} </span></p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+        
+                    <!-- Logo and Actions -->
                     <div class="header-center">
-                        <div class="logo logo-width-2">
+                        <div class="logo">
                             <a href="{{ '/' }}"><img height="40rem" src="{{ asset('frontend/assets/imgs/theme/logo-alt.png') }}" alt="logo" /></a>
                         </div>
                     </div>
-
+        
                     <div class="header-action-right">
-                        <div class="header-action-2" style="margin:0 3rem">
-
-                            <div class="header-action-icon-2">
-                                <a href="#">
-                                    <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
-
-                                    @if(Auth()->user())
-                                        <span class="pro-count blue">{{ $wishList_count }} </span>
-                                    @else
-                                        <span class="pro-count blue"> 0 </span>
-                                    @endif
-
-                                </a>
-                                <a href="#"><span class="lable"></span></a>
-                                <div class="cart-dropdown-wrap cart-dropdown-hm2">
-
-                                    @if(Auth()->user())
-                                        @if($wishList_count < 1)
-                                            <p>Such Emptiness!! 🥲</p>
-                                            <p>Add your Wishes!</p>
+                        <!-- Wishlist & Cart Components -->
+                        <div class="header-action-right">
+                            <div class="header-action-2" style="margin:0 3rem">
+    
+                                <div class="header-action-icon-2">
+                                    <a href="#">
+                                        <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
+    
+                                        @if(Auth()->user())
+                                            <span class="pro-count blue">{{ $wishList_count }} </span>
                                         @else
-                                            <ul>
-                                            @foreach($wishlistItems as $item)
-                                            <li>
-                                                <div class="shopping-cart-img">
-                                                    <a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}"><img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" /></a>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}">{{ $item->product->product_name }}</a></h4>
-                                                    <h4><span>PKR </span>{{ $item->product->selling_price }}</h4>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                <form action="{{ route('wishlist.remove', $item->product->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm"><i class="fi-rs-cross-small"></i></button>
-                                                </form>
-                                                </div>
-                                            </li>
-                                            @endforeach
+                                            <span class="pro-count blue"> 0 </span>
                                         @endif
-                                    </ul>
-                                    @else
-                                    <ul>
-                                        <li>Such Emptiness!! 🥲
-                                            <br>
-                                            Login to view your wishlist..
-                                        </li>
-                                    </ul>
-                                    @endif
-
-                                </div>
-                            </div>
-                            <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="#">
-                                    <img alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
-
-                                    @if(Auth()->user())
-                                        <span class="pro-count blue">{{ $cartItem_count }} </span>
-                                    @else
-                                        <span class="pro-count blue"> 0 </span>
-                                    @endif
-                                </a>
-                                <a href="shop-cart.html"><span class="lable"></span></a>
-                                <!-- add dynamic cart -->
-                                <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                    <ul>
-                                    @if(Auth()->user())
-                                        @if($cartItem_count < 1)
-                                            <p>Empty Also!! 🥲</p>
-                                            <p>Fill it up...</p>
-                                        @else
-                                            @foreach($cartItems as $item)
+    
+                                    </a>
+                                    <a href="#"><span class="lable"></span></a>
+                                    <div class="cart-dropdown-wrap cart-dropdown-hm2">
+    
+                                        @if(Auth()->user())
+                                            @if($wishList_count < 1)
+                                                <p>Such Emptiness!! 🥲</p>
+                                                <p>Add your Wishes!</p>
+                                            @else
+                                                <ul>
+                                                @foreach($wishlistItems as $item)
                                                 <li>
                                                     <div class="shopping-cart-img">
-                                                        <img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" />
+                                                        <a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}"><img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" /></a>
                                                     </div>
                                                     <div class="shopping-cart-title">
-                                                        <h4>{{ $item->product->product_name }}</h4>
-
-                                                        @php
-                                                            $amount = $item->product->selling_price - $item->product->discount_price;
-                                                            $discount = 100 - (($amount / $item->product->selling_price) * 100);
-                                                        @endphp
-                                                        <h4 class="current-price text-brand">PKR {{ $amount }}</h4>
+                                                        <h4><a href="{{ url('/product-details/'.$item->product->id.'/'.$item->product->product_slug) }}">{{ $item->product->product_name }}</a></h4>
+                                                        <h4><span>PKR </span>{{ $item->product->selling_price }}</h4>
                                                     </div>
-                                                    <div class="shopping-cart-delete">
-                                                        <button class="remove-item btn btn-sm btn-outline-danger" data-id="{{ $item->product_id }}"><i class="fi-rs-cross-small"></i></button>
+                                                    <div class="shopping-cart-delete" style="height:0.5rem;width:0.5rem;">
+                                                    <form action="{{ route('wishlist.remove', $item->product->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        {{-- <button type="submit" class="btn btn-sm"><i class="fi-rs-cross-small"></i></button> --}}
+                                                        <button type="submit" class="btn btn-sm hover-up" data-id="{{ $item->product_id }}" style="background-color:#00ccff00;border:none;"><i class="fi-rs-cross-small"></i></button>
+                                                    </form>
                                                     </div>
                                                 </li>
-                                            @endforeach
+                                                @endforeach
+                                            @endif
                                         </ul>
-                                        <div class="shopping-cart-footer">
-                                            <div class="shopping-cart-total">
-                                                <h4>Total <span>PKR {{ $cartItems->sum(function($item) { return $item->product->selling_price - $item->product->discount_price * $item->quantity; }) }}</span></h4>
-                                            </div>
-                                        </div>
-                                        @endif
-                                    @else
+                                        @else
                                         <ul>
-                                            <li>Also Empty!! 🥲
+                                            <li>Such Emptiness!! 🥲
                                                 <br>
-                                                Login to view your Cart..
+                                                Login to view your wishlist..
                                             </li>
                                         </ul>
-                                    @endif
+                                        @endif
+    
+                                    </div>
+                                </div>
+                                <div class="header-action-icon-2">
+                                    <a class="mini-cart-icon" href="#">
+                                        <img alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
+    
+                                        @if(Auth()->user())
+                                            <span class="pro-count blue">{{ $cartItem_count }} </span>
+                                        @else
+                                            <span class="pro-count blue"> 0 </span>
+                                        @endif
+                                    </a>
+                                    <a href="shop-cart.html"><span class="lable"></span></a>
+                                    <!-- add dynamic cart -->
+                                    <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                        <ul>
+                                        @if(Auth()->user())
+                                            @if($cartItem_count < 1)
+                                                <p>Also Empty!! 🥲</p>
+                                                <p>Add to your cart...</p>
+                                            @else
+                                                @foreach($cartItems as $item)
+                                                    <li>
+                                                        <div class="shopping-cart-img">
+                                                            <img alt="VisionSphere" src="{{ asset($item->product->product_thambnail) }}" />
+                                                        </div>
+                                                        <div class="shopping-cart-title">
+                                                            <h4>{{ $item->product->product_name }}</h4>
+    
+                                                            @php
+                                                                $amount = $item->product->selling_price - $item->product->discount_price;
+                                                                $discount = 100 - (($amount / $item->product->selling_price) * 100);
+                                                            @endphp
+                                                            <h4 class="current-price text-brand">PKR {{ $amount }} <span class="fw-light" style="font-size:0.8rem">| qty: {{ $item->quantity }}</span></h4>
+                                                        </div>
+                                                        <div class="shopping-cart-delete" style="Position:fixed;height:0.5rem;width:0.5rem;">
+                                                            <button class="remove-item hover-up" data-id="{{ $item->product_id }}" style="background-color:#00ccff00;border:none;"><i class="fi-rs-cross-small"></i></button>
+                                                        </div>
+                                                    </li>
+                                                    {{-- <hr> --}}
+                                                @endforeach
+                                            </ul>
+                                            <div class="shopping-cart-footer">
+                                                <div class="shopping-cart-total">
+                                                    <h4>Total <span>PKR {{ $cartItems->sum(function($item) { return $item->product->selling_price - $item->product->discount_price * $item->quantity; }) }}</span></h4>
+                                                </div>
+                                            </div>
+                                            @endif
+                                        @else
+                                            <ul>
+                                                <li>Also Empty!! 🥲
+                                                    <br>
+                                                    Login to view your Cart..
+                                                </li>
+                                            </ul>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
+        
+
+        
 
 
         <div class="header-bottom header-bottom-bg-color sticky-bar shadow">
@@ -647,6 +687,12 @@
                     <!-- Search results container -->
                     <div id="mobile-search-results" class="mobile-search-results">
                         <!-- Search result items will be inserted here -->
+                    </div>
+                    <div class="suggestions-container card shadow rounded mt-20">
+                        <h5>Popular Searches</h5>
+                        <div class="popular-tags">
+                            <p>Loading suggestions...</p>
+                        </div>
                     </div>
                 </div>
 
