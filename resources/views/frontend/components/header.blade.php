@@ -114,7 +114,7 @@
                     <!-- Standard Navbar Search -->
                     <div class="search-form">
                         {{-- <input type="text" id="nav-product-search" name="search" placeholder="Search..." autocomplete="off" /> --}}
-                        <button class="btn btn-outline-secondary" id="open-full-search">Search 🔍</button>
+                        <button class="btn btn-outline-secondary" id="open-full-search">Search here..</button>
                     </div>
         
                     <!-- Full-screen overlay search -->

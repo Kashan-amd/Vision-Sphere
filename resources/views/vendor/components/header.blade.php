@@ -9,7 +9,7 @@
             <div class="flex-grow-1">
                 <div class="position-relative">
                     <div>
-                        <img src="{{ asset('adminbackend/assets/images/logo-alt-1.png') }}" height="30rem" class="logo" alt="logo icon">
+                        <img src="{{ asset('adminbackend/assets/images/logo-alt.png') }}" height="30rem" class="logo" alt="logo icon">
                     </div>
                 </div>
             </div>

@@ -41,7 +41,7 @@ class VendorController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('vendor.login')->with($notification);
+        return redirect()->route('vendor.dashboard')->with($notification);
 
     }// End Mehtod
 

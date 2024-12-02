@@ -17,7 +17,7 @@
                     <div class="sidebar-widget-2 widget_search mb-50">
                         <div class="search-form">
                             <form action="{{ route('all.vendors') }}" method="GET">
-                                <input class="shadow" type="text" name="search" placeholder="Search vendors (by name or ID)..." />
+                                <input class="shadow" type="text" name="search" placeholder="Search vendors (by name or ID)..." style="width:38rem"/>
                                 <button type="submit"><i class="fi-rs-search"></i></button>
                             </form>
                         </div>

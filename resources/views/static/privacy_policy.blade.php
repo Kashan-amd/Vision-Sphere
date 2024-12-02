@@ -103,3 +103,6 @@
     </div>
 </div>
 @endsection
+@php
+    $hideFooter = true;
+@endphp

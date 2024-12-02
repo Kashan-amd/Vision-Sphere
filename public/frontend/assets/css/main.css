@@ -1883,7 +1883,7 @@ h5 {
 .close-search {
   position: fixed;
   top: 32px;
-  right: 40px;
+  right: 15px;
   font-size: 15px;
   background-color: #00c1ff;
   color: black !important;

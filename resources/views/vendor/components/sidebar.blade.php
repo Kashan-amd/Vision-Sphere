@@ -8,7 +8,7 @@
 <div class="sidebar-wrapper" data-simplebar="true">
 	<div class="sidebar-header">
 		<div>
-			<h4 class="logo-text" style="color:black">Hi, {{ auth()->user()->name }}</h4>
+			<h6 class="logo-text fs-5" style="color:black">{{ auth()->user()->name }}</h6>
 		</div>
 		<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
 		</div>
