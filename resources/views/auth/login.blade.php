@@ -30,6 +30,9 @@
                                         </div>
                                         <div class="form-group">
                                             <input required="" type="password" name="password" placeholder="Your password *" />
+                                            <p class="text-danger mt-1" style="font-size: 0.875rem;">
+                                                Password should be at least 8 characters long.
+                                            </p>
                                         </div>
 
                                         <div class="login_footer form-group mb-50">

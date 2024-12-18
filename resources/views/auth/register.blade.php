@@ -33,6 +33,9 @@
                                     </div>
                                     <div class="form-group">
                                         <input required="" type="password" name="password" placeholder="Password" />
+                                        <p class="text-danger mt-1" style="font-size: 0.875rem;">
+                                                Password should be at least 8 characters long.
+                                        </p>
                                     </div>
                                     <div class="form-group">
                                         <input required="" type="password" name="password_confirmation" placeholder="Confirm password" />
