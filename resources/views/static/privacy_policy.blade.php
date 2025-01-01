@@ -78,7 +78,7 @@
         <h2 style="font-size: 1.25rem; font-weight: 600; text-align: left; margin-top: 1.5rem;">7. Your Choices</h2>
         <ul style="text-align: left; padding-left: 1.5rem;">
             <li><strong>Access and Update:</strong> You may access or update your information within your account settings.</li>
-            <li><strong>Account Deletion:</strong> To delete your account, contact us at <strong>visionsphere@gmail.com</strong>. Once deleted, we may retain certain information for legal or business purposes.</li>
+            <li><strong>Account Deletion:</strong> To delete your account, contact us at <strong>support@visionsphere.com</strong>. Once deleted, we may retain certain information for legal or business purposes.</li>
         </ul>
         
         <ul style="text-align: left; padding-left: 1.5rem;">
@@ -88,7 +88,7 @@
         </ul>
         
         <p style="text-align: left;">
-            To exercise these rights, please contact us at <strong>visionsphere@gmail.com</strong>.
+            To exercise these rights, please contact us at <strong>support@visionsphere.com</strong>.
         </p>
         
         <h2 style="font-size: 1.25rem; font-weight: 600; text-align: left; margin-top: 1.5rem;">8. Updates to this Privacy Policy</h2>
@@ -98,7 +98,7 @@
         
         <h2 style="font-size: 1.25rem; font-weight: 600; text-align: left; margin-top: 1.5rem;">Contact Us</h2>
         <p style="text-align: left;">
-            If you have questions regarding this Policy, contact us at <strong>visionsphere@gmail.com</strong>.
+            If you have questions regarding this Policy, contact us at <strong>support@visionsphere.com</strong>.
         </p>
     </div>
 </div>

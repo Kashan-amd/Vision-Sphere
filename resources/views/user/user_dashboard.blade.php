@@ -86,15 +86,41 @@
                         <div class="tab-pane fade" id="dashboard" role="tabpanel">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="mb-0">Hello {{ Auth::user()->name }}!</h3>
+                                    <h3 class="mb-0">Loyalty Points!</h3>
                                 </div>
                                 <div class="card-body">
-                                    <p>
-                                        From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br />
-                                        manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a>
-                                    </p>
+                                    @if (Auth::check())
+                                        <div class="loyalty-points">
+                                            <div class="loyalty-header mb-4">
+                                                <p class="text-center" style="font-size: 1.2rem;">You have <strong style="font-size: 2rem; color: #f39c12;">{{ Auth::user()->loyalty_points }}</strong> loyalty points!</p>
+                                            </div>
+                                
+                                            <div class="loyalty-info card p-4 shadow-sm rounded">
+                                                <ul class="list-unstyled mb-0">
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="fas fa-coins text-success" style="font-size: 1.5rem;"></i>
+                                                        <span class="ml-3" style="font-size: 1rem;"><strong>Earn Points:</strong> For every <strong>100 PKR</strong> you spend, you earn <strong>1 loyalty point</strong>.</span>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="fas fa-gift text-danger" style="font-size: 1.5rem;"></i>
+                                                        <span class="ml-3" style="font-size: 1rem;"><strong>Redeem Points:</strong> You can redeem your points to get discounts. <strong>1 point = 2 PKR discount</strong>.</span>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="fas fa-arrow-up text-warning" style="font-size: 1.5rem;"></i>
+                                                        <span class="ml-3" style="font-size: 1rem;"><strong>Maximize Savings:</strong> The more you shop, the more points you earn and the bigger discounts you get!</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                
+                                            <div class="mt-4 text-center">
+                                                <small style="color: #7f8c8d;">Example: If you spend <strong>2000 PKR</strong>, you earn <strong>20 points</strong> which you can redeem for a <strong>40 PKR discount</strong> on your next order.</small>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
+                                
                             </div>
+                            
                         </div>
                         <div class="tab-pane fade" id="orders" role="tabpanel">
                             <div class="card">
@@ -102,45 +128,42 @@
                                     <h3 class="mb-0">Your Orders</h3>
                                 </div>
                                 <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th>Order</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                <th>Total</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>#1357</td>
-                                                <td>March 45, 2020</td>
-                                                <td>Processing</td>
-                                                <td>PKR 3125</td>
-                                                <td><a href="#" class="btn-small d-block">View</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>#2468</td>
-                                                <td>June 29, 2020</td>
-                                                <td>Completed</td>
-                                                <td>PKR 1364</td>
-                                                <td><a href="#" class="btn-small d-block">View</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>#2366</td>
-                                                <td>August 02, 2020</td>
-                                                <td>Completed</td>
-                                                <td>PKR 4280</td>
-                                                <td><a href="#" class="btn-small d-block">View</a></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    @if($orders->isNotEmpty())
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Order ID</th>
+                                                    <th>Date</th>
+                                                    <th>Status</th>
+                                                    <th>Total</th>
+                                                    <th>Points Earned</th>
+                                                    {{-- <th>Actions</th> --}}
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($orders as $order)
+                                                    <tr>
+                                                        <td>#{{ $order->id }}</td>
+                                                        <td>{{ $order->created_at->format('F d, Y') }}</td>
+                                                        <td>{{ ucfirst($order->status) }}</td>
+                                                        <td>PKR {{ number_format($order->total_amount, 2) }}</td>
+                                                        <td>{{ $order->points_earned }}</td>
+                                                        {{-- <td>
+                                                            <a href="{{ route('order.view', $order->id) }}" class="btn-small d-block btn-primary">View</a>
+                                                        </td> --}}
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    @else
+                                        <p>No orders found.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="tab-pane fade" id="track-orders" role="tabpanel">
                             <div class="card">
                                 <div class="card-header">

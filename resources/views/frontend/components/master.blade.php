@@ -86,6 +86,50 @@
     </script>
 
     <script type="text/javascript">
+
+        // updating cart quantites...
+        $(document).ready(function () {
+            // Input Field Change
+            $('.qty-val').change(function () {
+                let productId = $(this).data('id');
+                let newQty = parseInt($(this).val());
+                let maxQty = parseInt($(this).attr('max'));
+                let minQty = parseInt($(this).attr('min'));
+
+                if (newQty >= minQty && newQty <= maxQty) {
+                    updateQuantity(productId, newQty);
+                } else {
+                    alert('Quantity must be between ' + minQty + ' and ' + maxQty);
+                    $(this).val(minQty);
+                }
+            });
+
+            // AJAX Function
+            function updateQuantity(productId, quantity) {
+                $.ajax({
+                    url: '{{ route("cart.update.quantity") }}', // Laravel route for updating quantity
+                    method: 'GET',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'), 
+                        product_id: productId,
+                        quantity: quantity
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // reload window here
+                            window.location.reload();
+                            // $('#total-price').text('PKR ' + response.totalPrice);
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Error updating quantity!');
+                    }
+                });
+            }
+        });
+
         document.querySelectorAll('.remove-item').forEach(button => {
             button.addEventListener('click', function() {
                 const productId = this.getAttribute('data-id');

@@ -2,7 +2,7 @@
 <!-- <div class="mobile-promotion" style="background-color:#67b1ce;margin:0 0 -20px 0;">
     <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>1 Month</strong> left</span>
 </div> -->
-<section class="home-slider position-relative mb-1 mt-20">
+<section class="home-slider position-relative mb-1 mt-15">
 
     <div class="container">
         <div class="home-slide-cover mt-10">
@@ -34,7 +34,7 @@
                             $restOfTitle = implode(' ', array_slice($words, 3));
                         @endphp
 
-                        <div class="single-hero-slider single-animation-wrap" style="background-image: url({{ asset('upload/sliders/'.$slider->image) }})">
+                        <div class="single-hero-slider single-animation-wrap" style="background-image: url({{ asset('upload/sliders/'.$slider->image) }}); height:600px">
                             <div class="slider-content">
                                 <h1 class="display-2 mb-40">
                                     {{ $firstThreeWords }}<br />

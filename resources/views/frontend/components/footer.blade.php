@@ -28,6 +28,7 @@
                 </div>
             </div>
         </section>
+        
         <section class="featured-footer section-padding d-none d-lg-block d-md-block">
             <div class="container">
                 <div class="row">
@@ -78,6 +79,7 @@
                 </div>
             </div>
         </section>
+
         <section class="section-padding footer-mid">
             <div class="container pt-15 pb-20">
                 <div class="row">

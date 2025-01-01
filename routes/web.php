@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -44,7 +45,22 @@ Route::middleware(['auth', 'role:user,admin,vendor'])->group(function () {
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::get('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update.quantity');
 });
+
+// checkout routes
+Route::middleware(['auth', 'role:user,admin,vendor'])->group(function () {
+    Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
+    Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+
+});
+
+// order success route..
+Route::get('order/success/{order}', function (Order $order) {
+    return view('frontend.order_success', compact('order'));
+})->name('order.success');
+
 
 // Wishlist routes
 Route::middleware(['auth', 'role:user,admin,vendor'])->group(function () {

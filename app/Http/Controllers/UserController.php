@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\WishList;
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,22 +16,37 @@ class UserController extends Controller
     {
         $wishList_count = 0;
         $wishlistItems = collect(); // Empty collection if the user is not authenticated
-        
+    
         $cartItem_count = 0;
         $cartItems = collect(); // Empty collection if the user is not authenticated
-        
-        if (Auth::check()) { 
+    
+        $orders = collect(); // Variable to hold all orders
+    
+        if (Auth::check()) {
             $user = Auth::user();
-            $cartItem_count = Cart::where('user_id', $user->id)->count(); 
+            
+            // Fetch cart details
+            $cartItem_count = Cart::where('user_id', $user->id)->count();
             $cartItems = $user->cart()->with('product')->get();
-
-            $wishList_count = WishList::where('user_id', $user->id)->count(); 
+    
+            // Fetch wishlist details
+            $wishList_count = WishList::where('user_id', $user->id)->count();
             $wishlistItems = $user->wishlist()->with('product')->get();
+    
+            // Fetch all orders
+            $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
         }
-
-        return compact('wishList_count', 'wishlistItems', 'cartItem_count', 'cartItems');
+    
+        return compact(
+            'wishList_count',
+            'wishlistItems',
+            'cartItem_count',
+            'cartItems',
+            'orders'
+        );
     }
-
+    
+    
     public function UserDashboard()
     {
         $id = Auth::user()->id;
@@ -38,6 +54,7 @@ class UserController extends Controller
         $data = $this->getUserData();
         return view('user.user_dashboard', $data, compact('id', 'userdata'));
     }
+    
 
     public function UserProfileUpdate(Request $request)
     {

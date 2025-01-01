@@ -46,16 +46,18 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="product-content-price">
+                                {{-- <div class="product-content-price">
                                     <span class="text-silent">Quantity: {{ $item->quantity }}</span>
-                                </div>
+                                </div> --}}
                                 <div class="row justify-content-around mt-10">
-                                    <div class="col-lg-6 col-md-6 col-6 detail-qty border radius">
-                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                        <input type="num" name="quantity" class="qty-val" value="{{ $item->quantity }}" min="1" max="{{ $item->product->product_qty ?? 1 }}">
-                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                    <div data-mdb-input-init class="form-outline" style="width: 22rem;">
+                                        <span class="text-silent">Quantity:</span>
+                                        <input type="number" class="qty-val"  data-id="{{ $item->product_id }}" value="{{ $item->quantity }}" min="1" max="{{ $item->product->product_qty ?? 1 }}" id="typeNumber" class="form-control" />
                                     </div>
-                                </div>
+                                    {{-- <div class="col-lg-6 col-md-6 col-6 detail-qty border radius">
+                                        <input type="number" name="quantity" class="qty-val" data-id="{{ $item->product_id }}" value="{{ $item->quantity }}" min="1" max="{{ $item->product->product_qty ?? 1 }}">
+                                    </div> --}}
+                                </div>                                
                             </div>
                             
                             <div class="col-lg-12 col-md-12 col-12">
@@ -174,12 +176,25 @@
             <hr>
             <div class="row ml-5">
                 <div class="col-lg-10 col-md-9 col-8 p-0">
-                    </span style="font-size: 10px">Total:</span><h5>PKR {{ $cartItems->sum(function($item) { return $item->product->selling_price - $item->product->discount_price * $item->quantity; }) }}</h5>
+                    <span style="font-size: 10px">Total:</span>
+                    <h5>
+                        PKR {{
+                            $cartItems->sum(function ($item) {
+                                $discountedPrice = $item->product->selling_price - ($item->product->discount_price ?? 0);
+                                return $discountedPrice * $item->quantity;
+                            })
+                        }}
+                    </h5>
                 </div>
                 
                 <div class="col-lg-2 col-md-3 col-4 p-0">
-                    <button class="btn btn-sm btn-outline-primary">Checkout</button>
+                    @if (count($cartItems) > 0)
+                        <a href="{{ route('checkout.index') }}" class="btn btn-sm btn-outline-primary">Checkout</a>
+                    @else
+                        <p>waiting...</p>
+                    @endif
                 </div>
+                
             </div>
         </div>
     </div>

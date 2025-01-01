@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\WishList;
 use App\Models\Cart;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -86,6 +87,34 @@ class CartController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function updateQuantity(Request $request)
+    {
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+    
+        $cartItem = Cart::where('user_id', auth()->id())
+            ->where('product_id', $validated['product_id'])
+            ->first();
+    
+        if (!$cartItem) {
+            return response()->json(['success' => false, 'message' => 'Cart item not found!'], 404);
+        }
+    
+        $cartItem->quantity = $validated['quantity'];
+        $cartItem->save();
+    
+        // Calculate total price for all cart items and this has some issuess...
+        // $totalPrice = Cart::where('user_id', auth()->id())
+        //     ->join('products', 'cart.product_id', '=', 'products.id')
+        //     ->sum(DB::raw('cart.quantity * products.selling_price'));
+    
+        return response()->json(['success' => true]);
+    }
+    
+
 
     public function remove(Request $request)
     {

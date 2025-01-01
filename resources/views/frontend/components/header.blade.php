@@ -8,7 +8,7 @@
                         <div class="header-info">
                             <ul>
                                 <li><a href="{{ route('cart.index') }}">My Cart</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
+                                {{-- <li><a href="checkout.html">Checkout</a></li> --}}
                                 <li><a href="track_order.html">Order Tracking</a></li>
                             </ul>
                         </div>
@@ -838,14 +838,14 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
+                            <li><a href="{{ route('purchase.guide') }}">Purchase Guide</a></li>
+                            <li><a href="{{ route('about')}}">About Us</a></li>
                             <li class="menu-item-has-children">
                                 <a href="#">Misc</a>
                                 <ul class="dropdown">
-                                    <li><a href="page-about.html">About Us</a></li>
-                                    <li><a href="page-contact.html">Contact</a></li>
-                                    <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
-                                    <li><a href="page-terms.html">Terms of Service</a></li>
+                                    <li><a href="{{ route('contact')}}">Contact</a></li>
+                                    <li><a href="{{ route('privacy.policy')}}">Privacy Policy</a></li>
+                                    <li><a href="{{ route('terms.service')}}">Terms of Service</a></li>
                                 </ul>
                             </li>
                             <!-- <li class="menu-item-has-children">
@@ -863,70 +863,70 @@
                 </div>
                 <div class="mobile-header-info-wrap">
                     <div class="single-mobile-header-info-wrap">
-                    @if(auth()->check())
-                        @if(auth()->user()->role === 'user')
-                            <a href="{{ route('user.dashboard') }}"><i class="lable ml-0">Account</i></a>
-                            <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                                <ul>
-                                    <li>
-                                        <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>My Account</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-label mr-10"></i>My Points</a>
-                                    </li>
-                                    <li>
-                                        <a href="shop-wishlist.html"><i class="fi fi-rs-heart mr-10"></i>My Wishlist</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        @elseif(auth()->user()->role === 'admin')
-                            <a href="{{ route('admin.dashboard') }}">
+                        @if(auth()->check())
+                            @if(auth()->user()->role === 'user')
+                                <a href="{{ route('user.dashboard') }}"><i class="lable ml-0">Account</i></a>
+                                <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                                    <ul>
+                                        <li>
+                                            <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>My Account</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-label mr-10"></i>My Points</a>
+                                        </li>
+                                        <li>
+                                            <a href="shop-wishlist.html"><i class="fi fi-rs-heart mr-10"></i>My Wishlist</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('user.dashboard') }}"><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @elseif(auth()->user()->role === 'admin')
+                                <a href="{{ route('admin.dashboard') }}">
+                                    <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
+                                </a>
+                                <a href="{{ route('admin.dashboard') }}"><span class="lable ml-0">Account</span></a>
+                                <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                                    <ul>
+                                        <li>
+                                            <a href="{{ route('admin.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>Admin Dashboard</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @elseif(auth()->user()->role === 'vendor')
+                                <a href="{{ route('vendor.dashboard') }}">
+                                    <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
+                                </a>
+                                <a href="{{ route('vendor.dashboard') }}"><span class="lable ml-0">Account</span></a>
+                                <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
+                                    <ul>
+                                        <li>
+                                            <a href="{{ route('vendor.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>Vendor Dashboard</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @endif
+                        @else
+                            <a href="{{ route('login') }}">
                                 <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
                             </a>
-                            <a href="{{ route('admin.dashboard') }}"><span class="lable ml-0">Account</span></a>
-                            <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                                <ul>
-                                    <li>
-                                        <a href="{{ route('admin.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>Admin Dashboard</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        @elseif(auth()->user()->role === 'vendor')
-                            <a href="{{ route('vendor.dashboard') }}">
-                                <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
-                            </a>
-                            <a href="{{ route('vendor.dashboard') }}"><span class="lable ml-0">Account</span></a>
-                            <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
-                                <ul>
-                                    <li>
-                                        <a href="{{ route('vendor.dashboard') }}"><i class="fi fi-rs-user mr-10"></i>Vendor Dashboard</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('logout') }}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <a href="{{ route('login') }}"><span class="lable ml-0">Login</span></a>
+                            <span class="lable" style="margin-left: 2px; margin-right: 2px;"> | </span>
+                            <a href="{{ route('register') }}"><span class="lable ml-0">Register</span></a>
                         @endif
-                    @else
-                        <a href="{{ route('login') }}">
-                            <img class="svgInject" alt="VisionSphere" src="{{ asset('frontend/assets/imgs/theme/icons/icon-user.svg') }}" />
-                        </a>
-                        <a href="{{ route('login') }}"><span class="lable ml-0">Login</span></a>
-                        <span class="lable" style="margin-left: 2px; margin-right: 2px;"> | </span>
-                        <a href="{{ route('register') }}"><span class="lable ml-0">Register</span></a>
-                    @endif
                     </div>
                 </div>
             </div>

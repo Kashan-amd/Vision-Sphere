@@ -61,7 +61,7 @@
         
         <h2 style="font-size: 1.25rem; font-weight: 600; text-align: left; margin-top: 1.5rem;">Contact Us</h2>
         <p style="text-align: left;">
-            If you have any questions about these Terms, please contact us at <strong>visionsphere@gmail.com</strong>.
+            If you have any questions about these Terms, please contact us at <strong>support@visionsphere.com</strong>.
         </p>
     </div>
 </div>
