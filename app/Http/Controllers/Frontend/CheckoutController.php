@@ -93,7 +93,9 @@ class CheckoutController extends Controller
         $totalAmount = 0;
         $products = [];
         foreach (Cart::where('user_id', Auth::id())->get() as $cartItem) {
-            $amount = $cartItem->product->selling_price * $cartItem->quantity;
+            // Use discounted price if available, otherwise selling price
+            $finalPrice = $cartItem->product->selling_price - ($cartItem->product->discount_price ?? 0);
+            $amount = $finalPrice * $cartItem->quantity;
             $totalAmount += $amount;
             $products[] = [
                 'product_id' => $cartItem->product_id,
@@ -110,6 +112,7 @@ class CheckoutController extends Controller
     
         // Apply discount to the total amount
         $totalAmount -= $discount;
+       
         $earnedPoints = floor($totalAmount / 100);
         // dd($totalAmount);
         // Create the order

@@ -156,9 +156,31 @@
                     </div>
         
                     <div class="header-action-right">
-                        <!-- Wishlist & Cart Components -->
+                        <!-- Wishlist , Cart and Loyalty Points Components -->
                         <div class="header-action-right">
                             <div class="header-action-2" style="margin:0 3rem">
+                                 <!-- Loyalty Points -->
+                                <div class="header-action-icon-2">
+                                <a href="#">
+                             <img alt="Loyalty Points" src="{{ asset('frontend/assets/imgs/theme/icons/coin.png') }}"   />
+                             @if(Auth()->user())
+                             <span class="pro-count gold">{{ Auth()->user()->loyalty_points ?? 0 }}</span>
+                              @else
+                             <span class="pro-count gold">0</span>
+                                @endif
+                                 </a>
+                                    <a href="#"><span class="lable"></span></a>
+                                <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                             @if(Auth()->user())
+                             <p>You have <strong>{{ Auth()->user()->loyalty_points ?? 0 }}</strong> loyalty points!</p>
+                          <small>Earn and Use your points to get discounts on your orders. 🎉</small>
+                            @else
+                        <p>Login to view your loyalty points!!!
+
+                        </p>
+                            @endif
+                    </div>
+                </div>
     
                                 <div class="header-action-icon-2">
                                     <a href="#">
