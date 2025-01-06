@@ -38,7 +38,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
+    /**
+    * The attributes that should be set to their default values.
+    *
+    * @var array<string, mixed>
+    */
+   protected $attributes = 
+   [
+       'loyalty_points' => 0, // Set default loyalty points to 0
+   ];
     public function products()
     {
         return $this->hasMany(Product::class, 'vendor_id');

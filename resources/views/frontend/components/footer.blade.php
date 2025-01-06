@@ -102,8 +102,6 @@
                         <h4 class="widget-title">How to..</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
                             <li><a href="#">Choose Eyeglasses</a></li>
-                            <li><a href="#">Fill out Prescription</a></li>
-                            <li><a href="#">Loyalty points</a></li>
                             <li><a href="#">Order Out</a></li>
                         </ul>
                     </div>
@@ -125,7 +123,6 @@
                             <li><a href="{{ route('privacy.policy') }}">Privacy Policy</a></li>
                             <li><a href="{{ route('terms.service') }}">Terms &amp; Conditions</a></li>
                             <li><a href="{{ route('purchase.guide') }}">Purchase Guide</a></li>
-                            <li><a href="{{ route('become.vendor') }}">Become a Vendor</a></li>
                         </ul>
                     </div>
                 </div>

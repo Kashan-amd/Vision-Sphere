@@ -92,7 +92,8 @@
                                     @if (Auth::check())
                                         <div class="loyalty-points">
                                             <div class="loyalty-header mb-4">
-                                                <p class="text-center" style="font-size: 1.2rem;">You have <strong style="font-size: 2rem; color: #f39c12;">{{ Auth::user()->loyalty_points }}</strong> loyalty points!</p>
+                                                <p class="text-center" style="font-size: 1.2rem;"><img src="{{ asset('icons/coin.png') }}" alt="" 
+                         style="width: 50px; height: 50px; margin-right: 10px; vertical-align: middle;"> You have <strong style="font-size: 2rem; color: #f39c12;">{{ Auth::user()->loyalty_points }}</strong> loyalty points!</p>
                                             </div>
                                 
                                             <div class="loyalty-info card p-4 shadow-sm rounded">
