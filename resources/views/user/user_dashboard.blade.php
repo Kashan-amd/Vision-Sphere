@@ -59,7 +59,7 @@
                                             <div class="text-center">Change Password</div>
                                         </a>
                                     </li>
-                                    <li class="nav-item shadow">
+                                    <li class="nav-item shadow mb-10">
                                         <a class="nav-link" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                             <img src="{{ asset('icons/off-alt.png') }}" alt="">
                                             <div class="text-center">Logout</div>

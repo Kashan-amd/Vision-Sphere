@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\Review;
 use App\Models\MultiImg;
 use App\Models\Product;
 use App\Models\SubCategory;
@@ -23,6 +25,55 @@ class VendorProductController extends Controller
         $products = Product::where('vendor_id',$id)->latest()->get();
         return view('vendor.backend.product.vendor_product_all',compact('products'));
     } // End Method
+
+    public function vendorOrders()
+    {
+        $vendorId = auth()->user()->id;
+    
+        // Fetch orders with the products sold by the vendor and the customer who bought it
+        $orders = Order::whereHas('products', function($query) use ($vendorId) {
+            $query->where('vendor_id', $vendorId);
+        })
+        ->with(['products' => function($query) use ($vendorId) {
+            $query->where('vendor_id', $vendorId);
+        }, 'user'])
+        ->get();
+    
+        return view('vendor.vendor_orders', compact('orders'));
+    }
+    public function updateOrderStatus(Request $request, $orderId)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'status' => ['required', 'in:pending,processing,completed,cancelled']
+        ]);
+
+        // Find the order by ID
+        $order = Order::findOrFail($orderId);
+
+        // Update the status
+        $order->status = $request->status;
+        $order->save();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Order status updated successfully');
+    }
+
+    public function vendorReviews()
+    {
+        $vendorId = auth()->user()->id;
+
+        // Fetch all products of the vendor
+        $vendorProducts = Product::where('vendor_id', $vendorId)->pluck('id');
+
+        // Fetch reviews for the vendor's products along with the customer's name
+        $reviews = Review::whereIn('product_id', $vendorProducts)
+                        ->with('product', 'user') // Eager load product and user relationships
+                        ->get();
+
+        return view('vendor.vendor_reviews', compact('reviews'));
+    }
+
 
     public function VendorAddProduct()
     {

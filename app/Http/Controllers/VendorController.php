@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Review;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,19 +45,71 @@ class VendorController extends Controller
         return redirect()->route('vendor.dashboard')->with($notification);
 
     }// End Mehtod
-
+    
     public function VendorDashboard()
     {
         $vendorId = auth()->user()->id;
-        $productCount = Product::where('vendor_id', $vendorId)->count();
-        $customerCount = User::where('role', 'user')->count();
+        $vendorProducts = Product::where('vendor_id', $vendorId)->pluck('id');
 
+         // Get the count of orders for the vendor
+        $orderCount = Order::whereHas('products', function($query) use ($vendorId) {
+            $query->where('vendor_id', $vendorId);
+        })->count();
+        
+        // Get the total number of products for the vendor
+        $productCount = Product::where('vendor_id', $vendorId)->count();
+        
+        // Get the total number of customers
+        $customerCount = User::where('role', 'user')->count();
+        
+        // Get the total number of reviews for the vendor's products
         $reviewCount = Review::whereHas('product', function($query) use ($vendorId) {
             $query->where('vendor_id', $vendorId);
         })->count(); 
+    
+        // Fetch total sales for the vendor over time (monthly)
+        $salesData = Order::join('order_product', 'orders.id', '=', 'order_product.order_id')
+        ->join('products', 'order_product.product_id', '=', 'products.id')
+        ->where('products.vendor_id', $vendorId)
+        ->selectRaw('SUM(orders.total_amount) as total_sales, MONTH(orders.created_at) as month, YEAR(orders.created_at) as year')
+        ->groupBy('year', 'month')
+        ->orderBy('year', 'asc')
+        ->orderBy('month', 'asc')
+        ->get();
+    
+        $totalSales = $salesData->pluck('total_sales');
+        // dd($salesData);
 
-        return view('vendor.vendor_dashboard', compact('productCount', 'customerCount', 'reviewCount'));
+        // Fetch product performance (units sold for the vendor's products)
+        $productPerformance = Product::where('vendor_id', $vendorId)
+            ->withCount('orders') // assuming 'orders' is the relationship for order items
+            ->get();
+            
+        // dd($productPerformance);
+
+        // Fetch product category distribution (number of products per category)
+        $categoryDistribution = Product::where('vendor_id', $vendorId)
+        ->join('categories', 'products.category_id', '=', 'categories.id') // Join with categories table
+        ->selectRaw('categories.name as category, COUNT(*) as count') // Select the category name from categories table
+        ->groupBy('categories.name') // Group by category name
+        ->get();
+
+        // Get the top 5 customers who reviewed the vendor's products
+        $topCustomers = User::whereHas('reviews', function ($query) use ($vendorProducts) {
+            $query->whereIn('product_id', $vendorProducts);
+        })
+        ->withAvg('reviews', 'rating') // Get average rating for reviews
+        ->orderByDesc('reviews_avg_rating')
+        ->limit(5)
+        ->get();
+
+    
+        return view('vendor.vendor_dashboard', compact(
+            'vendorProducts', 'orderCount', 'productCount', 'customerCount', 'reviewCount', 'salesData', 'totalSales', 'productPerformance', 'categoryDistribution', 'topCustomers'
+        ));
     }
+    
+    
 
     public function VendorLogin()
     {

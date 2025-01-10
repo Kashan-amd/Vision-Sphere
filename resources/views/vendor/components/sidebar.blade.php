@@ -26,21 +26,31 @@
         @if($status === 'active')
 
 		{{-- Order --}}
-		<li class="menu-label">Order & Product</li>
+		<li class="menu-label">Order & Reviews</li>
 		<li>
 			<a href="javascript:;" class="has-arrow">
 				<div class="parent-icon"><i class='bx bx-cart'></i>
 				</div>
-				<div class="menu-title">All Order</div>
+				<div class="menu-title">Orders</div>
 			</a>
 			<ul>
-				<li> <a href="#"><i class="bx bx-right-arrow-alt"></i>All Order</a>
+				<li> <a href="{{ route('vendor.orders') }}"><i class="bx bx-right-arrow-alt"></i>All Orders</a>
 				</li>
-				<li> <a href="#"><i class="bx bx-right-arrow-alt"></i>Add Order</a>
+				{{-- <li> <a href="#"><i class="bx bx-right-arrow-alt"></i>Add Order</a> --}}
 				</li>
 			</ul>
 		</li>
-
+		<li>
+			<a href="javascript:;" class="has-arrow">
+				<div class="parent-icon"><i class="bx bx-message"></i>
+				</div>
+				<div class="menu-title">Reviews</div>
+			</a>
+			<ul>
+				<li> <a href="{{ route('vendor.reviews') }}"><i class="bx bx-right-arrow-alt"></i>All Reviews</a>
+			</ul>
+		</li>
+		<li class="menu-label">Products</li>
 		<li>
 			<a href="javascript:;" class="has-arrow">
 				<div class="parent-icon"><i class="bx bx-category"></i>

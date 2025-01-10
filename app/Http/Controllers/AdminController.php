@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -18,9 +19,55 @@ class AdminController extends Controller
         $productCount = Product::count();
         $vendorCount = User::where('role', 'vendor')->count();
         $customerCount = User::where('role', 'user')->count();
-        $reviews = Review::get();
-        return view('admin.admin_dashboard', compact('productCount', 'vendorCount', 'customerCount', 'reviews'));
+        $reviewCount = Review::count();
+        
+        $reviews = Review::with(['user', 'product'])->get();
+        // Total orders
+        $orderCount = Order::count();
+        // dd($reviews);
+        
+        // Total sales trends by month
+        $salesData = Order::selectRaw('SUM(total_amount) as total_sales, MONTH(created_at) as month, YEAR(created_at) as year')
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'asc')
+            ->orderBy('month', 'asc')
+            ->get();
+            
+        // Total brands (count by vendor)
+        $brandData = Product::selectRaw('vendors.name as vendor_name, COUNT(products.id) as product_count')
+            ->join('users as vendors', 'products.vendor_id', '=', 'vendors.id')
+            ->groupBy('vendors.id')
+            ->get();
+
+        // Fetch product performance (units sold)
+        $productPerformance = Product::select('product_name')
+        ->withCount('orders')
+        ->orderBy('orders_count', 'desc')
+        ->limit(10)
+        ->get();
+            
+        // Category distribution
+        $categoryDistribution = Product::selectRaw('categories.name as category_name, COUNT(*) as product_count')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->groupBy('categories.id')
+            ->get();
+        
+        // dd($productPerformance);
+
+        return view('admin.admin_dashboard', compact('productCount', 'vendorCount', 'productPerformance', 'customerCount', 'reviewCount', 'reviews', 'orderCount', 'salesData', 'brandData', 'categoryDistribution'));
     }
+    
+    public function adminOrders()
+    {
+        $orders = Order::with(['user', 'products'])->get(); // Assuming relationships are defined
+        return view('admin.admin_orders', compact('orders'));
+    }
+    public function adminReviews()
+    {
+        $reviews = Review::with(['user', 'product'])->get(); // Assuming relationships are defined
+        return view('admin.admin_reviews', compact('reviews'));
+    }
+    
 
     public function AdminLogin()
     {

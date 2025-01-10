@@ -86,6 +86,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/password/update', [AdminController::class, 'AdminPasswordUpdate'])->name('admin.password.update');
     Route::post('/admin/profile/update', [AdminController::class, 'AdminProfileUpdate'])->name('admin.profile.update');
 
+    Route::get('/admin/orders', [AdminController::class, 'adminOrders'])->name('admin.orders');
+    Route::get('/admin/reviews', [AdminController::class, 'adminReviews'])->name('admin.reviews');
+
+
     // Active InActive Validation Routes
     Route::get('/inactive/vendor', [AdminController::class, 'InactiveVendor'])->name('inactive.vendor');
     Route::get('/inactive/vendor/details/{id}', [AdminController::class, 'InactiveVendorDetails'])->name('inactive.vendor.details');
@@ -185,6 +189,10 @@ Route::middleware(['auth', 'role:vendor'])->group(function () {
             Route::get('/vendor/product/edit/{id}' , 'VendorEditProduct')->name('vendor.edit.product');
             Route::post('/vendor/product/update/{id}' , 'VendorUpdateProduct')->name('vendor.update.product');
             Route::get('/vendor/product/delete/{id}' , 'VendorDeleteProduct')->name('vendor.delete.product');
+
+            Route::get('/vendor/orders', 'vendorOrders')->name('vendor.orders');
+            Route::put('/vendor/orders/{orderId}/status', 'updateOrderStatus')->name('vendor.updateOrderStatus');
+            Route::get('vendor/reviews', 'vendorReviews')->name('vendor.reviews');
 
             Route::get('/vendor/subcategory/ajax/{category_id}' , 'VendorGetSubCategory')->name('vendor.get.subcategory');
 

@@ -31,24 +31,15 @@ class CheckoutController extends Controller
     
         // Fetch product details for each product in the order
         $productDetails = [];
-        foreach ($orderProducts as $key) {
-            $product = Product::find($key['product_id']);
-            if ($product) {
-                $productDetails[] = [
-                    'name' => $product->product_name,
-                    'quantity' => $key['quantity'],
-                    'price' => $key['price'],
-                    'image' => $product->product_thambnail,
-                ];
-            } else {
-                $productDetails[] = [
-                    'name' => 'Product not found',
-                    'quantity' => $key['quantity'],
-                    'price' => $key['price'],
-                    'image' => null,
-                ];
-            }
+        foreach ($order->products as $product) {
+            $productDetails[] = [
+                'name' => $product->product_name,
+                'quantity' => $product->pivot->quantity,  // Access the quantity from the pivot table
+                'price' => $product->pivot->price,        // Access the price from the pivot table
+                'image' => $product->product_thambnail,
+            ];
         }
+        
     
         // Pass data to the view
         return view('frontend.checkout.success', $data, compact('order', 'productDetails'));
@@ -86,14 +77,13 @@ class CheckoutController extends Controller
             'phone' => 'required|string|max:15',
             'address' => 'required|string',
             'payment_method' => 'required|string',
-            'redeem_points' => 'nullable|boolean', // Handle points redemption
+            'redeem_points' => 'nullable|boolean',
         ]);
     
         // Calculate total amount and prepare products array
         $totalAmount = 0;
         $products = [];
         foreach (Cart::where('user_id', Auth::id())->get() as $cartItem) {
-            // Use discounted price if available, otherwise selling price
             $finalPrice = $cartItem->product->selling_price - ($cartItem->product->discount_price ?? 0);
             $amount = $finalPrice * $cartItem->quantity;
             $totalAmount += $amount;
@@ -112,9 +102,9 @@ class CheckoutController extends Controller
     
         // Apply discount to the total amount
         $totalAmount -= $discount;
-       
+    
         $earnedPoints = floor($totalAmount / 100);
-        // dd($totalAmount);
+    
         // Create the order
         $order = Order::create([
             'user_id' => Auth::id(),
@@ -122,12 +112,21 @@ class CheckoutController extends Controller
             'payment_method' => $validated['payment_method'],
             'total_amount' => $totalAmount,
             'status' => 'pending',
-            'products' => json_encode($products), // Store products as JSON
-            'points_earned' => $earnedPoints, // Points earned based on final price after discount
+            'points_earned' => $earnedPoints,
         ]);
+    
+        foreach ($products as $product) {
+            $order->products()->attach($product['product_id'], [
+                'quantity' => $product['quantity'],
+                'price' => $product['price'], // Include the price here
+            ]);
+        }
+        
+    
         // Update user's loyalty points in the database
         $user->loyalty_points += $earnedPoints;
         $user->save();
+    
         // Deduct redeemed points from user's loyalty points
         if ($redeemPoints > 0) {
             $user->loyalty_points -= $redeemPoints;
@@ -140,6 +139,8 @@ class CheckoutController extends Controller
         // Redirect to a success page
         return redirect()->route('checkout.success');
     }
+    
+    
     
 
     // Helper function to calculate the total amount

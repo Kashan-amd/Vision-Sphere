@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('address'); 
             $table->string('payment_method');  
             $table->decimal('total_amount', 10, 2);
-            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending'); 
-            $table->json('products');  // JSON column to store products and quantities
+            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');  // Order status
             $table->timestamps();  
         });
+        
     }
 
     /**

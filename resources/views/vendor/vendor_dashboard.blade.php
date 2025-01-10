@@ -1,9 +1,10 @@
 @extends('vendor\components\master')
+
 @section('content')
 @php
     $id = Auth::user()->id;
-    $verdorId = App\Models\User::find($id);
-    $status = $verdorId->status;
+    $vendorId = App\Models\User::find($id);
+    $status = $vendorId->status;
 @endphp
 
 <div class="page-content">
@@ -16,31 +17,31 @@
     <br>
 
     <div class="row g-3">
-        <div class="col-md-3">
-            <div class="glass-card text-center">
-                <i class='bx bx-cart fs-3'></i>
-                <h5>2400</h5>
-                <p>Total Orders</p>
-            </div>
-        </div>
+		<div class="col-md-3">
+			<div class="glass-card text-center">
+				<i class='bx bx-cart fs-3'></i>
+				<h5>{{ $orderCount }}</h5> <!-- Display order count -->
+				<p>Total Orders</p>
+			</div>
+		</div>		
         <div class="col-md-3">
             <div class="glass-card text-center">
                 <i class='bx bx-group fs-3'></i>
-                <h5>{{ $customerCount }}</h5>
+                <h5>{{ $customerCount }}</h5> <!-- Display customer count -->
                 <p>Total Customers</p>
             </div>
         </div>
         <div class="col-md-3">
             <div class="glass-card text-center">
                 <i class='bx bx-glasses fs-3'></i>
-                <h5>{{ $productCount }}</h5>
-                <p>Products</p>
+                <h5>{{ $productCount }}</h5> <!-- Display product count -->
+                <p>Total Products</p>
             </div>
         </div>
         <div class="col-md-3">
             <div class="glass-card text-center">
                 <i class='bx bx-message fs-3'></i>
-                <h5>{{ $reviewCount }}</h5>
+                <h5>{{ $reviewCount }}</h5> <!-- Display review count -->
                 <p>Reviews</p>
             </div>
         </div>
@@ -85,7 +86,42 @@
 				<!-- Customer Growth Over Time -->
 				<div class="col-md-6">
 					<div class="glass-card">
-						<canvas id="customerGrowthChart"></canvas>
+
+						<div class="p-3">
+							<h5 class="mb-0">Customers Reviews</h5>
+							<p class="text-muted">Top 5 customers reviews/rating for your products</p>
+							
+							<!-- Table for displaying reviews -->
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Customer Name</th>
+										<th>Rating</th>
+										<th>Review</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach($topCustomers as $customer)
+										@foreach($customer->reviews as $review)
+											@if(in_array($review->product_id, $vendorProducts->toArray()))
+												<tr>
+													<td>{{ $customer->name }}</td>
+													<td>
+														<!-- Display the rating for each individual review -->
+														<strong>{{ number_format($review->rating / 20, 0) }}</strong>
+													</td>
+													<td>
+														<!-- Display the review text for each review -->
+														{{ $review->comment }}
+													</td>
+												</tr>
+											@endif
+										@endforeach
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -96,99 +132,99 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- JavaScript to render the charts -->
 <script>
-var ctx1 = document.getElementById('salesChart').getContext('2d');
-var salesChart = new Chart(ctx1, {
-	type: 'line',
-	data: {
-		labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'], 
-		datasets: [{
-			label: 'Sales ($)',
-			data: [1500, 2000, 1800, 2200, 2100, 2300, 2500],
-			borderColor: 'rgba(0, 123, 255, 1)',
-			backgroundColor: 'rgba(0, 123, 255, 0.2)',
-			fill: true
-		}]
-	},
-	options: {
-		responsive: true,
-		plugins: {
-			title: {
-				display: true,
-				text: 'Total Sales Over Time'
+	// Sales Data
+	
+	var salesData = @json($salesData);
+	// Mapping over salesData and formatting month and year
+	var months = salesData.map(item => {
+		var date = new Date(item.year, item.month - 1);
+		return date.toLocaleString('default', { month: 'long', year: 'numeric' }); // Format as "Month Year"
+	});
+
+	var totalSales = salesData.map(item => item.total_sales);
+	
+	// Product Performance Data
+	var productPerformanceLabels = @json($productPerformance->pluck('product_name'));
+	var productPerformanceData = @json($productPerformance->pluck('orders_count'));
+
+	// Category Distribution Data
+	var categoryDistributionLabels = @json($categoryDistribution->pluck('category'));
+	var categoryDistributionData = @json($categoryDistribution->pluck('count'));
+
+	// Sales Chart
+	var ctx1 = document.getElementById('salesChart').getContext('2d');
+	var salesChart = new Chart(ctx1, {
+		type: 'line',
+		data: {
+			labels: months, 
+			datasets: [{
+				label: 'Sales (PKR)',
+				data: totalSales,
+				borderColor: 'rgba(0, 123, 255, 1)',
+				backgroundColor: 'rgba(0, 123, 255, 0.2)',
+				fill: true
+			}]
+		},
+		options: {
+			responsive: true,
+			plugins: {
+				title: {
+					display: true,
+					text: 'Total Sales Over Time'
+				}
 			}
 		}
-	}
-});
-
-var ctx2 = document.getElementById('productPerformanceChart').getContext('2d');
-var productPerformanceChart = new Chart(ctx2, {
+	});
+	
+	// Product Performance Chart
+	var ctx2 = document.getElementById('productPerformanceChart').getContext('2d');
+	var productPerformanceChart = new Chart(ctx2, {
 	type: 'bar',
 	data: {
-		labels: ['Glasses', 'Sunglasses', 'Eyewear', 'Lenses'],
+		labels: productPerformanceLabels,
 		datasets: [{
-			label: 'Units Sold',
-			data: [500, 600, 400, 700],
-			backgroundColor: 'rgba(255, 99, 132, 0.2)',
-			borderColor: 'rgba(255, 99, 132, 1)',
-			borderWidth: 1
+		label: 'Units Sold',
+		data: productPerformanceData,
+		backgroundColor: 'rgba(255, 99, 132, 0.2)',
+		borderColor: 'rgba(255, 99, 132, 1)',
+		borderWidth: 1
 		}]
 	},
 	options: {
 		responsive: true,
 		plugins: {
-			title: {
-				display: true,
-				text: 'Products Performance'
-			}
+		title: {
+			display: true,
+			text: 'Products Performance'
+		}
 		}
 	}
-});
+	});
 
-var ctx3 = document.getElementById('categoryDistributionChart').getContext('2d');
-var categoryDistributionChart = new Chart(ctx3, {
-	type: 'pie',
-	data: {
-		labels: ['Eyewear', 'Sunglasses', 'Reading Glasses', 'Fashion Glasses'],
-		datasets: [{
-			label: 'Product Categories',
-			data: [300, 200, 500, 400],
-			backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56']
-		}]
-	},
-	options: {
-		responsive: true,
-		plugins: {
-			title: {
-				display: true,
-				text: 'Product Categories Distribution'
+	
+	// Category Distribution Chart
+	var ctx3 = document.getElementById('categoryDistributionChart').getContext('2d');
+	var categoryDistributionChart = new Chart(ctx3, {
+		type: 'pie',
+		data: {
+			labels: categoryDistributionLabels,
+			datasets: [{
+				label: 'Product Categories',
+				data: categoryDistributionData,
+				backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56']
+			}]
+		},
+		options: {
+			responsive: true,
+			plugins: {
+				title: {
+					display: true,
+					text: 'Product Categories Distribution'
+				}
 			}
 		}
-	}
-});
-
-var ctx4 = document.getElementById('customerGrowthChart').getContext('2d');
-var customerGrowthChart = new Chart(ctx4, {
-	type: 'line',
-	data: {
-		labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-		datasets: [{
-			label: 'New Customers',
-			data: [100, 150, 120, 180, 200, 220, 250],
-			borderColor: 'rgba(75, 192, 192, 1)',
-			backgroundColor: 'rgba(75, 192, 192, 0.2)',
-			fill: true
-		}]
-	},
-	options: {
-		responsive: true,
-		plugins: {
-			title: {
-				display: true,
-				text: 'Customer Growth Over Time'
-			}
-		}
-	}
-});
+	});
+	
 </script>
 
 @endsection

@@ -18,6 +18,20 @@
 				</li>
 
                 <li>
+					<a href="{{ route('admin.orders') }}">
+						<div class="parent-icon"><i class="bx bx-cart"></i>
+						</div>
+						<div class="menu-title">Orders</div>
+					</a>
+				</li>
+				<li>
+					<a href="{{ route('admin.reviews') }}">
+						<div class="parent-icon"><i class="bx bx-message"></i>
+						</div>
+						<div class="menu-title">Reviews</div>
+					</a>
+				</li>
+				<li>
 					<a href="{{ route('all.brand') }}">
 						<div class="parent-icon"><i class="bx bx-star"></i>
 						</div>
