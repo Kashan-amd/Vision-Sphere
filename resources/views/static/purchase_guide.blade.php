@@ -35,7 +35,7 @@
         margin-top: 2rem;
         color: black;
     }
-    p, ul {
+    p {
         font-size: 1.2rem;
         color: #333;
         line-height: 1.6;
@@ -108,7 +108,7 @@
         h2 {
             font-size: 1.5rem;
         }
-        p, ul {
+        p {
             font-size: 1rem;
         }
         .step {

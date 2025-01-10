@@ -1,5 +1,5 @@
 
-<!-- <div class="mobile-promotion" style="background-color:#67b1ce;margin:0 0 -20px 0;">
+<!-- <div class="mobile-banners" style="background-color:#67b1ce;margin:0 0 -20px 0;">
     <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>1 Month</strong> left</span>
 </div> -->
 <section class="home-slider position-relative mb-1 mt-15">
@@ -51,26 +51,26 @@
         </div>
 
         <div class="mobile-promotion  mt-2" style="border-radius: 5px;">
-        <div class="row text-center">
-            <div class="col-4">
-                <span class="promotion-title"><strong>Loyalty Points</strong></span>
-                <p class="promotion-detail">Collect em' All!</p>
-            </div>
-            <div class="col-4">
-                <span class="promotion-title"><strong>Wide Assortment</strong></span>
-                <p class="promotion-detail">Mega Discounts!</p>
-            </div>
-            <div class="col-4">
-                <span class="promotion-title"><strong>Return</strong></span>
-                <p class="promotion-detail">Within 30 days!</p>
+            <div class="row text-center">
+                <div class="col-4">
+                    <span class="promotion-title"><strong>Loyalty Points</strong></span>
+                    <p class="promotion-detail">Collect em' All!</p>
+                </div>
+                <div class="col-4">
+                    <span class="promotion-title"><strong>Wide Assortment</strong></span>
+                    <p class="promotion-detail">Mega Discounts!</p>
+                </div>
+                <div class="col-4">
+                    <span class="promotion-title"><strong>Return</strong></span>
+                    <p class="promotion-detail">Within 30 days!</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="mobile-promotion  mt-2 shadow" style="border-radius: 5px;">
-        <div class="row">
-            <img height="100rem" width="100%" style="object-fit: cover;" src="{{ asset('frontend/assets/imgs/banner/banner.jpg') }}" alt="">
+        <div class="mobile-promotion  mt-2 shadow" style="border-radius: 5px;">
+            <div class="row">
+                <img height="100rem" width="100%" style="object-fit: cover;" src="{{ asset('frontend/assets/imgs/banner/banner.jpg') }}" alt="">
+            </div>
         </div>
-    </div>
     </div>
 
 </section>

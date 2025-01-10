@@ -66,7 +66,7 @@
                                                     <option selected="">Open this select Join Date</option>
                                                     <?php
                                                         $currentYear = date("Y");
-                                                        for ($year = 2000; $year <= $currentYear; $year++) {
+                                                        for ($year = 2010; $year <= $currentYear; $year++) {
                                                             echo "<option value='$year'>$year</option>";
                                                         }
                                                     ?>
@@ -104,7 +104,7 @@
 
                             <div class="col-lg-6 pr-30 d-none d-lg-block">
                                 <div class="card-login mt-115">
-                                    <a href="#" class="social-login facebook-login">
+                                    {{-- <a href="#" class="social-login facebook-login">
                                         <img src="{{ asset('frontend/assets/imgs/theme/icons/logo-facebook.svg') }}" alt="" />
                                         <span>Continue with Facebook</span>
                                     </a>
@@ -117,7 +117,7 @@
                                     <a href="#" class="social-login apple-login">
                                         <img src="{{ asset('frontend/assets/imgs/theme/icons/logo-apple.svg') }}" alt="" />
                                         <span>Continue with Apple</span>
-                                    </a>
+                                    </a> --}}
 
                                 </div>
                             </div>

@@ -43,52 +43,54 @@
         <div class="row vendor-grid">
 
             @foreach ($vendors as $vendor)
-            <div class="col-lg-3 col-md-6 col-12 col-sm-6">
-                <div class="vendor-wrap mb-40">
-                    <div class="vendor-img-action-wrap">
-                        <div class="vendor-img">
-                            <a href="{{ route('vendor.details',$vendor->id) }}">
-                                <img style="border-radius:10px" class="default-img" src="{{ (!empty($vendor->photo)) ? url('upload/user/vendor/'.$vendor->photo):url('adminbackend/assets/images/no_image.jpg') }}" alt="" />
-                            </a>
+            @if ($vendor->status == 'active')
+                <div class="col-lg-3 col-md-6 col-12 col-sm-6">
+                    <div class="vendor-wrap mb-40">
+                        <div class="vendor-img-action-wrap">
+                            <div class="vendor-img">
+                                <a href="{{ route('vendor.details',$vendor->id) }}">
+                                    <img style="border-radius:10px" class="default-img" src="{{ (!empty($vendor->photo)) ? url('upload/user/vendor/'.$vendor->photo):url('adminbackend/assets/images/no_image.jpg') }}" alt="" />
+                                </a>
+                            </div>
+                            <div class="product-badges product-badges-position product-badges-mrg">
+                                @if ($vendor->products->count() > 10)
+                                    <span class="hot">Super Mall</span>
+                                @elseif ($vendor->products->count() > 5)
+                                    <span class="hot">Mall</span>
+                                @elseif ($vendor->products->count() < 2)
+                                    <span class="new">New</span>
+                                @endif
+                            </div>
                         </div>
-                        <div class="product-badges product-badges-position product-badges-mrg">
-                            @if ($vendor->products->count() > 10)
-                                <span class="hot">Super Mall</span>
-                            @elseif ($vendor->products->count() > 5)
-                                <span class="hot">Mall</span>
-                            @elseif ($vendor->products->count() < 2)
-                                <span class="new">New</span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="vendor-content-wrap">
-                        <div class="d-flex justify-content-between align-items-end mb-30">
-                            <div>
-                                <div class="product-category">
-                                    <span class="text-muted">Since {{ $vendor->vendor_join_year ?? 'Unknown' }}</span>
-                                </div>
-                                <h4 class="mb-5"><a href="{{ route('vendor.details',$vendor->id) }}">{{ $vendor->name ?? 'Not found!'}}</a></h4>
-                                <div class="product-rate-cover">
-                                    <div class="product-rate d-inline-block">
-                                        <div class="product-rating" style="width: 90%"></div>
+                        <div class="vendor-content-wrap">
+                            <div class="d-flex justify-content-between align-items-end mb-30">
+                                <div>
+                                    <div class="product-category">
+                                        <span class="text-muted">Since {{ $vendor->vendor_join_year ?? 'Unknown' }}</span>
                                     </div>
-                                    <span class="font-small ml-5 text-muted"> (4.0)</span>
+                                    <h4 class="mb-5"><a href="{{ route('vendor.details',$vendor->id) }}">{{ $vendor->name ?? 'Not found!'}}</a></h4>
+                                    <div class="product-rate-cover">
+                                        <div class="product-rate d-inline-block">
+                                            <div class="product-rating" style="width: 90%"></div>
+                                        </div>
+                                        <span class="font-small ml-5 text-muted"> (4.0)</span>
+                                    </div>
+                                </div>
+                                <div class="mb-10">
+                                    <span class="font-small total-product">{{ $vendor->products->count() }} Products</span>
                                 </div>
                             </div>
-                            <div class="mb-10">
-                                <span class="font-small total-product">{{ $vendor->products->count() }} Products</span>
+                            <div class="vendor-info mb-30">
+                                <ul class="contact-infor text-muted">
+                                    <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}" alt="" /><strong>Address: </strong> <span>{{ $vendor->address ?? 'Not found!' }}</span></li>
+                                    <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}" alt="" /><strong>Call Us:</strong><span>{{ $vendor->phone ?? 'Not found!' }}</span></li>
+                                </ul>
                             </div>
+                            <a href="{{ route('vendor.details',$vendor->id) }}" class="btn btn-xs">Visit Store <i class="fi-rs-arrow-small-right"></i></a>
                         </div>
-                        <div class="vendor-info mb-30">
-                            <ul class="contact-infor text-muted">
-                                <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-location.svg') }}" alt="" /><strong>Address: </strong> <span>{{ $vendor->address ?? 'Not found!' }}</span></li>
-                                <li><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-contact.svg') }}" alt="" /><strong>Call Us:</strong><span>{{ $vendor->phone ?? 'Not found!' }}</span></li>
-                            </ul>
-                        </div>
-                        <a href="{{ route('vendor.details',$vendor->id) }}" class="btn btn-xs">Visit Store <i class="fi-rs-arrow-small-right"></i></a>
                     </div>
                 </div>
-            </div>
+            @endif
             <!--end vendor card-->
             @endforeach
 

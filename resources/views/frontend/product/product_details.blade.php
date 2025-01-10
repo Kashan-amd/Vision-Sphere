@@ -263,29 +263,31 @@
                                             $bridgeWidth = '';
                                             $templeLength = '';
 
-                                            // like 'Medium 55-44-136' or 'Wide 58-44-138' (and removing the words)
-                                            if (preg_match('/(\d+)-(\d+)-(\d+)/', $product_size, $matches)) {
+                                            // like 'Medium 55.83-44.02-146' or 'Wide 58.44-44.36-138' (and removing the words)
+                                            if (preg_match('/(\d+(\.\d+)?)-(\d+(\.\d+)?)-(\d+(\.\d+)?)/', $product_size, $matches)) {
                                                 // The matches array will have [full_match, lens_width, bridge_width, temple_length]
                                                 $lensWidth = $matches[1];
-                                                $bridgeWidth = $matches[2];
-                                                $templeLength = $matches[3];
+                                                $bridgeWidth = $matches[3];
+                                                $templeLength = $matches[5];
                                             }
+
+                                            // dd($lensWidth, $bridgeWidth, $templeLength);
                                         @endphp
                                         <div class="col-lg-6 col-md-6 col-12 position-relative hover-up">
                                             <img class="rounded shadow" src="{{ asset('./frontend/assets/imgs/guides/chart.jpg') }}" alt="Size Guide" style="width: 100%;">
 
                                             <!-- Lens Width -->
-                                            <div class="lens-width-label" style="position: absolute; top: 29%; left: 13%; color: #00d1ff;">
+                                            <div class="lens-width-label" style="position: absolute; top: 26%; left: 12%; color: #00d1ff;">
                                                 <span class="fw-bold" style="background: white; padding: 2px 5px;">{{$lensWidth}}</span>
                                             </div>
 
                                             <!-- Bridge Width -->
-                                            <div class="bridge-width-label" style="position: absolute; top: 25%; left: 24%; color: #00d1ff;">
+                                            <div class="bridge-width-label" style="position: absolute; top: 26%; left: 23%; color: #00d1ff;">
                                                 <span class="fw-bold" style="background: white; padding: 2px 5px;">{{$bridgeWidth}}</span>
                                             </div>
 
                                             <!-- Temple Length -->
-                                            <div class="temple-length-label" style="position: absolute; top: 29%; right: 25%; color: #00d1ff;">
+                                            <div class="temple-length-label" style="position: absolute; top: 26%; right: 25%; color: #00d1ff;">
                                                 <span class="fw-bold" style="background: white; padding: 2px 5px;">{{$templeLength}}</span>
                                             </div>
                                         </div>

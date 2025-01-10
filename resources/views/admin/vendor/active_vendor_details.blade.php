@@ -37,7 +37,7 @@
                                         <h6 class="mb-0">User Name</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" name="username" value="{{ $activeVendorDetails->username }}" />
+                                        <input type="text" class="form-control" readonly name="username" value="{{ $activeVendorDetails->username }}" />
                                     </div>
                                 </div>
 
@@ -46,7 +46,7 @@
                                         <h6 class="mb-0"> Shop Name</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" name="name" class="form-control" value="{{ $activeVendorDetails->name }}" />
+                                        <input type="text" name="name" class="form-control" readonly value="{{ $activeVendorDetails->name }}" />
                                     </div>
                                 </div>
 
@@ -55,7 +55,7 @@
                                         <h6 class="mb-0">Vendor Email</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="email" name="email" class="form-control" value="{{ $activeVendorDetails->email }}" />
+                                        <input type="email" name="email" class="form-control" readonly value="{{ $activeVendorDetails->email }}" />
                                     </div>
                                 </div>
 
@@ -64,7 +64,7 @@
                                         <h6 class="mb-0">Vendor Phone </h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" name="phone" class="form-control" value="{{ $activeVendorDetails->phone }}" />
+                                        <input type="text" name="phone" class="form-control" readonly value="{{ $activeVendorDetails->phone }}" />
                                     </div>
                                 </div>
 
@@ -73,7 +73,7 @@
                                         <h6 class="mb-0">Vendor Address</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" name="address" class="form-control" value="{{ $activeVendorDetails->address }}" />
+                                        <input type="text" name="address" class="form-control" readonly value="{{ $activeVendorDetails->address }}" />
                                     </div>
                                 </div>
 
@@ -82,7 +82,7 @@
                                         <h6 class="mb-0">Vendor Join</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" name="vendor_join_year" class="form-control" value="{{ $activeVendorDetails->vendor_join_year }}" />
+                                        <input type="text" name="vendor_join_year" class="form-control" readonly value="{{ $activeVendorDetails->vendor_join_year }}" />
                                     </div>
                                 </div>
 
@@ -91,7 +91,7 @@
                                         <h6 class="mb-0">Vendor Info</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <textarea name="vendor_short_info" class="form-control" id="inputAddress2" placeholder="Vendor Info " rows="3">
+                                        <textarea name="vendor_short_info" class="form-control" readonly id="inputAddress2" placeholder="Vendor Info " rows="3">
                                         {{ $activeVendorDetails->vendor_short_info }}
                                     </textarea>
                                     </div>

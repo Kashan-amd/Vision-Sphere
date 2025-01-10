@@ -4,12 +4,12 @@
             <div class="container">
                 <div class="row align-items-center">
 
-                    <div class="col-xl-3 col-lg-4">
+                    <div class="col-xl-3 col-lg-4 ml-5" style="margin:0 -1rem 0 0">
                         <div class="header-info">
                             <ul>
                                 <li><a href="{{ route('cart.index') }}">My Cart</a></li>
                                 {{-- <li><a href="checkout.html">Checkout</a></li> --}}
-                                <li><a href="track_order.html">Order Tracking</a></li>
+                                <li><a href="#">Order Tracking</a></li>
                             </ul>
                         </div>
                     </div>
@@ -158,7 +158,7 @@
                     <div class="header-action-right">
                         <!-- Wishlist , Cart and Loyalty Points Components -->
                         <div class="header-action-right">
-                            <div class="header-action-2" style="margin:0 3rem">
+                            <div class="header-action-2" style="margin:0 2.5rem">
                                  <!-- Loyalty Points -->
                                 <div class="header-action-icon-2">
                                 <a href="#">
@@ -371,7 +371,9 @@
                                                 <li><a href="#">No shops found</a></li>
                                             @else
                                                 @foreach ($shops as $shop)
+                                                    @if ($shop->status == 'active')
                                                     <li><a href="{{ route('vendor.details', $shop->id) }}">{{ $shop->name }}</a></li>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                         </ul>

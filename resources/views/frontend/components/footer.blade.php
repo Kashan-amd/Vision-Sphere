@@ -99,20 +99,20 @@
                     <div class="footer-link-widget col wow animate__animated animate__fadeInUp d-none d-lg-block d-md-block" data-wow-delay=".3s">
                     </div>
                     <div class="footer-link-widget col wow animate__animated animate__fadeInUp d-none d-lg-block d-md-block" data-wow-delay=".1s">
-                        <h4 class="widget-title">How to..</h4>
+                        {{-- <h4 class="widget-title">How to..</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
                             <li><a href="#">Choose Eyeglasses</a></li>
                             <li><a href="#">Order Out</a></li>
-                        </ul>
+                        </ul> --}}
                     </div>
                     <div class="footer-link-widget col wow animate__animated animate__fadeInUp d-none d-lg-block d-md-block" data-wow-delay=".2s">
                         <h4 class="widget-title">Account</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
                             <li><a href="{{ route('login') }}">Sign In</a></li>
                             <li><a href="{{ route('cart.index') }}">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
+                            {{-- <li><a href="#">My Wishlist</a></li> --}}
                             <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Shipping Details</a></li>
+                            <li><a href="{{ route('become.vendor') }}">Become a Vendor</a></li>
                         </ul>
                     </div>
                     <div class="footer-link-widget col wow animate__animated animate__fadeInUp d-none d-lg-block d-md-block" data-wow-delay=".4s">
