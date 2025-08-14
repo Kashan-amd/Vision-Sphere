@@ -16,5 +16,8 @@ npm-debug.log
 yarn-error.log
 /.fleet
 /.idea
-/.vscode
 /public/upload
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
